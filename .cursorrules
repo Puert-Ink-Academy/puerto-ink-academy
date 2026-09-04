@@ -1,0 +1,19 @@
+# Puerto Ink Academy — Cursor Rules
+
+## Tech Stack
+- Next.js 15 (App Router, Server Actions, TypeScript)
+- Styling: Tailwind CSS, Shadcn UI (Dark theme only, sleek gaming aesthetic)
+- Database: PostgreSQL via Drizzle ORM
+- Storage: DigitalOcean Spaces (S3 compatible) + CDN
+- Auth: Session-based role auth (ADMIN, TEACHER, APPRENTICE)
+
+## Domain Business Rules
+- Levels are linear and locked: apprentices can only view their active level.
+- Submissions require 8/10 or higher to pass and unlock the next sequence.
+- Endless attempts: failed submissions (<8/10) trigger retries and persist in history.
+- Dynamic XP: award XP based on score (10 = 100 XP, 9 = 90 XP, 8 = 80 XP, <8 = 0 XP).
+- Versioning: edits to lessons create new versions in `level_versions` to preserve historical student data.
+
+## Code Style
+- Always use TypeScript with strict types; do not use `any`.
+- Keep components modular and mobile-first responsive.
