@@ -3,9 +3,12 @@ import {
   ClipboardCheck,
   LayoutDashboard,
   Trophy,
+  UserRound,
   Users,
   type LucideIcon,
 } from "lucide-react";
+
+import { sessionUsers } from "@/lib/mock/session";
 
 export type NavItem = {
   href: string;
@@ -27,6 +30,7 @@ export const navItems: Record<NavKey, NavItem[]> = {
       activePrefixes: ["/apprentice/category"],
     },
     { href: "/apprentice/leaderboard", label: "Leaderboard", icon: Trophy },
+    { href: `/profile/${sessionUsers.apprentice.id}`, label: "Profile", icon: UserRound },
   ],
   teacher: [
     { href: "/teacher/dashboard", label: "Dashboard", icon: LayoutDashboard },

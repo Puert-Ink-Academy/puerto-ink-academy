@@ -1,13 +1,22 @@
-import { Check, ChevronRight, Lock } from "lucide-react";
+import { Check, ChevronRight, Crown, Lock } from "lucide-react";
 import Link from "next/link";
 
+import { MASTERY_SCORE } from "@/lib/grading";
 import { levelStatus, type LevelStatus } from "@/lib/levels";
 import type { CategoryId } from "@/lib/mock/categories";
 import type { LevelLesson } from "@/lib/mock/level-lessons";
 import type { LevelResult } from "@/lib/mock/level-results";
 import { cn } from "cn";
 
-function SkillNode({ level, status }: { level: number; status: LevelStatus }) {
+function SkillNode({
+  level,
+  status,
+  mastered,
+}: {
+  level: number;
+  status: LevelStatus;
+  mastered: boolean;
+}) {
   return (
     <span
       aria-hidden
@@ -23,6 +32,11 @@ function SkillNode({ level, status }: { level: number; status: LevelStatus }) {
       {status === "completed" && <Check className="size-5" />}
       {status === "active" && level}
       {status === "locked" && <Lock className="size-4" />}
+      {mastered && (
+        <span className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full border border-amber-200 bg-gradient-to-b from-amber-300 to-amber-500 text-zinc-950 shadow-[0_0_14px_var(--color-amber-400)]">
+          <Crown className="size-3.5" />
+        </span>
+      )}
     </span>
   );
 }
@@ -31,17 +45,19 @@ function CardBody({
   lesson,
   status,
   result,
+  mastered,
 }: {
   lesson: LevelLesson;
   status: LevelStatus;
   result: LevelResult | undefined;
+  mastered: boolean;
 }) {
   return (
     <>
       <p
         className={cn(
           "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
-          status === "completed" && "text-emerald-400",
+          status === "completed" && (mastered ? "text-amber-400" : "text-emerald-400"),
           status === "active" && "text-amber-400",
           status === "locked" && "text-zinc-600",
         )}
@@ -59,10 +75,17 @@ function CardBody({
       <div className="mt-2 flex items-center justify-between gap-3 text-xs">
         {status === "completed" && (
           <>
-            <span className="text-emerald-400">Completed</span>
+            {mastered ? (
+              <span className="flex items-center gap-1 font-medium text-amber-300">
+                <Crown className="size-3.5" aria-hidden />
+                Mastered
+              </span>
+            ) : (
+              <span className="text-emerald-400">Completed</span>
+            )}
             {result && (
               <span className="font-semibold text-amber-300 tabular-nums">
-                {result.score}/10
+                {result.highestScore}/10
               </span>
             )}
           </>
@@ -87,6 +110,14 @@ function CardBody({
   );
 }
 
+function linkLabel(lesson: LevelLesson, status: LevelStatus, result: LevelResult | undefined) {
+  const base = `Level ${lesson.level}: ${lesson.title}`;
+  if (status === "active") return `${base}, active`;
+  if (!result) return `${base}, completed`;
+  const state = result.highestScore === MASTERY_SCORE ? "mastered" : "completed";
+  return `${base}, ${state} ${result.highestScore}/10`;
+}
+
 export function SkillTree({
   categoryId,
   lessons,
@@ -103,12 +134,15 @@ export function SkillTree({
       {lessons.map((lesson, index) => {
         const status = levelStatus(lesson.level, currentLevel);
         const result = results.find((entry) => entry.level === lesson.level);
+        const mastered = status === "completed" && result?.highestScore === MASTERY_SCORE;
         const isLast = index === lessons.length - 1;
         const cardClassName = cn(
           "block min-h-12 rounded-xl border p-4 transition-colors md:row-start-1",
           index % 2 === 0 ? "md:col-start-1" : "md:col-start-3",
           status === "completed" &&
-            "border-emerald-500/30 bg-zinc-900 hover:border-emerald-400/60",
+            (mastered
+              ? "border-amber-400/50 bg-amber-400/[0.06] shadow-[0_0_24px_-10px_var(--color-amber-400)] hover:border-amber-300"
+              : "border-emerald-500/30 bg-zinc-900 hover:border-emerald-400/60"),
           status === "active" &&
             "border-amber-400/60 bg-amber-400/5 shadow-[0_0_24px_-8px_var(--color-amber-400)] hover:border-amber-300",
           status === "locked" &&
@@ -131,20 +165,21 @@ export function SkillTree({
                 )}
               />
             )}
-            <SkillNode level={lesson.level} status={status} />
+            <SkillNode level={lesson.level} status={status} mastered={mastered} />
             {status === "locked" ? (
               <div aria-disabled="true" className={cardClassName}>
-                <CardBody lesson={lesson} status={status} result={result} />
+                <CardBody lesson={lesson} status={status} result={result} mastered={false} />
               </div>
             ) : (
               <Link
                 href={`/apprentice/category/${categoryId}/level/${lesson.level}`}
+                aria-label={linkLabel(lesson, status, result)}
                 className={cn(
                   cardClassName,
                   "outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",
                 )}
               >
-                <CardBody lesson={lesson} status={status} result={result} />
+                <CardBody lesson={lesson} status={status} result={result} mastered={mastered} />
               </Link>
             )}
           </li>

@@ -1,4 +1,5 @@
 import { Crown, Medal } from "lucide-react";
+import Link from "next/link";
 
 import {
   Table,
@@ -74,10 +75,12 @@ export function LeaderboardTable({
   entries,
   highlightCurrentUser = false,
   levelLabel = "Level",
+  linkProfiles = false,
 }: {
   entries: LeaderboardEntry[];
   highlightCurrentUser?: boolean;
   levelLabel?: "Level" | "Cleared";
+  linkProfiles?: boolean;
 }) {
   const levelText = (level: number) =>
     levelLabel === "Cleared" ? `${level} cleared` : `Level ${level}`;
@@ -112,14 +115,23 @@ export function LeaderboardTable({
               podium ?? (isYou ? { ...defaultStyle, ...currentUserStyle } : defaultStyle);
 
             return (
-              <TableRow key={entry.name} className={cn("border-zinc-800", style.row)}>
+              <TableRow key={entry.id} className={cn("border-zinc-800", style.row)}>
                 <TableCell className={cn("py-3 pl-4", style.edge)}>
                   <RankBadge rank={entry.rank} className={style.badge} />
                 </TableCell>
                 <TableCell className="py-3">
                   <p className={cn("font-semibold", style.name)}>
                     <span className="text-zinc-500">#{entry.rank}</span>{" "}
-                    {entry.name}
+                    {linkProfiles ? (
+                      <Link
+                        href={`/profile/${entry.id}`}
+                        className="underline-offset-4 outline-none hover:underline focus-visible:underline"
+                      >
+                        {entry.name}
+                      </Link>
+                    ) : (
+                      entry.name
+                    )}
                     {isYou && (
                       <span className="ml-2 rounded-full border border-amber-400/50 bg-amber-400/10 px-1.5 py-0.5 align-middle text-[0.6rem] font-medium tracking-[0.12em] text-amber-300 uppercase">
                         You

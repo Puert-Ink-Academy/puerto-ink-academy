@@ -1,20 +1,24 @@
 import { CheckCircle2 } from "lucide-react";
 
-import { xpForScore } from "@/lib/grading";
 import type { LevelResult as LevelResultData } from "@/lib/mock/level-results";
 
 export function LevelResult({ result }: { result: LevelResultData }) {
   const stats = [
-    { label: "Score", value: `${result.score}/10` },
-    { label: "XP Earned", value: `+${xpForScore(result.score)}` },
+    { label: "Best Score", value: `${result.highestScore}/10` },
+    { label: "XP Earned", value: `+${result.xp}` },
     { label: "Attempts", value: String(result.attempts) },
   ];
 
   return (
-    <section className="rounded-xl border border-emerald-500/30 bg-zinc-900 p-4 sm:p-5">
-      <div className="flex items-center gap-2">
-        <CheckCircle2 className="size-5 text-emerald-400" aria-hidden />
-        <h2 className="text-sm font-semibold text-zinc-50">Passed</h2>
+    <section
+      role="status"
+      className="rounded-xl border border-emerald-500/40 bg-emerald-500/[0.06] p-4 shadow-[0_0_32px_-12px_var(--color-emerald-500)] sm:p-5"
+    >
+      <div className="flex items-center gap-2.5">
+        <span className="flex size-9 items-center justify-center rounded-full bg-emerald-500/15">
+          <CheckCircle2 className="size-5 text-emerald-400" aria-hidden />
+        </span>
+        <h2 className="text-lg font-semibold tracking-tight text-emerald-100">Level Passed!</h2>
       </div>
       <dl className="mt-4 grid grid-cols-3 gap-3">
         {stats.map((stat) => (
@@ -35,9 +39,7 @@ export function LevelResult({ result }: { result: LevelResultData }) {
         <h3 className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
           Teacher Feedback
         </h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">
-          {result.feedback}
-        </p>
+        <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">{result.feedback}</p>
       </div>
     </section>
   );

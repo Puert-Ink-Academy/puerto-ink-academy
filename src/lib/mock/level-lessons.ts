@@ -65,9 +65,9 @@ const fineLineLessons: LessonContent[] = [
   {
     level: 5,
     title: "Line Control",
-    objective: "What the apprentice needs to learn",
-    exercise: "Detailed description of the task",
-    tips: "Advice from the teacher",
+    objective: "Pull clean, consistent lines that hold their shape through curves",
+    exercise: "Tattoo a sheet of straight lines, smooth curves and closed circles in one pass each",
+    tips: "Move from your shoulder, not your wrist, and keep a steady hand speed",
     references: [
       { id: "straight-lines", label: "Straight lines" },
       { id: "curves", label: "Curves" },

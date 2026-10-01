@@ -30,4 +30,12 @@ export const mockPhotos = {
     "color-packing.jpg",
     "Practice skin with a heart, star, diamond, and swallow packed with color",
   ),
+  evolutionRough: photo(
+    "evolution-rough.jpg",
+    "Practice skin with shaky, uneven lining drills and blurred, blown-out lines",
+  ),
+  evolutionClean: photo(
+    "evolution-clean.jpg",
+    "Practice skin with crisp, even straight lines and clean circles",
+  ),
 } satisfies Record<string, SubmissionPhoto>;

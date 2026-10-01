@@ -1,6 +1,6 @@
 "use client";
 
-import { ImagePlus, X } from "lucide-react";
+import { ImagePlus, Lock, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -15,9 +15,11 @@ export type SelectedPhoto = {
 export function PhotoUploadZone({
   photos,
   onPhotosChange,
+  disabled = false,
 }: {
   photos: SelectedPhoto[];
   onPhotosChange: (photos: SelectedPhoto[]) => void;
+  disabled?: boolean;
 }) {
   const inputId = useId();
   const [isDragging, setIsDragging] = useState(false);
@@ -31,7 +33,7 @@ export function PhotoUploadZone({
   }, []);
 
   function addFiles(fileList: FileList | null) {
-    if (!fileList) return;
+    if (disabled || !fileList) return;
 
     const added = Array.from(fileList)
       .filter((file) => file.type.startsWith("image/"))
@@ -55,10 +57,11 @@ export function PhotoUploadZone({
   return (
     <div className="flex flex-col gap-4">
       <label
-        htmlFor={inputId}
+        htmlFor={disabled ? undefined : inputId}
+        aria-disabled={disabled || undefined}
         onDragOver={(event) => {
           event.preventDefault();
-          setIsDragging(true);
+          if (!disabled) setIsDragging(true);
         }}
         onDragLeave={() => setIsDragging(false)}
         onDrop={(event) => {
@@ -67,22 +70,38 @@ export function PhotoUploadZone({
           addFiles(event.dataTransfer.files);
         }}
         className={cn(
-          "flex min-h-40 cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-zinc-700 bg-zinc-950/60 px-6 py-8 text-center transition-colors hover:border-amber-400/60 focus-within:border-amber-400 focus-within:ring-3 focus-within:ring-amber-400/30",
+          "flex min-h-40 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-zinc-700 bg-zinc-950/60 px-6 py-8 text-center transition-colors",
+          disabled
+            ? "cursor-not-allowed opacity-50 grayscale"
+            : "cursor-pointer hover:border-amber-400/60 focus-within:border-amber-400 focus-within:ring-3 focus-within:ring-amber-400/30",
           isDragging && "border-amber-400 bg-amber-400/5",
         )}
       >
-        <span className="flex size-12 items-center justify-center rounded-full bg-amber-400/10 text-amber-400">
-          <ImagePlus className="size-6" aria-hidden />
+        <span
+          className={cn(
+            "flex size-12 items-center justify-center rounded-full",
+            disabled ? "bg-zinc-800 text-zinc-400" : "bg-amber-400/10 text-amber-400",
+          )}
+        >
+          {disabled ? (
+            <Lock className="size-6" aria-hidden />
+          ) : (
+            <ImagePlus className="size-6" aria-hidden />
+          )}
         </span>
         <span className="text-sm font-medium text-zinc-50">
-          Tap to add photos or drag them here
+          {disabled
+            ? "Uploads are locked while your submission is reviewed"
+            : "Tap to add photos or drag them here"}
         </span>
-        <span className="text-xs text-zinc-500">You can add several images</span>
+        {!disabled && <span className="text-xs text-zinc-500">You can add several images</span>}
         <input
           id={inputId}
           type="file"
           accept="image/*"
           multiple
+          disabled={disabled}
+          aria-disabled={disabled || undefined}
           className="sr-only"
           onChange={(event) => {
             addFiles(event.target.files);

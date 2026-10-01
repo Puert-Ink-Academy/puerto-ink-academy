@@ -19,7 +19,9 @@ export function GradingView({ nav }: { nav: StaffNav }) {
           Submissions to grade
         </h1>
         <p className="mt-1 text-sm text-zinc-400">
-          {pendingSubmissions.length} apprentices are waiting for feedback.
+          {pendingSubmissions.length} submissions across{" "}
+          {new Set(pendingSubmissions.map((submission) => submission.categoryId)).size} styles
+          are waiting for feedback.
         </p>
       </header>
       <TeacherDashboard submissions={pendingSubmissions} />

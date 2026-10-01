@@ -25,6 +25,7 @@ export default function LeaderboardPage() {
         scopes={leaderboardScopes}
         rankings={rankings}
         highlightCurrentUser
+        linkProfiles
         showBanner
         lockedHints={lockedHints}
       />

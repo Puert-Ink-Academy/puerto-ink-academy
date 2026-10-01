@@ -29,7 +29,7 @@ export const levelAttempts: LevelAttempt[] = [
     level: 2,
     attempt: 1,
     submittedAt: "Mar 11, 2026",
-    photos: [mockPhotos.liningDrills, mockPhotos.roseOutline],
+    photos: [mockPhotos.roseOutline, mockPhotos.liningDrills],
     score: 6,
     feedback:
       "Needle hang is too long, so the lines blow out. Shorten it and resubmit.",
@@ -49,8 +49,19 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-3-attempt-1",
     level: 3,
     attempt: 1,
+    submittedAt: "Mar 18, 2026",
+    photos: [mockPhotos.evolutionRough],
+    score: 6,
+    feedback:
+      "Your depth wanders, so several lines blew out and others barely took. Slow down and keep the angle steady.",
+  },
+  {
+    categoryId: "fine-line",
+    id: "fine-line-level-3-attempt-2",
+    level: 3,
+    attempt: 2,
     submittedAt: "Mar 22, 2026",
-    photos: [mockPhotos.liningDrills, mockPhotos.whipShading],
+    photos: [mockPhotos.evolutionClean, mockPhotos.liningDrills],
     score: 10,
     feedback: "Perfectly even depth across the whole sheet. No notes.",
   },
@@ -71,7 +82,7 @@ export const levelAttempts: LevelAttempt[] = [
     attempt: 1,
     submittedAt: "Apr 12, 2026",
     photos: [mockPhotos.liningDrills, mockPhotos.roseOutline],
-    score: 7,
+    score: 6,
     feedback:
       "Close. Your straights are steady, but rework the transitions on the curves so they don't wobble.",
   },

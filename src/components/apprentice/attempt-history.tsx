@@ -1,12 +1,24 @@
-import { CheckCircle2, RotateCcw } from "lucide-react";
+import { CheckCircle2, Hourglass, RotateCcw } from "lucide-react";
 
 import { PhotoThumbnails } from "@/components/submissions/photo-thumbnails";
 import { isPassingScore, xpForScore } from "@/lib/grading";
 import type { LevelAttempt } from "@/lib/mock/level-attempts";
+import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
 
-export function AttemptHistory({ attempts }: { attempts: LevelAttempt[] }) {
-  if (attempts.length === 0) return null;
+export type PendingAttempt = {
+  submittedAt: string;
+  photos: SubmissionPhoto[];
+};
+
+export function AttemptHistory({
+  attempts,
+  pending,
+}: {
+  attempts: LevelAttempt[];
+  pending?: PendingAttempt;
+}) {
+  if (attempts.length === 0 && !pending) return null;
 
   return (
     <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5">
@@ -14,6 +26,39 @@ export function AttemptHistory({ attempts }: { attempts: LevelAttempt[] }) {
         Attempts
       </h2>
       <ol className="mt-4 flex flex-col">
+        {pending && (
+          <li className="relative flex gap-3 pb-5 last:pb-0">
+            {attempts.length > 0 && (
+              <span
+                aria-hidden
+                className="absolute top-8 bottom-0 left-[0.9375rem] w-px bg-zinc-800"
+              />
+            )}
+            <span
+              aria-hidden
+              className="relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full border border-sky-400/40 bg-sky-400/10 text-sky-300"
+            >
+              <Hourglass className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <p className="text-sm font-semibold text-zinc-50">
+                  Attempt {attempts.length + 1}
+                </p>
+                <p className="text-xs text-zinc-500">{pending.submittedAt}</p>
+                <span className="ml-auto rounded-full border border-sky-400/40 bg-sky-400/10 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-sky-300 uppercase">
+                  Pending review
+                </span>
+              </div>
+              <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">
+                Waiting for your teacher&apos;s grade and feedback.
+              </p>
+              <div className="mt-3">
+                <PhotoThumbnails photos={pending.photos} />
+              </div>
+            </div>
+          </li>
+        )}
         {attempts.map((attempt, index) => {
           const passed = isPassingScore(attempt.score);
           const isLast = index === attempts.length - 1;

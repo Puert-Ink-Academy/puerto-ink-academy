@@ -1,12 +1,15 @@
-import { isPassingScore } from "@/lib/grading";
+import { xpForScore } from "@/lib/grading";
 import type { CategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts, levelAttempts } from "@/lib/mock/level-attempts";
 
 export type LevelResult = {
   level: number;
-  score: number;
+  highestScore: number;
+  xp: number;
   attempts: number;
   feedback: string;
+  latestScore: number;
+  latestFeedback: string;
 };
 
 export function getLevelResult(
@@ -14,14 +17,19 @@ export function getLevelResult(
   level: number,
 ): LevelResult | undefined {
   const attempts = getLevelAttempts(categoryId, level);
-  const passing = attempts.find((attempt) => isPassingScore(attempt.score));
-  if (!passing) return undefined;
+  const [latest] = attempts;
+  if (!latest) return undefined;
+
+  const best = attempts.reduce((top, attempt) => (attempt.score > top.score ? attempt : top));
 
   return {
     level,
-    score: passing.score,
+    highestScore: best.score,
+    xp: xpForScore(best.score),
     attempts: attempts.length,
-    feedback: passing.feedback,
+    feedback: best.feedback,
+    latestScore: latest.score,
+    latestFeedback: latest.feedback,
   };
 }
 

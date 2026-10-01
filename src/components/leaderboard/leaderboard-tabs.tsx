@@ -52,12 +52,14 @@ export function LeaderboardTabs({
   scopes,
   rankings,
   highlightCurrentUser = false,
+  linkProfiles = false,
   showBanner = false,
   lockedHints = {},
 }: {
   scopes: LeaderboardScope[];
   rankings: Record<LeaderboardScope, LeaderboardEntry[]>;
   highlightCurrentUser?: boolean;
+  linkProfiles?: boolean;
   showBanner?: boolean;
   lockedHints?: Partial<Record<LeaderboardScope, string>>;
 }) {
@@ -114,6 +116,7 @@ export function LeaderboardTabs({
                 <LeaderboardTable
                   entries={entries}
                   highlightCurrentUser={highlightCurrentUser}
+                  linkProfiles={linkProfiles}
                   levelLabel={item === "global" ? "Cleared" : "Level"}
                 />
               ) : (

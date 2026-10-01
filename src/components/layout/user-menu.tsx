@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronsUpDown, LogOut } from "lucide-react";
+import { ChevronsUpDown, LogOut, UserRound } from "lucide-react";
+import Link from "next/link";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
@@ -75,6 +76,15 @@ export function UserMenu({
           <p className="truncate text-xs text-zinc-500">{user.email}</p>
         </div>
         <DropdownMenuSeparator />
+        {nav === "apprentice" && (
+          <DropdownMenuItem
+            className="min-h-10"
+            render={<Link href={`/profile/${user.id}`} />}
+          >
+            <UserRound />
+            View profile
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem
           variant="destructive"
           disabled={pending}

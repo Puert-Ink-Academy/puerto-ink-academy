@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Crown } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -6,14 +6,18 @@ import { AttemptHistory } from "@/components/apprentice/attempt-history";
 import { LessonSections } from "@/components/apprentice/lesson-sections";
 import { LevelResult } from "@/components/apprentice/level-result";
 import { LevelSubmission } from "@/components/apprentice/level-submission";
+import { MasteryBadge } from "@/components/apprentice/mastery-badge";
 import { ReferenceMaterial } from "@/components/apprentice/reference-material";
 import { categoryStyles } from "@/lib/categories";
+import { levelState } from "@/lib/grading";
 import { isViewableLevel, levelStatus } from "@/lib/levels";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { getCategory, isCategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts } from "@/lib/mock/level-attempts";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
+import { sessionUsers } from "@/lib/mock/session";
+import { getPendingSubmission } from "@/lib/mock/teacher-dashboard";
 import { cn } from "cn";
 
 export default async function LevelPage({
@@ -39,8 +43,16 @@ export default async function LevelPage({
 
   const category = getCategory(id);
   const isCompleted = levelStatus(levelNumber, currentLevel) === "completed";
-  const result = isCompleted ? getLevelResult(id, levelNumber) : undefined;
+  const result = getLevelResult(id, levelNumber);
+  const state = levelState(result?.highestScore);
   const attempts = getLevelAttempts(id, levelNumber);
+  const pendingSubmission = getPendingSubmission(sessionUsers.apprentice.id, id, levelNumber);
+  const submission = {
+    categoryId: id,
+    categoryName: category.name,
+    level: levelNumber,
+    pending: pendingSubmission !== undefined,
+  };
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
@@ -61,20 +73,44 @@ export default async function LevelPage({
           >
             {category.name} · Level {lesson.level}
           </p>
-          {isCompleted && (
-            <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-emerald-300 uppercase">
-              Completed
+          {state === "mastered" ? (
+            <span className="flex items-center gap-1 rounded-full border border-amber-400/60 bg-amber-400/15 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-amber-300 uppercase shadow-[0_0_12px_-2px_var(--color-amber-400)]">
+              <Crown className="size-3" aria-hidden />
+              Mastered
             </span>
+          ) : (
+            isCompleted && (
+              <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-emerald-300 uppercase">
+                Completed
+              </span>
+            )
           )}
         </div>
         <h1 className="mt-1 text-3xl font-semibold tracking-tight text-zinc-50">
           {lesson.title}
         </h1>
       </header>
-      <LessonSections lesson={lesson} />
+      <div id="lesson" className="scroll-mt-20">
+        <LessonSections lesson={lesson} />
+      </div>
       <ReferenceMaterial references={lesson.references} />
-      {isCompleted ? result && <LevelResult result={result} /> : <LevelSubmission />}
-      <AttemptHistory attempts={attempts} />
+      {state === "not-attempted" && <LevelSubmission variant="first" {...submission} />}
+      {state === "failed" && result && (
+        <LevelSubmission
+          variant="retry"
+          latestScore={result.latestScore}
+          latestFeedback={result.latestFeedback}
+          {...submission}
+        />
+      )}
+      {state === "passed" && result && (
+        <>
+          <LevelResult result={result} />
+          <LevelSubmission variant="improve" {...submission} />
+        </>
+      )}
+      {state === "mastered" && result && <MasteryBadge result={result} />}
+      <AttemptHistory attempts={attempts} pending={pendingSubmission} />
     </main>
   );
 }
