@@ -3,26 +3,36 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { isActivePath, navItems, type NavKey } from "@/components/layout/nav-items";
+import {
+  isActivePath,
+  navAccent,
+  navItems,
+  roleBadge,
+  type NavKey,
+} from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
 export function SidebarNav({ nav }: { nav: NavKey }) {
   const pathname = usePathname();
+  const accent = navAccent[nav];
+  const badge = roleBadge[nav];
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-zinc-800 bg-zinc-900 md:flex">
       <div className="flex items-center gap-2 px-5 py-6">
-        <span
-          aria-hidden
-          className="size-2 rounded-full bg-amber-400 shadow-[0_0_12px_var(--color-amber-400)]"
-        />
+        <span aria-hidden className={cn("size-2 rounded-full", accent.dot)} />
         <span className="text-sm font-semibold tracking-wide text-zinc-50">
           Puerto Ink
         </span>
-        {nav === "teacher" && (
-          <span className="ml-auto rounded-full border border-zinc-700 px-2 py-0.5 text-[0.65rem] tracking-[0.12em] text-zinc-400 uppercase">
-            Teacher
+        {badge && (
+          <span
+            className={cn(
+              "ml-auto rounded-full border px-2 py-0.5 text-[0.65rem] tracking-[0.12em] uppercase",
+              badge.className,
+            )}
+          >
+            {badge.label}
           </span>
         )}
       </div>
@@ -39,11 +49,10 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
               className={cn(
                 buttonVariants({ variant: "ghost", size: "lg" }),
                 "h-11 w-full justify-start px-3 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-50",
-                active &&
-                  "bg-amber-400/10 text-amber-400 hover:bg-amber-400/15 hover:text-amber-400",
+                active && accent.active,
               )}
             >
-              <Icon className={cn("size-4", active && "text-amber-400")} />
+              <Icon className={cn("size-4", active && accent.icon)} />
               {item.label}
             </Link>
           );

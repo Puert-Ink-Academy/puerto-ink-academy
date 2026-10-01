@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { isActivePath, navItems, type NavKey } from "@/components/layout/nav-items";
+import { isActivePath, navAccent, navItems, type NavKey } from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
 export function MobileBottomNav({ nav }: { nav: NavKey }) {
   const pathname = usePathname();
   const items = navItems[nav];
+  const accent = navAccent[nav];
 
   return (
     <nav
@@ -32,10 +33,10 @@ export function MobileBottomNav({ nav }: { nav: NavKey }) {
                 className={cn(
                   buttonVariants({ variant: "ghost" }),
                   "h-auto min-h-11 w-full flex-col gap-1 rounded-none px-2 py-2 text-[0.7rem] text-zinc-400 hover:bg-transparent hover:text-zinc-50",
-                  active && "text-amber-400 hover:text-amber-400",
+                  active && accent.activeText,
                 )}
               >
-                <Icon className={cn("size-5", active && "text-amber-400")} />
+                <Icon className={cn("size-5", active && accent.icon)} />
                 {item.label}
               </Link>
             </li>
