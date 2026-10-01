@@ -1,15 +1,8 @@
 import { Check, Lock } from "lucide-react";
 import Link from "next/link";
 
+import { levelStatus, type LevelStatus } from "@/lib/levels";
 import { cn } from "cn";
-
-type LevelStatus = "completed" | "active" | "locked";
-
-function levelStatus(level: number, currentLevel: number): LevelStatus {
-  if (level < currentLevel) return "completed";
-  if (level === currentLevel) return "active";
-  return "locked";
-}
 
 const statusLabel: Record<LevelStatus, string> = {
   completed: "Completed",
@@ -68,7 +61,7 @@ export function CurriculumTree({
                     status === "locked" ? "text-zinc-500" : "text-zinc-50",
                   )}
                 >
-                  {status === "active" ? (
+                  {status !== "locked" ? (
                     <Link
                       href={`/apprentice/level/${level}`}
                       className="underline-offset-4 after:absolute after:inset-0 after:content-[''] hover:text-amber-300 hover:underline"
