@@ -1,5 +1,6 @@
 import {
   BookOpen,
+  ClipboardCheck,
   LayoutDashboard,
   Trophy,
   Users,
@@ -14,6 +15,8 @@ export type NavItem = {
 
 export type NavKey = "apprentice" | "teacher" | "admin";
 
+export type StaffNav = Exclude<NavKey, "apprentice">;
+
 export const navItems: Record<NavKey, NavItem[]> = {
   apprentice: [
     { href: "/apprentice/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -23,8 +26,14 @@ export const navItems: Record<NavKey, NavItem[]> = {
   teacher: [
     { href: "/teacher/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/teacher/curriculum", label: "Curriculum", icon: BookOpen },
+    { href: "/teacher/leaderboard", label: "Leaderboard", icon: Trophy },
   ],
-  admin: [{ href: "/admin/dashboard", label: "Users", icon: Users }],
+  admin: [
+    { href: "/admin/dashboard", label: "Users", icon: Users },
+    { href: "/admin/grading", label: "Grading", icon: ClipboardCheck },
+    { href: "/admin/curriculum", label: "Curriculum", icon: BookOpen },
+    { href: "/admin/leaderboard", label: "Leaderboard", icon: Trophy },
+  ],
 };
 
 export type NavAccent = {
@@ -32,6 +41,8 @@ export type NavAccent = {
   active: string;
   activeText: string;
   icon: string;
+  avatar: string;
+  eyebrow: string;
 };
 
 const amberAccent: NavAccent = {
@@ -39,6 +50,8 @@ const amberAccent: NavAccent = {
   active: "bg-amber-400/10 text-amber-400 hover:bg-amber-400/15 hover:text-amber-400",
   activeText: "text-amber-400 hover:text-amber-400",
   icon: "text-amber-400",
+  avatar: "border-amber-400/40 bg-amber-400/10 text-amber-300",
+  eyebrow: "text-amber-400",
 };
 
 export const navAccent: Record<NavKey, NavAccent> = {
@@ -49,10 +62,13 @@ export const navAccent: Record<NavKey, NavAccent> = {
     active: "bg-violet-400/10 text-violet-400 hover:bg-violet-400/15 hover:text-violet-400",
     activeText: "text-violet-400 hover:text-violet-400",
     icon: "text-violet-400",
+    avatar: "border-violet-400/40 bg-violet-400/10 text-violet-300",
+    eyebrow: "text-violet-400",
   },
 };
 
-export const roleBadge: Partial<Record<NavKey, { label: string; className: string }>> = {
+export const roleBadge: Record<NavKey, { label: string; className: string }> = {
+  apprentice: { label: "Apprentice", className: "border-zinc-700 text-zinc-400" },
   teacher: { label: "Teacher", className: "border-zinc-700 text-zinc-400" },
   admin: { label: "Admin", className: "border-violet-400/40 text-violet-300" },
 };

@@ -7,16 +7,16 @@ import {
   isActivePath,
   navAccent,
   navItems,
-  roleBadge,
   type NavKey,
 } from "@/components/layout/nav-items";
+import { RolePill } from "@/components/layout/role-pill";
+import { UserMenu } from "@/components/layout/user-menu";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
 export function SidebarNav({ nav }: { nav: NavKey }) {
   const pathname = usePathname();
   const accent = navAccent[nav];
-  const badge = roleBadge[nav];
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-zinc-800 bg-zinc-900 md:flex">
@@ -25,16 +25,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
         <span className="text-sm font-semibold tracking-wide text-zinc-50">
           Puerto Ink
         </span>
-        {badge && (
-          <span
-            className={cn(
-              "ml-auto rounded-full border px-2 py-0.5 text-[0.65rem] tracking-[0.12em] uppercase",
-              badge.className,
-            )}
-          >
-            {badge.label}
-          </span>
-        )}
+        <RolePill nav={nav} className="ml-auto" />
       </div>
       <nav aria-label="Academy" className="flex flex-1 flex-col gap-1 px-3">
         {navItems[nav].map((item) => {
@@ -58,6 +49,9 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
           );
         })}
       </nav>
+      <div className="border-t border-zinc-800 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+        <UserMenu nav={nav} variant="sidebar" />
+      </div>
     </aside>
   );
 }

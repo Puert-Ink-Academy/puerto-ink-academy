@@ -1,18 +1,7 @@
-import { Toaster } from "@/components/ui/sonner";
-
 export default function AcademyLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      {children}
-      <Toaster
-        theme="dark"
-        position="top-center"
-        mobileOffset={{ top: "calc(env(safe-area-inset-top) + 16px)" }}
-      />
-    </>
-  );
+  return children;
 }

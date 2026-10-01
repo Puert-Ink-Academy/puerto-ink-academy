@@ -3,13 +3,21 @@
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
+import { navAccent, roleBadge, type StaffNav } from "@/components/layout/nav-items";
 import { LevelFormSheet } from "@/components/teacher/level-form-sheet";
 import { LevelsTable } from "@/components/teacher/levels-table";
 import { Button } from "@/components/ui/button";
 import { emptyLevelForm, levelFormFromLesson } from "@/lib/level-form";
 import type { LevelLesson } from "@/lib/mock/level-lessons";
+import { cn } from "cn";
 
-export function CurriculumManager({ lessons }: { lessons: LevelLesson[] }) {
+export function CurriculumManager({
+  nav,
+  lessons,
+}: {
+  nav: StaffNav;
+  lessons: LevelLesson[];
+}) {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [editing, setEditing] = useState<LevelLesson | null>(null);
 
@@ -19,8 +27,13 @@ export function CurriculumManager({ lessons }: { lessons: LevelLesson[] }) {
     <>
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[0.7rem] font-medium tracking-[0.12em] text-amber-400 uppercase">
-            Teacher
+          <p
+            className={cn(
+              "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
+              navAccent[nav].eyebrow,
+            )}
+          >
+            {roleBadge[nav].label}
           </p>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
             Curriculum

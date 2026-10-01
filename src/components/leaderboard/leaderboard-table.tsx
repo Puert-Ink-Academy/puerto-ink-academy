@@ -63,7 +63,18 @@ function RankBadge({ rank, className }: { rank: number; className: string }) {
   );
 }
 
-export function LeaderboardTable({ entries }: { entries: LeaderboardEntry[] }) {
+const currentUserStyle: Pick<PodiumStyle, "edge" | "row"> = {
+  edge: "shadow-[inset_3px_0_0_var(--color-amber-400)]",
+  row: "bg-amber-400/[0.06] hover:bg-amber-400/10",
+};
+
+export function LeaderboardTable({
+  entries,
+  highlightCurrentUser = false,
+}: {
+  entries: LeaderboardEntry[];
+  highlightCurrentUser?: boolean;
+}) {
   return (
     <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
       <Table>
@@ -88,7 +99,10 @@ export function LeaderboardTable({ entries }: { entries: LeaderboardEntry[] }) {
         </TableHeader>
         <TableBody>
           {entries.map((entry) => {
-            const style = podiumStyles[entry.rank] ?? defaultStyle;
+            const isYou = highlightCurrentUser && entry.isCurrentUser === true;
+            const podium = podiumStyles[entry.rank];
+            const style =
+              podium ?? (isYou ? { ...defaultStyle, ...currentUserStyle } : defaultStyle);
 
             return (
               <TableRow key={entry.rank} className={cn("border-zinc-800", style.row)}>
@@ -99,6 +113,11 @@ export function LeaderboardTable({ entries }: { entries: LeaderboardEntry[] }) {
                   <p className={cn("font-semibold", style.name)}>
                     <span className="text-zinc-500">#{entry.rank}</span>{" "}
                     {entry.name}
+                    {isYou && (
+                      <span className="ml-2 rounded-full border border-amber-400/50 bg-amber-400/10 px-1.5 py-0.5 align-middle text-[0.6rem] font-medium tracking-[0.12em] text-amber-300 uppercase">
+                        You
+                      </span>
+                    )}
                   </p>
                   <p className="text-xs text-zinc-500 sm:hidden">
                     Level {entry.level}
