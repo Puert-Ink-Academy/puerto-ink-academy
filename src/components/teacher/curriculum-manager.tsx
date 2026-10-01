@@ -1,27 +1,93 @@
 "use client";
 
-import { Plus } from "lucide-react";
-import { useState } from "react";
+import { FolderPlus } from "lucide-react";
+import { useEffect, useState } from "react";
 
 import { navAccent, roleBadge, type StaffNav } from "@/components/layout/nav-items";
+import { CategoryAccordion } from "@/components/teacher/category-accordion";
+import { CreateCategoryDialog } from "@/components/teacher/create-category-dialog";
 import { LevelFormSheet } from "@/components/teacher/level-form-sheet";
-import { LevelsTable } from "@/components/teacher/levels-table";
 import { Button } from "@/components/ui/button";
-import { emptyLevelForm, levelFormFromLesson } from "@/lib/level-form";
-import type { LevelLesson } from "@/lib/mock/level-lessons";
+import type { CurriculumCategory, CurriculumLevel } from "@/lib/curriculum";
+import {
+  emptyLevelForm,
+  levelFormFromLesson,
+  type LevelFormValues,
+} from "@/lib/level-form";
 import { cn } from "cn";
+
+type SheetTarget = {
+  categoryId: string;
+  editing: CurriculumLevel | null;
+};
 
 export function CurriculumManager({
   nav,
+  categories,
   lessons,
 }: {
   nav: StaffNav;
-  lessons: LevelLesson[];
+  categories: CurriculumCategory[];
+  lessons: CurriculumLevel[];
 }) {
+  const [categoryList, setCategoryList] = useState(categories);
+  const [levelList, setLevelList] = useState(lessons);
+  const [openItems, setOpenItems] = useState<string[]>(
+    categories[0] ? [categories[0].id] : [],
+  );
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [editing, setEditing] = useState<LevelLesson | null>(null);
+  const [sheet, setSheet] = useState<SheetTarget | null>(null);
+  const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
+  const [categoryFormKey, setCategoryFormKey] = useState(0);
+  const [scrollTarget, setScrollTarget] = useState<string | null>(null);
 
-  const nextLevel = lessons.reduce((max, lesson) => Math.max(max, lesson.level), 0) + 1;
+  useEffect(() => {
+    if (!scrollTarget) return;
+    document
+      .getElementById(`category-${scrollTarget}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setScrollTarget(null);
+  }, [scrollTarget]);
+
+  const sheetCategory = categoryList.find((category) => category.id === sheet?.categoryId);
+  const sheetLevels = levelList.filter((lesson) => lesson.categoryId === sheet?.categoryId);
+  const nextLevel = sheetLevels.reduce((max, lesson) => Math.max(max, lesson.level), 0) + 1;
+  const takenLevels = sheetLevels
+    .map((lesson) => lesson.level)
+    .filter((level) => level !== sheet?.editing?.level);
+
+  const openSheet = (target: SheetTarget) => {
+    setSheet(target);
+    setSheetOpen(true);
+  };
+
+  const saveLevel = (values: LevelFormValues) => {
+    if (!sheet) return;
+    const { categoryId, editing } = sheet;
+    const content = {
+      level: values.level,
+      title: values.title,
+      objective: values.objective,
+      exercise: values.exercise,
+      tips: values.tips,
+    };
+
+    setLevelList((current) =>
+      editing
+        ? current.map((lesson) =>
+            lesson.categoryId === categoryId && lesson.level === editing.level
+              ? { ...lesson, ...content }
+              : lesson,
+          )
+        : [...current, { ...content, categoryId, references: [] }],
+    );
+  };
+
+  const createCategory = (category: CurriculumCategory) => {
+    setCategoryList((current) => [...current, category]);
+    setOpenItems((current) => [...current, category.id]);
+    setScrollTarget(category.id);
+  };
 
   return (
     <>
@@ -39,33 +105,50 @@ export function CurriculumManager({
             Curriculum
           </h1>
           <p className="mt-1 text-sm text-zinc-400">
-            {lessons.length} permanent levels
+            {categoryList.length} categories · {levelList.length} permanent levels
           </p>
         </div>
         <Button
           size="lg"
+          variant="outline"
           onClick={() => {
-            setEditing(null);
-            setSheetOpen(true);
+            setCategoryFormKey((key) => key + 1);
+            setCategoryDialogOpen(true);
           }}
-          className="h-11 w-full bg-amber-400 px-4 text-zinc-950 shadow-[0_0_24px_-6px_var(--color-amber-400)] hover:bg-amber-300 sm:w-auto"
+          className="h-11 w-full px-4 text-amber-300 hover:text-amber-200 sm:w-auto dark:border-amber-400/50 dark:bg-amber-400/10 dark:hover:bg-amber-400/20"
         >
-          <Plus />
-          Create New Level
+          <FolderPlus />
+          Create Category
         </Button>
       </header>
-      <LevelsTable
-        lessons={lessons}
-        onEdit={(lesson) => {
-          setEditing(lesson);
-          setSheetOpen(true);
-        }}
+      <CategoryAccordion
+        categories={categoryList}
+        lessons={levelList}
+        value={openItems}
+        onValueChange={setOpenItems}
+        onCreateLevel={(categoryId) => openSheet({ categoryId, editing: null })}
+        onEditLevel={(lesson) => openSheet({ categoryId: lesson.categoryId, editing: lesson })}
       />
-      <LevelFormSheet
-        open={sheetOpen}
-        onOpenChange={setSheetOpen}
-        mode={editing ? "edit" : "create"}
-        initialValues={editing ? levelFormFromLesson(editing) : emptyLevelForm(nextLevel)}
+      {sheet && sheetCategory && (
+        <LevelFormSheet
+          key={`${sheet.categoryId}-${sheet.editing?.level ?? "new"}`}
+          open={sheetOpen}
+          onOpenChange={setSheetOpen}
+          mode={sheet.editing ? "edit" : "create"}
+          categoryName={sheetCategory.name}
+          takenLevels={takenLevels}
+          initialValues={
+            sheet.editing ? levelFormFromLesson(sheet.editing) : emptyLevelForm(nextLevel)
+          }
+          onSave={saveLevel}
+        />
+      )}
+      <CreateCategoryDialog
+        open={categoryDialogOpen}
+        onOpenChange={setCategoryDialogOpen}
+        existing={categoryList}
+        onCreate={createCategory}
+        formKey={categoryFormKey}
       />
     </>
   );

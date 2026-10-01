@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { isPassingScore, xpForScore } from "@/lib/grading";
+import { getCategory } from "@/lib/mock/categories";
 import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
 import { cn } from "cn";
 
@@ -137,7 +138,8 @@ export function GradingModal({
                 {submission.apprenticeName}
               </DialogTitle>
               <DialogDescription className="mt-1 text-zinc-400">
-                Level {submission.level} · {submission.lessonTitle} ·{" "}
+                {getCategory(submission.categoryId).name} · Level {submission.level} ·{" "}
+                {submission.lessonTitle} ·{" "}
                 {submission.submittedAt}
               </DialogDescription>
             </div>

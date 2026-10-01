@@ -1,4 +1,5 @@
 import { isPassingScore } from "@/lib/grading";
+import type { CategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts, levelAttempts } from "@/lib/mock/level-attempts";
 
 export type LevelResult = {
@@ -8,8 +9,11 @@ export type LevelResult = {
   feedback: string;
 };
 
-function resultForLevel(level: number): LevelResult | undefined {
-  const attempts = getLevelAttempts(level);
+export function getLevelResult(
+  categoryId: CategoryId,
+  level: number,
+): LevelResult | undefined {
+  const attempts = getLevelAttempts(categoryId, level);
   const passing = attempts.find((attempt) => isPassingScore(attempt.score));
   if (!passing) return undefined;
 
@@ -21,12 +25,14 @@ function resultForLevel(level: number): LevelResult | undefined {
   };
 }
 
-export const levelResults: LevelResult[] = [
-  ...new Set(levelAttempts.map((attempt) => attempt.level)),
-]
-  .sort((a, b) => a - b)
-  .flatMap((level) => resultForLevel(level) ?? []);
+export function getCategoryResults(categoryId: CategoryId): LevelResult[] {
+  const levels = new Set(
+    levelAttempts
+      .filter((attempt) => attempt.categoryId === categoryId)
+      .map((attempt) => attempt.level),
+  );
 
-export function getLevelResult(level: number): LevelResult | undefined {
-  return levelResults.find((result) => result.level === level);
+  return [...levels]
+    .sort((a, b) => a - b)
+    .flatMap((level) => getLevelResult(categoryId, level) ?? []);
 }

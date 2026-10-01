@@ -5,11 +5,24 @@ const nextConfig: NextConfig = {
   // so metadata must render blocking instead of streaming into <body>.
   htmlLimitedBots: /.*/,
   async redirects() {
-    return ["apprentice", "teacher", "admin"].map((role) => ({
+    const roleHomes = ["apprentice", "teacher", "admin"].map((role) => ({
       source: `/${role}`,
       destination: `/${role}/dashboard`,
       permanent: false,
     }));
+    return [
+      ...roleHomes,
+      {
+        source: "/apprentice/curriculum",
+        destination: "/apprentice/dashboard",
+        permanent: false,
+      },
+      {
+        source: "/apprentice/level/:level",
+        destination: "/apprentice/category/fine-line/level/:level",
+        permanent: false,
+      },
+    ];
   },
 };
 

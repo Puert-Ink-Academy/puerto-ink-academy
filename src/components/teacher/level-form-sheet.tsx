@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import type { LevelFormValues } from "@/lib/level-form";
+import { levelFormFromData, type LevelFormValues } from "@/lib/level-form";
 
 type LevelFormMode = "create" | "edit";
 
@@ -46,28 +46,37 @@ function Field({
 
 function LevelForm({
   mode,
+  categoryName,
+  takenLevels,
   initialValues,
-  onSaved,
+  onSave,
 }: {
   mode: LevelFormMode;
+  categoryName: string;
+  takenLevels: number[];
   initialValues: LevelFormValues;
-  onSaved: () => void;
+  onSave: (values: LevelFormValues) => void;
 }) {
   const baseId = useId();
   const id = (name: keyof LevelFormValues) => `${baseId}-${name}`;
+  const [levelError, setLevelError] = useState<string>();
 
   return (
     <form
       className="flex min-h-0 flex-1 flex-col"
       onSubmit={(event) => {
         event.preventDefault();
-        const level = Number(new FormData(event.currentTarget).get("level"));
+        const values = levelFormFromData(new FormData(event.currentTarget));
+        if (takenLevels.includes(values.level)) {
+          setLevelError(`Level ${values.level} already exists in ${categoryName}.`);
+          return;
+        }
         toast.success(
           mode === "create"
-            ? `Level ${level} created`
-            : `Level ${level} saved as a new version`,
+            ? `${categoryName} Level ${values.level} created`
+            : `${categoryName} Level ${values.level} saved as a new version`,
         );
-        onSaved();
+        onSave(values);
       }}
     >
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto px-5 pb-5">
@@ -81,8 +90,16 @@ function LevelForm({
             step={1}
             required
             defaultValue={initialValues.level}
+            onChange={() => setLevelError(undefined)}
+            aria-invalid={levelError ? true : undefined}
+            aria-describedby={levelError ? `${id("level")}-error` : undefined}
             className={`h-11 ${fieldClassName}`}
           />
+          {levelError && (
+            <p id={`${id("level")}-error`} className="text-sm text-rose-400">
+              {levelError}
+            </p>
+          )}
         </Field>
         <Field id={id("title")} label="Title">
           <Input
@@ -168,12 +185,18 @@ export function LevelFormSheet({
   open,
   onOpenChange,
   mode,
+  categoryName,
+  takenLevels,
   initialValues,
+  onSave,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mode: LevelFormMode;
+  categoryName: string;
+  takenLevels: number[];
   initialValues: LevelFormValues;
+  onSave: (values: LevelFormValues) => void;
 }) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -187,15 +210,20 @@ export function LevelFormSheet({
           </SheetTitle>
           <SheetDescription className="text-zinc-400">
             {mode === "create"
-              ? "Add a permanent level to the curriculum."
-              : "Saving creates a new version, so past submissions keep their original lesson."}
+              ? `Add a permanent level to ${categoryName}.`
+              : `${categoryName} · Saving creates a new version, so past submissions keep their original lesson.`}
           </SheetDescription>
         </SheetHeader>
         <LevelForm
           key={`${mode}-${initialValues.level}`}
           mode={mode}
+          categoryName={categoryName}
+          takenLevels={takenLevels}
           initialValues={initialValues}
-          onSaved={() => onOpenChange(false)}
+          onSave={(values) => {
+            onSave(values);
+            onOpenChange(false);
+          }}
         />
       </SheetContent>
     </Sheet>

@@ -29,7 +29,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
       </div>
       <nav aria-label="Academy" className="flex flex-1 flex-col gap-1 px-3">
         {navItems[nav].map((item) => {
-          const active = isActivePath(pathname, item.href);
+          const active = isActivePath(pathname, item);
           const Icon = item.icon;
 
           return (

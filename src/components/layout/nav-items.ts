@@ -11,6 +11,7 @@ export type NavItem = {
   href: string;
   label: string;
   icon: LucideIcon;
+  activePrefixes?: string[];
 };
 
 export type NavKey = "apprentice" | "teacher" | "admin";
@@ -19,8 +20,12 @@ export type StaffNav = Exclude<NavKey, "apprentice">;
 
 export const navItems: Record<NavKey, NavItem[]> = {
   apprentice: [
-    { href: "/apprentice/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/apprentice/curriculum", label: "Curriculum", icon: BookOpen },
+    {
+      href: "/apprentice/dashboard",
+      label: "Dashboard",
+      icon: LayoutDashboard,
+      activePrefixes: ["/apprentice/category"],
+    },
     { href: "/apprentice/leaderboard", label: "Leaderboard", icon: Trophy },
   ],
   teacher: [
@@ -73,6 +78,12 @@ export const roleBadge: Record<NavKey, { label: string; className: string }> = {
   admin: { label: "Admin", className: "border-violet-400/40 text-violet-300" },
 };
 
-export function isActivePath(pathname: string, href: string) {
+function matchesPath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function isActivePath(pathname: string, item: NavItem) {
+  return [item.href, ...(item.activePrefixes ?? [])].some((href) =>
+    matchesPath(pathname, href),
+  );
 }

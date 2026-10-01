@@ -22,7 +22,7 @@ export function MobileBottomNav({ nav }: { nav: NavKey }) {
         style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
       >
         {items.map((item) => {
-          const active = isActivePath(pathname, item.href);
+          const active = isActivePath(pathname, item);
           const Icon = item.icon;
 
           return (

@@ -1,12 +1,14 @@
 import { LeaderboardHeader } from "@/components/leaderboard/leaderboard-header";
-import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
-import { leaderboard } from "@/lib/mock/leaderboard";
+import { LeaderboardTabs } from "@/components/leaderboard/leaderboard-tabs";
+import { getRankings, leaderboardScopes } from "@/lib/mock/leaderboard";
 
 export default function TeacherLeaderboardPage() {
+  const rankings = getRankings();
+
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
-      <LeaderboardHeader nav="teacher" count={leaderboard.length} />
-      <LeaderboardTable entries={leaderboard} />
+      <LeaderboardHeader nav="teacher" count={rankings.global.length} />
+      <LeaderboardTabs scopes={leaderboardScopes} rankings={rankings} />
     </main>
   );
 }

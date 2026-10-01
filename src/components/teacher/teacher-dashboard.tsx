@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 import { GradingModal } from "@/components/teacher/grading-modal";
+import { getCategory } from "@/lib/mock/categories";
 import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
 
 export function TeacherDashboard({ submissions }: { submissions: PendingSubmission[] }) {
@@ -32,7 +33,8 @@ export function TeacherDashboard({ submissions }: { submissions: PendingSubmissi
                   {submission.xp.toLocaleString("en-US")} XP
                 </span>
                 <span className="mt-0.5 block truncate text-xs text-zinc-400">
-                  {submission.lessonTitle} · {submission.submittedAt}
+                  {getCategory(submission.categoryId).name} · {submission.lessonTitle} ·{" "}
+                  {submission.submittedAt}
                 </span>
               </span>
               <ChevronRight className="size-4 shrink-0 text-zinc-500" aria-hidden />

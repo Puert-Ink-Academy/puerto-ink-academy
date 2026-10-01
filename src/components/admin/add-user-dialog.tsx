@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import type { PlatformUser } from "@/lib/mock/admin-users";
 import { isRole, roles, type Role } from "@/lib/roles";
+import { slugify } from "@/lib/slug";
 
 type FieldErrors = { name?: string; email?: string };
 
@@ -31,13 +32,6 @@ const labelClass = "text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 up
 const fieldClass =
   "h-11 border-zinc-700 bg-zinc-950/60 text-zinc-100 focus-visible:border-violet-400 focus-visible:ring-violet-400/30";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
 
 function validate(name: string, email: string, takenEmails: string[]): FieldErrors {
   const errors: FieldErrors = {};

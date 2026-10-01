@@ -1,3 +1,5 @@
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { AttemptHistory } from "@/components/apprentice/attempt-history";
@@ -5,41 +7,59 @@ import { LessonSections } from "@/components/apprentice/lesson-sections";
 import { LevelResult } from "@/components/apprentice/level-result";
 import { LevelSubmission } from "@/components/apprentice/level-submission";
 import { ReferenceMaterial } from "@/components/apprentice/reference-material";
+import { categoryStyles } from "@/lib/categories";
 import { isViewableLevel, levelStatus } from "@/lib/levels";
-import { apprenticeDashboard } from "@/lib/mock/apprentice-dashboard";
+import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
+import { getCategory, isCategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts } from "@/lib/mock/level-attempts";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
+import { cn } from "cn";
 
 export default async function LevelPage({
   params,
 }: {
-  params: Promise<{ level: string }>;
+  params: Promise<{ id: string; level: string }>;
 }) {
-  const { level } = await params;
-  const levelNumber = Number(level);
-  const { currentLevel } = apprenticeDashboard;
+  const { id, level } = await params;
+  if (!isCategoryId(id)) notFound();
 
-  if (!isViewableLevel(levelNumber, currentLevel)) {
+  const levelNumber = Number(level);
+  const { currentLevel, isLocked } = getCategoryProgress(id);
+
+  if (isLocked || !isViewableLevel(levelNumber, currentLevel)) {
     notFound();
   }
 
-  const lesson = getLevelLesson(levelNumber);
+  const lesson = getLevelLesson(id, levelNumber);
 
   if (!lesson) {
     notFound();
   }
 
+  const category = getCategory(id);
   const isCompleted = levelStatus(levelNumber, currentLevel) === "completed";
-  const result = isCompleted ? getLevelResult(levelNumber) : undefined;
-  const attempts = getLevelAttempts(levelNumber);
+  const result = isCompleted ? getLevelResult(id, levelNumber) : undefined;
+  const attempts = getLevelAttempts(id, levelNumber);
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
+      <Link
+        href={`/apprentice/category/${id}`}
+        className="flex w-fit items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-zinc-50"
+      >
+        <ArrowLeft className="size-4" aria-hidden />
+        Back to {category.name}
+      </Link>
       <header>
         <div className="flex items-center gap-2">
-          <p className="text-[0.7rem] font-medium tracking-[0.12em] text-amber-400 uppercase">
-            Level {lesson.level}
+          <p
+            className={cn(
+              "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
+              categoryStyles[id].text,
+            )}
+          >
+            {category.name} · Level {lesson.level}
           </p>
           {isCompleted && (
             <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-emerald-300 uppercase">

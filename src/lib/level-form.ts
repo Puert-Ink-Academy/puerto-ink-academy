@@ -1,5 +1,5 @@
+import type { CurriculumLevel } from "@/lib/curriculum";
 import { PASS_SCORE, xpForScore } from "@/lib/grading";
-import type { LevelLesson } from "@/lib/mock/level-lessons";
 
 export type LevelFormValues = {
   level: number;
@@ -25,7 +25,7 @@ export function emptyLevelForm(nextLevel: number): LevelFormValues {
   };
 }
 
-export function levelFormFromLesson(lesson: LevelLesson): LevelFormValues {
+export function levelFormFromLesson(lesson: CurriculumLevel): LevelFormValues {
   return {
     level: lesson.level,
     title: lesson.title,
@@ -34,5 +34,22 @@ export function levelFormFromLesson(lesson: LevelLesson): LevelFormValues {
     tips: lesson.tips,
     passingScore: PASS_SCORE,
     xpReward: DEFAULT_XP_REWARD,
+  };
+}
+
+function text(formData: FormData, name: keyof LevelFormValues): string {
+  const value = formData.get(name);
+  return typeof value === "string" ? value.trim() : "";
+}
+
+export function levelFormFromData(formData: FormData): LevelFormValues {
+  return {
+    level: Number(text(formData, "level")),
+    title: text(formData, "title"),
+    objective: text(formData, "objective"),
+    exercise: text(formData, "exercise"),
+    tips: text(formData, "tips"),
+    passingScore: Number(text(formData, "passingScore")),
+    xpReward: Number(text(formData, "xpReward")),
   };
 }

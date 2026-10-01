@@ -2,6 +2,7 @@ import { Check, ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
 
 import { levelStatus, type LevelStatus } from "@/lib/levels";
+import type { CategoryId } from "@/lib/mock/categories";
 import type { LevelLesson } from "@/lib/mock/level-lessons";
 import type { LevelResult } from "@/lib/mock/level-results";
 import { cn } from "cn";
@@ -87,10 +88,12 @@ function CardBody({
 }
 
 export function SkillTree({
+  categoryId,
   lessons,
   results,
   currentLevel,
 }: {
+  categoryId: CategoryId;
   lessons: LevelLesson[];
   results: LevelResult[];
   currentLevel: number;
@@ -135,7 +138,7 @@ export function SkillTree({
               </div>
             ) : (
               <Link
-                href={`/apprentice/level/${lesson.level}`}
+                href={`/apprentice/category/${categoryId}/level/${lesson.level}`}
                 className={cn(
                   cardClassName,
                   "outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",

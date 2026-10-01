@@ -11,17 +11,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getCategoryStyle } from "@/lib/categories";
+import type { CurriculumLevel } from "@/lib/curriculum";
 import { PASS_SCORE } from "@/lib/grading";
 import { DEFAULT_XP_REWARD } from "@/lib/level-form";
-import type { LevelLesson } from "@/lib/mock/level-lessons";
+import { cn } from "cn";
 
 export function LevelsTable({
+  categoryId,
   lessons,
   onEdit,
 }: {
-  lessons: LevelLesson[];
-  onEdit: (lesson: LevelLesson) => void;
+  categoryId: string;
+  lessons: CurriculumLevel[];
+  onEdit: (lesson: CurriculumLevel) => void;
 }) {
+  const style = getCategoryStyle(categoryId);
+
   return (
     <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
       <Table className="table-fixed">
@@ -51,7 +57,12 @@ export function LevelsTable({
           {lessons.map((lesson) => (
             <TableRow key={lesson.level} className="border-zinc-800 hover:bg-zinc-800/40">
               <TableCell className="pl-4">
-                <span className="flex size-8 items-center justify-center rounded-full border border-amber-400/40 bg-amber-400/10 text-xs font-semibold text-amber-300 tabular-nums">
+                <span
+                  className={cn(
+                    "flex size-8 items-center justify-center rounded-full border text-xs font-semibold tabular-nums",
+                    style.chip,
+                  )}
+                >
                   {lesson.level}
                 </span>
               </TableCell>

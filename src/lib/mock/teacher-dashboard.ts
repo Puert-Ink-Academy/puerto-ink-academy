@@ -1,8 +1,10 @@
+import type { CategoryId } from "@/lib/mock/categories";
 import { mockPhotos, type SubmissionPhoto } from "@/lib/mock/photos";
 
 export type PendingSubmission = {
   id: string;
   apprenticeName: string;
+  categoryId: CategoryId;
   level: number;
   xp: number;
   lessonTitle: string;
@@ -12,8 +14,9 @@ export type PendingSubmission = {
 
 export const pendingSubmissions: PendingSubmission[] = [
   {
-    id: "michael-level-8",
+    id: "michael-fine-line-level-8",
     apprenticeName: "Michael",
+    categoryId: "fine-line",
     level: 8,
     xp: 7850,
     lessonTitle: "Shading Gradients",
@@ -21,20 +24,22 @@ export const pendingSubmissions: PendingSubmission[] = [
     photos: [mockPhotos.gradientShading, mockPhotos.whipShading, mockPhotos.roseOutline],
   },
   {
-    id: "alex-level-6",
+    id: "alex-realism-level-3",
     apprenticeName: "Alex",
-    level: 6,
+    categoryId: "realism",
+    level: 3,
     xp: 5420,
-    lessonTitle: "Whip Shading",
+    lessonTitle: "Skin Textures",
     submittedAt: "5 hours ago",
     photos: [mockPhotos.whipShading, mockPhotos.gradientShading],
   },
   {
-    id: "john-level-4",
+    id: "john-traditional-level-1",
     apprenticeName: "John",
-    level: 4,
+    categoryId: "traditional",
+    level: 1,
     xp: 3200,
-    lessonTitle: "Curves and Circles",
+    lessonTitle: "Bold Outlines",
     submittedAt: "Yesterday",
     photos: [mockPhotos.liningDrills],
   },

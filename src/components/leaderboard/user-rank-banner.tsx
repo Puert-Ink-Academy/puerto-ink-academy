@@ -1,17 +1,21 @@
-import { TrendingUp } from "lucide-react";
+import { Lock, Sparkles, TrendingUp } from "lucide-react";
 
 export function UserRankBanner({
   rank,
-  level,
+  scopeLabel,
+  lockedHint,
+  levelText,
   xp,
   nextRankXp,
 }: {
-  rank: number;
-  level: number;
+  rank: number | null;
+  scopeLabel: string;
+  lockedHint?: string;
+  levelText: string | null;
   xp: number;
   nextRankXp?: number;
 }) {
-  const xpToNextRank = nextRankXp === undefined ? null : nextRankXp - xp;
+  const xpToNextRank = rank === null || nextRankXp === undefined ? null : nextRankXp - xp;
 
   return (
     <aside
@@ -20,17 +24,35 @@ export function UserRankBanner({
     >
       <div className="flex items-center gap-3">
         <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-amber-400/60 bg-amber-400/10 text-sm font-semibold text-amber-300 tabular-nums">
-          #{rank}
+          {rank === null ? "–" : `#${rank}`}
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-semibold text-zinc-50">
-            You <span className="font-normal text-zinc-500">· Level {level}</span>
+            You
+            {levelText && <span className="font-normal text-zinc-500"> · {levelText}</span>}
           </p>
-          {xpToNextRank !== null && xpToNextRank > 0 && (
+          {rank === null ? (
             <p className="mt-0.5 flex items-center gap-1 text-xs text-zinc-400">
-              <TrendingUp className="size-3.5 text-amber-400" aria-hidden />
-              {xpToNextRank.toLocaleString("en-US")} XP to pass #{rank - 1}
+              {lockedHint ? (
+                <>
+                  <Lock className="size-3.5 text-zinc-500" aria-hidden />
+                  {lockedHint}
+                </>
+              ) : (
+                <>
+                  <Sparkles className="size-3.5 text-amber-400" aria-hidden />
+                  Earn {scopeLabel} XP to get ranked
+                </>
+              )}
             </p>
+          ) : (
+            xpToNextRank !== null &&
+            xpToNextRank > 0 && (
+              <p className="mt-0.5 flex items-center gap-1 text-xs text-zinc-400">
+                <TrendingUp className="size-3.5 text-amber-400" aria-hidden />
+                {xpToNextRank.toLocaleString("en-US")} XP to pass #{rank - 1}
+              </p>
+            )
           )}
         </div>
         <div className="text-right">

@@ -1,6 +1,6 @@
 import {
   CheckCircle2,
-  Crown,
+  LayoutGrid,
   Sparkles,
   Target,
   XCircle,
@@ -39,7 +39,12 @@ const toneStyles: Record<StatTone, { icon: string; value: string; card: string }
 
 export function StatGrid({ data }: { data: ApprenticeDashboardData }) {
   const stats: Stat[] = [
-    { label: "Current Level", value: String(data.currentLevel), icon: Crown, tone: "amber" },
+    {
+      label: "Categories",
+      value: `${data.categoriesStarted}/${data.totalCategories}`,
+      icon: LayoutGrid,
+      tone: "amber",
+    },
     { label: "Total XP", value: data.xp.toLocaleString("en-US"), icon: Sparkles, tone: "amber" },
     { label: "Avg Score", value: `${data.averageScore}/10`, icon: Target, tone: "neutral" },
     { label: "Completed", value: String(data.completedExercises), icon: CheckCircle2, tone: "neutral" },
