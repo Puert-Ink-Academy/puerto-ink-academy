@@ -9,6 +9,7 @@ import {
   navItems,
   type NavKey,
 } from "@/components/layout/nav-items";
+import { Wordmark } from "@/components/brand/wordmark";
 import { RolePill } from "@/components/layout/role-pill";
 import { UserMenu } from "@/components/layout/user-menu";
 import { buttonVariants } from "@/components/ui/button";
@@ -22,9 +23,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-zinc-800 bg-zinc-900 md:flex">
       <div className="flex items-center gap-2 px-5 pt-[calc(1.5rem+env(safe-area-inset-top))] pb-6">
         <span aria-hidden className={cn("size-2 rounded-full", accent.dot)} />
-        <span className="text-sm font-semibold tracking-wide text-zinc-50">
-          Puerto Ink
-        </span>
+        <Wordmark />
         <RolePill nav={nav} className="ml-auto" />
       </div>
       <nav aria-label="Academy" className="flex flex-1 flex-col gap-1 px-3">
