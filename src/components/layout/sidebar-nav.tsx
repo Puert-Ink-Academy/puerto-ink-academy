@@ -3,15 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { academyNav } from "@/components/layout/nav-items";
+import { isActivePath, navItems, type NavKey } from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
-function isActivePath(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-export function SidebarNav() {
+export function SidebarNav({ nav }: { nav: NavKey }) {
   const pathname = usePathname();
 
   return (
@@ -24,9 +20,14 @@ export function SidebarNav() {
         <span className="text-sm font-semibold tracking-wide text-zinc-50">
           Puerto Ink
         </span>
+        {nav === "teacher" && (
+          <span className="ml-auto rounded-full border border-zinc-700 px-2 py-0.5 text-[0.65rem] tracking-[0.12em] text-zinc-400 uppercase">
+            Teacher
+          </span>
+        )}
       </div>
       <nav aria-label="Academy" className="flex flex-1 flex-col gap-1 px-3">
-        {academyNav.map((item) => {
+        {navItems[nav].map((item) => {
           const active = isActivePath(pathname, item.href);
           const Icon = item.icon;
 

@@ -3,24 +3,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { academyNav } from "@/components/layout/nav-items";
+import { isActivePath, navItems, type NavKey } from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
-function isActivePath(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-export function MobileBottomNav() {
+export function MobileBottomNav({ nav }: { nav: NavKey }) {
   const pathname = usePathname();
+  const items = navItems[nav];
 
   return (
     <nav
       aria-label="Academy"
       className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-800 bg-zinc-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
     >
-      <ul className="grid grid-cols-3">
-        {academyNav.map((item) => {
+      <ul
+        className="grid"
+        style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
+      >
+        {items.map((item) => {
           const active = isActivePath(pathname, item.href);
           const Icon = item.icon;
 
