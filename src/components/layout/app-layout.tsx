@@ -12,7 +12,7 @@ export function AppLayout({
   return (
     <div className="min-h-svh bg-zinc-950 text-zinc-50">
       <SidebarNav nav={nav} />
-      <div className="pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0 md:pl-60">
+      <div className="pt-[env(safe-area-inset-top)] pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0 md:pl-60">
         {children}
       </div>
       <MobileBottomNav nav={nav} />

@@ -127,7 +127,7 @@ export function GradingModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {submission && (
-        <DialogContent className="top-0 left-0 flex h-svh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-y-auto rounded-none bg-zinc-900 p-0 ring-zinc-800 sm:max-w-none md:top-1/2 md:left-1/2 md:grid md:h-auto md:max-h-[90svh] md:w-[calc(100%-4rem)] md:max-w-5xl md:-translate-x-1/2 md:-translate-y-1/2 md:grid-cols-[1.4fr_1fr] md:overflow-hidden md:rounded-xl [&>[data-slot=dialog-close]]:z-10 [&>[data-slot=dialog-close]]:bg-zinc-950/70 [&>[data-slot=dialog-close]]:text-zinc-100 [&>[data-slot=dialog-close]]:backdrop-blur">
+        <DialogContent className="top-0 left-0 flex h-svh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-y-auto rounded-none bg-zinc-900 p-0 ring-zinc-800 sm:max-w-none md:top-1/2 md:left-1/2 md:grid md:h-auto md:max-h-[90svh] md:w-[calc(100%-4rem)] md:max-w-5xl md:-translate-x-1/2 md:-translate-y-1/2 md:grid-cols-[1.4fr_1fr] md:overflow-hidden md:rounded-xl pt-[env(safe-area-inset-top)] md:pt-0 [&>[data-slot=dialog-close]]:top-[calc(0.5rem+env(safe-area-inset-top))] md:[&>[data-slot=dialog-close]]:top-2 [&>[data-slot=dialog-close]]:z-10 [&>[data-slot=dialog-close]]:bg-zinc-950/70 [&>[data-slot=dialog-close]]:text-zinc-100 [&>[data-slot=dialog-close]]:backdrop-blur">
           <div className="relative flex shrink-0 items-center justify-center bg-zinc-950 md:min-h-0">
             <Image
               src={submission.photo.src}

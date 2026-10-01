@@ -11,7 +11,7 @@ export default function AcademyLayout({
       <Toaster
         theme="dark"
         position="top-center"
-        mobileOffset={{ top: 16 }}
+        mobileOffset={{ top: "calc(env(safe-area-inset-top) + 16px)" }}
       />
     </>
   );

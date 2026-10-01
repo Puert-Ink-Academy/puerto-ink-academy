@@ -179,9 +179,9 @@ export function LevelFormSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="gap-0 border-zinc-800 bg-zinc-900 data-[side=right]:w-full data-[side=right]:sm:max-w-lg"
+        className="gap-0 border-zinc-800 bg-zinc-900 data-[side=right]:w-full data-[side=right]:sm:max-w-lg [&>[data-slot=sheet-close]]:top-[calc(0.75rem+env(safe-area-inset-top))]"
       >
-        <SheetHeader className="p-5 pr-14">
+        <SheetHeader className="p-5 pt-[calc(1.25rem+env(safe-area-inset-top))] pr-14">
           <SheetTitle className="text-lg font-semibold text-zinc-50">
             {mode === "create" ? "Create New Level" : `Edit Level ${initialValues.level}`}
           </SheetTitle>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -15,6 +15,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Puerto Ink Academy",
   description: "The Next Evolution in Tattoo Education",
+  applicationName: "Puerto Ink",
+  appleWebApp: {
+    capable: true,
+    title: "Puerto Ink",
+    statusBarStyle: "black-translucent",
+  },
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#09090b",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
