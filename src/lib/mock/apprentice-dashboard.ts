@@ -13,7 +13,7 @@ export const apprenticeDashboard: ApprenticeDashboardData = {
   xp: 4850,
   averageScore: 8.5,
   completedExercises: 2,
-  failedAttempts: 1,
+  failedAttempts: 2,
   levelProgress: 80,
   totalLevels: 10,
 };

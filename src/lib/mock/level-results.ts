@@ -1,3 +1,6 @@
+import { isPassingScore } from "@/lib/grading";
+import { getLevelAttempts, levelAttempts } from "@/lib/mock/level-attempts";
+
 export type LevelResult = {
   level: number;
   score: number;
@@ -5,32 +8,24 @@ export type LevelResult = {
   feedback: string;
 };
 
+function resultForLevel(level: number): LevelResult | undefined {
+  const attempts = getLevelAttempts(level);
+  const passing = attempts.find((attempt) => isPassingScore(attempt.score));
+  if (!passing) return undefined;
+
+  return {
+    level,
+    score: passing.score,
+    attempts: attempts.length,
+    feedback: passing.feedback,
+  };
+}
+
 export const levelResults: LevelResult[] = [
-  {
-    level: 1,
-    score: 9,
-    attempts: 1,
-    feedback: "Clean station and solid glove discipline. Great start.",
-  },
-  {
-    level: 2,
-    score: 8,
-    attempts: 2,
-    feedback: "Hang is right now. Keep an eye on your voltage for lining.",
-  },
-  {
-    level: 3,
-    score: 10,
-    attempts: 1,
-    feedback: "Perfectly even depth across the whole sheet. No notes.",
-  },
-  {
-    level: 4,
-    score: 8,
-    attempts: 1,
-    feedback: "Placement is good. Use a little less solution for crisper lines.",
-  },
-];
+  ...new Set(levelAttempts.map((attempt) => attempt.level)),
+]
+  .sort((a, b) => a - b)
+  .flatMap((level) => resultForLevel(level) ?? []);
 
 export function getLevelResult(level: number): LevelResult | undefined {
   return levelResults.find((result) => result.level === level);

@@ -1,3 +1,5 @@
+import { mockPhotos, type SubmissionPhoto } from "@/lib/mock/photos";
+
 export type PendingSubmission = {
   id: string;
   apprenticeName: string;
@@ -5,14 +7,7 @@ export type PendingSubmission = {
   xp: number;
   lessonTitle: string;
   submittedAt: string;
-  photo: { src: string; alt: string; width: number; height: number };
-};
-
-const mockPhoto = {
-  src: "/mock/tattoo-submission.jpg",
-  alt: "Practice skin with straight line, curve, circle, and rose outline drills",
-  width: 1152,
-  height: 864,
+  photos: SubmissionPhoto[];
 };
 
 export const pendingSubmissions: PendingSubmission[] = [
@@ -23,7 +18,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     xp: 7850,
     lessonTitle: "Shading Gradients",
     submittedAt: "2 hours ago",
-    photo: mockPhoto,
+    photos: [mockPhotos.gradientShading, mockPhotos.whipShading, mockPhotos.roseOutline],
   },
   {
     id: "alex-level-6",
@@ -32,7 +27,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     xp: 5420,
     lessonTitle: "Whip Shading",
     submittedAt: "5 hours ago",
-    photo: mockPhoto,
+    photos: [mockPhotos.whipShading, mockPhotos.gradientShading],
   },
   {
     id: "john-level-4",
@@ -41,6 +36,6 @@ export const pendingSubmissions: PendingSubmission[] = [
     xp: 3200,
     lessonTitle: "Curves and Circles",
     submittedAt: "Yesterday",
-    photo: mockPhoto,
+    photos: [mockPhotos.liningDrills],
   },
 ];

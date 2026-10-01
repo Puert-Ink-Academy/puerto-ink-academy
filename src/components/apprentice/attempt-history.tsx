@@ -1,0 +1,72 @@
+import { CheckCircle2, RotateCcw } from "lucide-react";
+
+import { PhotoThumbnails } from "@/components/submissions/photo-thumbnails";
+import { isPassingScore, xpForScore } from "@/lib/grading";
+import type { LevelAttempt } from "@/lib/mock/level-attempts";
+import { cn } from "cn";
+
+export function AttemptHistory({ attempts }: { attempts: LevelAttempt[] }) {
+  if (attempts.length === 0) return null;
+
+  return (
+    <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5">
+      <h2 className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
+        Attempts
+      </h2>
+      <ol className="mt-4 flex flex-col">
+        {attempts.map((attempt, index) => {
+          const passed = isPassingScore(attempt.score);
+          const isLast = index === attempts.length - 1;
+          const Icon = passed ? CheckCircle2 : RotateCcw;
+
+          return (
+            <li key={attempt.id} className="relative flex gap-3 pb-5 last:pb-0">
+              {!isLast && (
+                <span
+                  aria-hidden
+                  className="absolute top-8 bottom-0 left-[0.9375rem] w-px bg-zinc-800"
+                />
+              )}
+              <span
+                aria-hidden
+                className={cn(
+                  "relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full border",
+                  passed
+                    ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
+                    : "border-rose-500/40 bg-rose-500/10 text-rose-400",
+                )}
+              >
+                <Icon className="size-4" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <p className="text-sm font-semibold text-zinc-50">
+                    Attempt {attempt.attempt}
+                  </p>
+                  <p className="text-xs text-zinc-500">{attempt.submittedAt}</p>
+                  <span
+                    className={cn(
+                      "ml-auto rounded-full border px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase tabular-nums",
+                      passed
+                        ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
+                        : "border-rose-500/40 bg-rose-500/10 text-rose-300",
+                    )}
+                  >
+                    {passed ? "Pass" : "Fail"} · {attempt.score}/10 · +
+                    {xpForScore(attempt.score)} XP
+                  </span>
+                </div>
+                <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">
+                  {attempt.feedback}
+                </p>
+                <div className="mt-3">
+                  <PhotoThumbnails photos={attempt.photos} />
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+  );
+}

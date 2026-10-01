@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 
+import { AttemptHistory } from "@/components/apprentice/attempt-history";
 import { LessonSections } from "@/components/apprentice/lesson-sections";
 import { LevelResult } from "@/components/apprentice/level-result";
 import { LevelSubmission } from "@/components/apprentice/level-submission";
 import { ReferenceMaterial } from "@/components/apprentice/reference-material";
 import { isViewableLevel, levelStatus } from "@/lib/levels";
 import { apprenticeDashboard } from "@/lib/mock/apprentice-dashboard";
+import { getLevelAttempts } from "@/lib/mock/level-attempts";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
 
@@ -30,6 +32,7 @@ export default async function LevelPage({
 
   const isCompleted = levelStatus(levelNumber, currentLevel) === "completed";
   const result = isCompleted ? getLevelResult(levelNumber) : undefined;
+  const attempts = getLevelAttempts(levelNumber);
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
@@ -51,6 +54,7 @@ export default async function LevelPage({
       <LessonSections lesson={lesson} />
       <ReferenceMaterial references={lesson.references} />
       {isCompleted ? result && <LevelResult result={result} /> : <LevelSubmission />}
+      <AttemptHistory attempts={attempts} />
     </main>
   );
 }

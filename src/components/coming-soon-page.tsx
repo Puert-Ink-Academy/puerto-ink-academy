@@ -1,4 +1,6 @@
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+
+import { buttonVariants } from "@/components/ui/button";
 
 export function ComingSoonPage() {
   return (
@@ -14,15 +16,16 @@ export function ComingSoonPage() {
         <p className="max-w-md text-base text-muted-foreground sm:text-lg">
           The Next Evolution in Tattoo Education
         </p>
-        <Button
-          disabled
-          aria-disabled="true"
-          size="lg"
-          variant="outline"
-          className="mt-2 h-11 cursor-not-allowed px-5 text-foreground opacity-100 disabled:opacity-100"
+        <Link
+          href="/login"
+          className={buttonVariants({
+            size: "lg",
+            variant: "outline",
+            className: "mt-2 h-11 px-5 text-foreground",
+          })}
         >
-          Login (Coming Soon)
-        </Button>
+          Login
+        </Link>
       </div>
     </main>
   );

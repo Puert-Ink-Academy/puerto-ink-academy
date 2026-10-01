@@ -1,10 +1,10 @@
 "use client";
 
 import { CheckCircle2, RotateCcw } from "lucide-react";
-import Image from "next/image";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 
+import { PhotoGallery } from "@/components/submissions/photo-gallery";
 import { ScoreInput } from "@/components/teacher/score-input";
 import { Button } from "@/components/ui/button";
 import {
@@ -129,15 +129,7 @@ export function GradingModal({
       {submission && (
         <DialogContent className="top-0 left-0 flex h-svh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 overflow-y-auto rounded-none bg-zinc-900 p-0 ring-zinc-800 sm:max-w-none md:top-1/2 md:left-1/2 md:grid md:h-auto md:max-h-[90svh] md:w-[calc(100%-4rem)] md:max-w-5xl md:-translate-x-1/2 md:-translate-y-1/2 md:grid-cols-[1.4fr_1fr] md:overflow-hidden md:rounded-xl pt-[env(safe-area-inset-top)] md:pt-0 [&>[data-slot=dialog-close]]:top-[calc(0.5rem+env(safe-area-inset-top))] md:[&>[data-slot=dialog-close]]:top-2 [&>[data-slot=dialog-close]]:z-10 [&>[data-slot=dialog-close]]:bg-zinc-950/70 [&>[data-slot=dialog-close]]:text-zinc-100 [&>[data-slot=dialog-close]]:backdrop-blur">
           <div className="relative flex shrink-0 items-center justify-center bg-zinc-950 md:min-h-0">
-            <Image
-              src={submission.photo.src}
-              alt={submission.photo.alt}
-              width={submission.photo.width}
-              height={submission.photo.height}
-              sizes="(min-width: 768px) 60vw, 100vw"
-              className="h-auto w-full object-contain md:max-h-[90svh]"
-              priority
-            />
+            <PhotoGallery photos={submission.photos} />
           </div>
           <div className="flex flex-col gap-5 p-5 md:overflow-y-auto">
             <div className="pr-8">
