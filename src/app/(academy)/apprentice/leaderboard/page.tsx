@@ -6,9 +6,13 @@ import { leaderboardScopes, type LeaderboardScope } from "@/lib/leaderboard";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { categories, getPreviousCategory } from "@/lib/mock/categories";
 import { getRankings } from "@/lib/mock/leaderboard";
+import { getProfile } from "@/lib/mock/profiles";
+import { personalLevel } from "@/lib/personal-level";
+import { getCurrentApprentice } from "@/lib/session";
 
 export default async function LeaderboardPage() {
   const rankings = getRankings();
+  const profile = getProfile(getCurrentApprentice().id);
   const t = await getTranslations("Leaderboard");
   const lockedHints: Partial<Record<LeaderboardScope, string>> = {};
   for (const category of categories) {
@@ -30,6 +34,7 @@ export default async function LeaderboardPage() {
         highlightCurrentUser
         linkProfiles
         showBanner
+        viewerPersonalLevel={profile ? personalLevel(profile.totalXp).level : undefined}
         lockedHints={lockedHints}
       />
     </main>

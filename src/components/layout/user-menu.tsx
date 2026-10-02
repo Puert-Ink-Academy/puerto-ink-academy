@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { isLocale, localeNames, locales } from "@/i18n/config";
 import type { NavKey } from "@/lib/nav";
+import { profilePath } from "@/lib/profile-slug";
 import { getSessionUser } from "@/lib/session";
 import { cn } from "cn";
 
@@ -91,7 +92,7 @@ export function UserMenu({
         {nav === "apprentice" && (
           <DropdownMenuItem
             className="min-h-10"
-            render={<Link href={`/profile/${user.id}`} />}
+            render={<Link href={profilePath(user.id)} />}
           >
             <UserRound />
             {t("viewProfile")}

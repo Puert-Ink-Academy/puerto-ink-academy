@@ -98,7 +98,8 @@
     "Dashboard": {
       "eyebrow": "Wähl deinen Weg",
       "title": "Start",
-      "subtitle": "Such dir einen Skilltree für heute aus."
+      "subtitle": "Such dir einen Skilltree für heute aus.",
+      "mastered": "Gemeisterte Lektionen"
     },
     "Stats": {
       "categories": "Kategorien",
@@ -223,15 +224,17 @@
     "Table": {
       "rank": "Rang",
       "apprentice": "Lehrling",
-      "level": "Level",
+      "personal": "Persönlich",
+      "style": "Stil",
       "xp": "XP",
       "average": "Ø",
-      "levelValue": "Level {level}",
+      "levelsCompact": "Persönlich {personal} · Stil {style}",
       "rankLabel": "Rang {rank}"
     },
     "Banner": {
       "label": "Dein Rang",
-      "levelInScope": "Level {level} · {scope}",
+      "levels": "Persönlich {personal} · Stil {style}",
+      "personalOnly": "Persönlich {personal}",
       "earnToRank": "Sammle {scope}-XP, um platziert zu werden",
       "toPass": "{xp} XP bis Platz {rank}",
       "xp": "XP"
@@ -243,6 +246,9 @@
     "publicSubtitle": "Lehrling der Puerto Ink Academy",
     "rank": "Rang: {rank}",
     "edit": "Profil bearbeiten",
+    "personalLevel": "Persönliches Level {level}",
+    "personalProgress": "{into} / {need} XP",
+    "personalProgressLabel": "Fortschritt zum persönlichen Level {next}",
     "Stats": {
       "totalXp": "Gesamt-XP",
       "perfect": "Perfekte {score}/10 erreicht",

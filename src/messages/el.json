@@ -98,7 +98,8 @@
     "Dashboard": {
       "eyebrow": "Διάλεξε τη διαδρομή σου",
       "title": "Αρχική",
-      "subtitle": "Διάλεξε ένα δέντρο δεξιοτήτων για σήμερα."
+      "subtitle": "Διάλεξε ένα δέντρο δεξιοτήτων για σήμερα.",
+      "mastered": "Κατακτημένα μαθήματα"
     },
     "Stats": {
       "categories": "Κατηγορίες",
@@ -223,15 +224,17 @@
     "Table": {
       "rank": "Θέση",
       "apprentice": "Μαθητευόμενος",
-      "level": "Επίπεδο",
+      "personal": "Προσωπικό",
+      "style": "Στυλ",
       "xp": "XP",
       "average": "Μ.Ο.",
-      "levelValue": "Επίπεδο {level}",
+      "levelsCompact": "Προσωπικό {personal} · Στυλ {style}",
       "rankLabel": "Θέση {rank}"
     },
     "Banner": {
       "label": "Η κατάταξή σου",
-      "levelInScope": "Επίπεδο {level} · {scope}",
+      "levels": "Προσωπικό {personal} · Στυλ {style}",
+      "personalOnly": "Προσωπικό {personal}",
       "earnToRank": "Κέρδισε XP {scope} για να μπεις στην κατάταξη",
       "toPass": "{xp} XP για να περάσεις τον #{rank}",
       "xp": "XP"
@@ -243,6 +246,9 @@
     "publicSubtitle": "Μαθητευόμενος της Puerto Ink Academy",
     "rank": "Βαθμίδα: {rank}",
     "edit": "Επεξεργασία προφίλ",
+    "personalLevel": "Προσωπικό επίπεδο {level}",
+    "personalProgress": "{into} / {need} XP",
+    "personalProgressLabel": "Πρόοδος προς το προσωπικό επίπεδο {next}",
     "Stats": {
       "totalXp": "Συνολικά XP",
       "perfect": "Τέλεια {score}/10",

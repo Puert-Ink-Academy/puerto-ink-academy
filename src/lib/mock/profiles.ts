@@ -9,6 +9,7 @@ import { getPlatformUser } from "@/lib/mock/admin-users";
 import { categories, type Category, type CategoryId } from "@/lib/mock/categories";
 import { apprenticeStandings, getRanking } from "@/lib/mock/leaderboard";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
+import { profileIdFromSlug } from "@/lib/profile-slug";
 
 export type ScopeStanding = {
   scope: CategoryId;
@@ -67,7 +68,8 @@ function scopeStanding(
   };
 }
 
-export function getProfile(id: string): ApprenticeProfile | undefined {
+export function getProfile(idOrSlug: string): ApprenticeProfile | undefined {
+  const id = profileIdFromSlug(idOrSlug) ?? idOrSlug;
   const standing = apprenticeStandings.find((entry) => entry.id === id);
   if (!standing) return undefined;
 

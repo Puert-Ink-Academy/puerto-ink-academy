@@ -1,6 +1,8 @@
 import type { CountryCode } from "@/lib/countries";
 import type { CategoryId } from "@/lib/mock/categories";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
+import { personalLevel } from "@/lib/personal-level";
+import { profileSlug } from "@/lib/profile-slug";
 import { unlockedCategoryIds } from "@/lib/progression";
 
 export type CategoryStanding = {
@@ -45,8 +47,12 @@ export const leaderboardScopes: LeaderboardScope[] = ["fine-line", "realism", "t
 export type LeaderboardEntry = {
   rank: number;
   id: string;
+  slug: string;
   name: string;
+  /** Level inside the leaderboard's style. */
   level: number;
+  /** Account level from total XP. */
+  personalLevel: number;
   xp: number;
   averageScore: number;
   isCurrentUser?: boolean;
@@ -69,7 +75,13 @@ function toUnranked(
   standing: ApprenticeStanding,
   scope: LeaderboardScope,
 ): Omit<LeaderboardEntry, "rank"> | null {
-  const base = { id: standing.id, name: standing.name, isCurrentUser: standing.isCurrentUser };
+  const base = {
+    id: standing.id,
+    slug: profileSlug(standing.id),
+    name: standing.name,
+    personalLevel: personalLevel(unlockedTotals(standing).xp).level,
+    isCurrentUser: standing.isCurrentUser,
+  };
 
   const stat = unlockedCategories(standing).has(scope) ? standing.categories[scope] : undefined;
   if (!stat || stat.xp === 0) return null;

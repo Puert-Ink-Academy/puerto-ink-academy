@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
 
-import { EvolutionPortfolio } from "@/components/profile/evolution-portfolio";
-import { LeaderboardStandings } from "@/components/profile/leaderboard-standings";
+import { FirstVsBest } from "@/components/profile/first-vs-best";
 import { MasteryShowcase } from "@/components/profile/mastery-showcase";
 import { ProfileHeader } from "@/components/profile/profile-header";
-import { ProfileStatsGrid } from "@/components/profile/profile-stats-grid";
 import { getProfile } from "@/lib/mock/profiles";
+import { personalLevel } from "@/lib/personal-level";
 
 export default async function ProfilePage({
   params,
@@ -16,24 +15,25 @@ export default async function ProfilePage({
   const profile = getProfile(id);
   if (!profile) notFound();
 
+  const highlight = profile.evolution[0];
+
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="mx-auto flex w-full max-w-2xl flex-col gap-8 px-4 py-8 sm:px-6 sm:py-12">
       <ProfileHeader
         profile={{
           id: profile.id,
           name: profile.name,
-          email: profile.email,
-          rankTitle: profile.rankTitle,
           isCurrentUser: profile.isCurrentUser,
           artistName: profile.artistName,
           studio: profile.studio,
           nationality: profile.nationality,
+          personal: personalLevel(profile.totalXp),
         }}
       />
-      <ProfileStatsGrid profile={profile} />
-      <LeaderboardStandings standings={profile.standings} />
-      <EvolutionPortfolio cards={profile.evolution} />
-      <MasteryShowcase badges={profile.mastered} linkable={profile.isCurrentUser} />
+      {profile.mastered.length > 0 && (
+        <MasteryShowcase badges={profile.mastered} linkable={profile.isCurrentUser} centered />
+      )}
+      {highlight && <FirstVsBest card={highlight} />}
     </main>
   );
 }

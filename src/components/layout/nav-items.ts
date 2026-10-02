@@ -10,6 +10,7 @@ import {
 
 import type { NavKey } from "@/lib/nav";
 import type { Role } from "@/lib/roles";
+import { profilePath } from "@/lib/profile-slug";
 import { getCurrentApprentice } from "@/lib/session";
 
 export type NavLabel =
@@ -36,7 +37,7 @@ export const navItems: Record<NavKey, NavItem[]> = {
       activePrefixes: ["/apprentice/category"],
     },
     { href: "/apprentice/leaderboard", label: "leaderboard", icon: Trophy },
-    { href: `/profile/${getCurrentApprentice().id}`, label: "profile", icon: UserRound },
+    { href: profilePath(getCurrentApprentice().id), label: "profile", icon: UserRound },
   ],
   teacher: [
     { href: "/teacher/dashboard", label: "dashboard", icon: LayoutDashboard },

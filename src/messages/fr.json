@@ -98,7 +98,8 @@
     "Dashboard": {
       "eyebrow": "Choisissez votre voie",
       "title": "Accueil",
-      "subtitle": "Choisissez un arbre à travailler aujourd'hui."
+      "subtitle": "Choisissez un arbre à travailler aujourd'hui.",
+      "mastered": "Leçons maîtrisées"
     },
     "Stats": {
       "categories": "Catégories",
@@ -223,15 +224,17 @@
     "Table": {
       "rank": "Rang",
       "apprentice": "Apprenti",
-      "level": "Niveau",
+      "personal": "Personnel",
+      "style": "Style",
       "xp": "XP",
       "average": "Moy.",
-      "levelValue": "Niveau {level}",
+      "levelsCompact": "Personnel {personal} · Style {style}",
       "rankLabel": "Rang {rank}"
     },
     "Banner": {
       "label": "Votre classement",
-      "levelInScope": "Niveau {level} · {scope}",
+      "levels": "Personnel {personal} · Style {style}",
+      "personalOnly": "Personnel {personal}",
       "earnToRank": "Gagnez des XP {scope} pour être classé",
       "toPass": "{xp} XP pour passer #{rank}",
       "xp": "XP"
@@ -243,6 +246,9 @@
     "publicSubtitle": "Apprenti de la Puerto Ink Academy",
     "rank": "Rang : {rank}",
     "edit": "Modifier le profil",
+    "personalLevel": "Niveau personnel {level}",
+    "personalProgress": "{into} / {need} XP",
+    "personalProgressLabel": "Progression vers le niveau personnel {next}",
     "Stats": {
       "totalXp": "XP total",
       "perfect": "{score}/10 parfaits obtenus",

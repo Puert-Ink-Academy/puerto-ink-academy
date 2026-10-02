@@ -98,7 +98,8 @@
     "Dashboard": {
       "eyebrow": "Choose your path",
       "title": "Dashboard",
-      "subtitle": "Pick a skill tree to train today."
+      "subtitle": "Pick a skill tree to train today.",
+      "mastered": "Mastered lessons"
     },
     "Stats": {
       "categories": "Categories",
@@ -223,15 +224,17 @@
     "Table": {
       "rank": "Rank",
       "apprentice": "Apprentice",
-      "level": "Level",
+      "personal": "Personal",
+      "style": "Style",
       "xp": "XP",
       "average": "Avg",
-      "levelValue": "Level {level}",
+      "levelsCompact": "Personal {personal} · Style {style}",
       "rankLabel": "Rank {rank}"
     },
     "Banner": {
       "label": "Your ranking",
-      "levelInScope": "Level {level} · {scope}",
+      "levels": "Personal {personal} · Style {style}",
+      "personalOnly": "Personal {personal}",
       "earnToRank": "Earn {scope} XP to get ranked",
       "toPass": "{xp} XP to pass #{rank}",
       "xp": "XP"
@@ -243,6 +246,9 @@
     "publicSubtitle": "Puerto Ink Academy apprentice",
     "rank": "Rank: {rank}",
     "edit": "Edit profile",
+    "personalLevel": "Personal Level {level}",
+    "personalProgress": "{into} / {need} XP",
+    "personalProgressLabel": "Progress toward personal level {next}",
     "Stats": {
       "totalXp": "Total XP",
       "perfect": "Perfect {score}/10<lower>s</lower> Achieved",

@@ -86,7 +86,8 @@ export function LeaderboardTable({
   const format = useFormatter();
   const t = useTranslations("Leaderboard.Table");
   const tCommon = useTranslations("Common");
-  const levelText = (level: number) => t("levelValue", { level });
+  const levelsText = (personal: number, style: number) =>
+    t("levelsCompact", { personal, style });
 
   return (
     <Panel padding="flush">
@@ -99,8 +100,11 @@ export function LeaderboardTable({
             <TableHead className="text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase">
               {t("apprentice")}
             </TableHead>
-            <TableHead className="hidden text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase sm:table-cell">
-              {t("level")}
+            <TableHead className="hidden text-[0.7rem] tracking-[0.12em] whitespace-nowrap text-zinc-400 uppercase sm:table-cell">
+              {t("personal")}
+            </TableHead>
+            <TableHead className="hidden text-[0.7rem] tracking-[0.12em] whitespace-nowrap text-zinc-400 uppercase sm:table-cell">
+              {t("style")}
             </TableHead>
             <TableHead className="text-right text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase">
               {t("xp")}
@@ -134,7 +138,7 @@ export function LeaderboardTable({
                     )}
                     {linkProfiles ? (
                       <Link
-                        href={`/profile/${entry.id}`}
+                        href={`/profile/${entry.slug}`}
                         className="underline-offset-4 outline-none hover:underline focus-visible:underline"
                       >
                         {entry.name}
@@ -148,10 +152,15 @@ export function LeaderboardTable({
                       </span>
                     )}
                   </p>
-                  <p className="text-xs text-zinc-500 sm:hidden">{levelText(entry.level)}</p>
+                  <p className="text-xs text-zinc-500 sm:hidden">
+                    {levelsText(entry.personalLevel, entry.level)}
+                  </p>
                 </TableCell>
                 <TableCell className="hidden py-3 text-zinc-300 tabular-nums sm:table-cell">
-                  {levelText(entry.level)}
+                  {entry.personalLevel}
+                </TableCell>
+                <TableCell className="hidden py-3 text-zinc-300 tabular-nums sm:table-cell">
+                  {entry.level}
                 </TableCell>
                 <TableCell className="py-3 text-right font-semibold text-zinc-50 tabular-nums">
                   {format.number(entry.xp)}

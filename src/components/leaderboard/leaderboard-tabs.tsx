@@ -46,6 +46,7 @@ export function LeaderboardTabs({
   highlightCurrentUser = false,
   linkProfiles = false,
   showBanner = false,
+  viewerPersonalLevel,
   lockedHints = {},
 }: {
   scopes: LeaderboardScope[];
@@ -53,6 +54,7 @@ export function LeaderboardTabs({
   highlightCurrentUser?: boolean;
   linkProfiles?: boolean;
   showBanner?: boolean;
+  viewerPersonalLevel?: number;
   lockedHints?: Partial<Record<LeaderboardScope, string>>;
 }) {
   const t = useTranslations("Leaderboard");
@@ -136,8 +138,13 @@ export function LeaderboardTabs({
           lockedHint={lockedHints[scope]}
           levelText={
             currentEntry
-              ? t("Banner.levelInScope", { level: currentEntry.level, scope: activeLabel })
-              : null
+              ? t("Banner.levels", {
+                  personal: currentEntry.personalLevel,
+                  style: currentEntry.level,
+                })
+              : viewerPersonalLevel !== undefined
+                ? t("Banner.personalOnly", { personal: viewerPersonalLevel })
+                : null
           }
           xp={currentEntry?.xp ?? 0}
           nextRankXp={entryAbove?.xp}

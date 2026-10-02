@@ -45,9 +45,13 @@ function BadgeTile({ badge }: { badge: ShowcaseBadge }) {
 export function MasteryShowcase({
   badges,
   linkable,
+  title,
+  centered = false,
 }: {
   badges: ShowcaseBadge[];
   linkable: boolean;
+  title?: string;
+  centered?: boolean;
 }) {
   const t = useTranslations("Profile.Showcase");
   const tileClass =
@@ -55,9 +59,9 @@ export function MasteryShowcase({
 
   return (
     <section aria-labelledby="showcase-heading" className="flex flex-col gap-3">
-      <div className="flex items-center gap-2">
+      <div className={cn("flex items-center gap-2", centered && "justify-center")}>
         <SectionLabel as="h2" id="showcase-heading">
-          {t("title")}
+          {title ?? t("title")}
         </SectionLabel>
         <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-xs font-medium text-amber-300 tabular-nums">
           {badges.length}
@@ -74,7 +78,12 @@ export function MasteryShowcase({
           <p className="text-xs text-zinc-500">{t("emptyBody")}</p>
         </Panel>
       ) : (
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <ul
+          className={cn(
+            !centered && "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4",
+            centered && "flex flex-wrap justify-center gap-3",
+          )}
+        >
           {badges.map((badge) => {
             const key = `${badge.category.id}-${badge.level}`;
             const label = t("tileLabel", {
@@ -84,7 +93,7 @@ export function MasteryShowcase({
               score: MASTERY_SCORE,
             });
             return (
-              <li key={key} className="flex">
+              <li key={key} className={cn("flex", centered && "w-40")}>
                 {linkable ? (
                   <Link
                     href={`/apprentice/category/${badge.category.id}/level/${badge.level}`}
