@@ -3,18 +3,19 @@
 import { FolderPlus } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { navAccent, roleBadge, type StaffNav } from "@/components/layout/nav-items";
+import { navAccent, roleBadge } from "@/components/layout/nav-items";
 import { CategoryAccordion } from "@/components/teacher/category-accordion";
 import { CreateCategoryDialog } from "@/components/teacher/create-category-dialog";
 import { LevelFormSheet } from "@/components/teacher/level-form-sheet";
 import { Button } from "@/components/ui/button";
+import { SectionLabel } from "@/components/ui/section-label";
 import type { CurriculumCategory, CurriculumLevel } from "@/lib/curriculum";
 import {
   emptyLevelForm,
   levelFormFromLesson,
   type LevelFormValues,
 } from "@/lib/level-form";
-import { cn } from "cn";
+import type { StaffNav } from "@/lib/nav";
 
 type SheetTarget = {
   categoryId: string;
@@ -93,14 +94,7 @@ export function CurriculumManager({
     <>
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p
-            className={cn(
-              "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
-              navAccent[nav].eyebrow,
-            )}
-          >
-            {roleBadge[nav].label}
-          </p>
+          <SectionLabel className={navAccent[nav].eyebrow}>{roleBadge[nav].label}</SectionLabel>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
             Curriculum
           </h1>

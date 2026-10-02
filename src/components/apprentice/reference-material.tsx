@@ -1,13 +1,13 @@
 import { ImageIcon } from "lucide-react";
 
+import { Panel } from "@/components/ui/panel";
+import { SectionLabel } from "@/components/ui/section-label";
 import type { LevelReference } from "@/lib/mock/level-lessons";
 
 export function ReferenceMaterial({ references }: { references: LevelReference[] }) {
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5">
-      <h2 className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
-        Reference Material
-      </h2>
+    <Panel as="section">
+      <SectionLabel as="h2">Reference Material</SectionLabel>
       <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {references.map((reference) => (
           <li key={reference.id}>
@@ -20,6 +20,6 @@ export function ReferenceMaterial({ references }: { references: LevelReference[]
           </li>
         ))}
       </ul>
-    </section>
+    </Panel>
   );
 }

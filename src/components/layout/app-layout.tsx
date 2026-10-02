@@ -1,6 +1,6 @@
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { MobileTopBar } from "@/components/layout/mobile-top-bar";
-import type { NavKey } from "@/components/layout/nav-items";
+import type { NavKey } from "@/lib/nav";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 
 export function AppLayout({

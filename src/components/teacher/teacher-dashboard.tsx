@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 
 import { GradingModal } from "@/components/teacher/grading-modal";
+import { Panel } from "@/components/ui/panel";
 import { categoryStyles } from "@/lib/categories";
 import { categories } from "@/lib/mock/categories";
 import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
@@ -46,7 +47,7 @@ export function TeacherDashboard({ submissions }: { submissions: PendingSubmissi
                   {items.length}
                 </span>
               </div>
-              <ul className="flex flex-col overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+              <Panel as="ul" padding="flush" className="flex flex-col">
                 {items.map((submission) => (
                   <li key={submission.id} className="border-b border-zinc-800 last:border-b-0">
                     <button
@@ -78,7 +79,7 @@ export function TeacherDashboard({ submissions }: { submissions: PendingSubmissi
                     </button>
                   </li>
                 ))}
-              </ul>
+              </Panel>
             </section>
           );
         })}

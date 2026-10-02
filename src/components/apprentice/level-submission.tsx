@@ -11,6 +11,8 @@ import {
   type SelectedPhoto,
 } from "@/components/apprentice/photo-upload-zone";
 import { Button } from "@/components/ui/button";
+import { Panel } from "@/components/ui/panel";
+import { SectionLabel } from "@/components/ui/section-label";
 import { MASTERY_SCORE, xpForScore } from "@/lib/grading";
 import type { CategoryId } from "@/lib/mock/categories";
 import { cn } from "cn";
@@ -66,10 +68,8 @@ export function LevelSubmission(props: LevelSubmissionProps) {
   };
 
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5">
-      <h2 className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
-        {headings[variant]}
-      </h2>
+    <Panel as="section">
+      <SectionLabel as="h2">{headings[variant]}</SectionLabel>
 
       {props.variant === "retry" && (
         <div
@@ -156,6 +156,6 @@ export function LevelSubmission(props: LevelSubmissionProps) {
           {sending ? "Sending…" : buttonLabels[variant]}
         </Button>
       )}
-    </section>
+    </Panel>
   );
 }

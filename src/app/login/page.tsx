@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { LoginForm } from "@/components/auth/login-form";
 import { Wordmark } from "@/components/brand/wordmark";
+import { Panel } from "@/components/ui/panel";
 
 export const metadata: Metadata = {
   title: "Sign in · Puerto Ink Academy",
@@ -22,13 +23,13 @@ export default function LoginPage() {
           />
           <Wordmark className="text-3xl" />
         </Link>
-        <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-5 sm:p-6">
+        <Panel as="section" padding="lg">
           <h1 className="text-xl font-semibold tracking-tight">Sign in</h1>
           <p className="mt-1 mb-5 text-sm text-zinc-400">
             We&apos;ll email you a one-time code. No password needed.
           </p>
           <LoginForm />
-        </section>
+        </Panel>
         <p className="mt-4 text-center text-xs text-zinc-500">
           Demo mode: any 6-digit code works.
         </p>

@@ -1,6 +1,8 @@
 import { CheckCircle2, Hourglass, RotateCcw } from "lucide-react";
 
 import { PhotoThumbnails } from "@/components/submissions/photo-thumbnails";
+import { Panel } from "@/components/ui/panel";
+import { SectionLabel } from "@/components/ui/section-label";
 import { isPassingScore, xpForScore } from "@/lib/grading";
 import type { LevelAttempt } from "@/lib/mock/level-attempts";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
@@ -21,10 +23,8 @@ export function AttemptHistory({
   if (attempts.length === 0 && !pending) return null;
 
   return (
-    <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5">
-      <h2 className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
-        Attempts
-      </h2>
+    <Panel as="section">
+      <SectionLabel as="h2">Attempts</SectionLabel>
       <ol className="mt-4 flex flex-col">
         {pending && (
           <li className="relative flex gap-3 pb-5 last:pb-0">
@@ -112,6 +112,6 @@ export function AttemptHistory({
           );
         })}
       </ol>
-    </section>
+    </Panel>
   );
 }

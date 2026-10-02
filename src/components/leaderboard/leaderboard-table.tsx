@@ -1,6 +1,7 @@
 import { Crown, Medal } from "lucide-react";
 import Link from "next/link";
 
+import { Panel } from "@/components/ui/panel";
 import {
   Table,
   TableBody,
@@ -9,7 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { LeaderboardEntry } from "@/lib/mock/leaderboard";
+import type { LeaderboardEntry } from "@/lib/leaderboard";
 import { cn } from "cn";
 
 type PodiumStyle = {
@@ -86,7 +87,7 @@ export function LeaderboardTable({
     levelLabel === "Cleared" ? `${level} cleared` : `Level ${level}`;
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+    <Panel padding="flush">
       <Table>
         <TableHeader>
           <TableRow className="border-zinc-800 hover:bg-transparent">
@@ -154,6 +155,6 @@ export function LeaderboardTable({
           })}
         </TableBody>
       </Table>
-    </div>
+    </Panel>
   );
 }

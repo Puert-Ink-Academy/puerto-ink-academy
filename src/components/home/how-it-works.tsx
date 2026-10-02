@@ -1,5 +1,7 @@
 import { BookOpen, Camera, Crown, Sparkles, Target, TrendingUp, type LucideIcon } from "lucide-react";
 
+import { SectionLabel } from "@/components/ui/section-label";
+
 type Step = {
   icon: LucideIcon;
   title: string;
@@ -38,9 +40,7 @@ export function HowItWorks() {
       className="mx-auto w-full max-w-6xl scroll-mt-8 px-4 sm:px-6"
     >
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-[0.7rem] font-medium tracking-[0.12em] text-amber-400 uppercase">
-          How it works
-        </p>
+        <SectionLabel tone="marketing">How it works</SectionLabel>
         <h2
           id="how-heading"
           className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl"

@@ -1,5 +1,5 @@
-import type { NavKey } from "@/components/layout/nav-items";
 import { platformUsers } from "@/lib/mock/admin-users";
+import type { NavKey } from "@/lib/nav";
 
 export type SessionUser = { id: string; name: string; email: string };
 

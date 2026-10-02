@@ -1,6 +1,7 @@
 import { CheckCircle2, Crown, Sparkles, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
+import { SectionLabel } from "@/components/ui/section-label";
 import type { ApprenticeProfile } from "@/lib/mock/profiles";
 import { cn } from "cn";
 
@@ -55,10 +56,10 @@ export function ProfileStatsGrid({ profile }: { profile: ApprenticeProfile }) {
         const Icon = stat.icon;
         return (
           <div key={stat.id} className={cn("rounded-xl border p-4", stat.card)}>
-            <dt className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
+            <SectionLabel as="dt" className="flex items-center gap-2">
               <Icon className={cn("size-4", stat.iconClass)} aria-hidden />
               <span>{stat.label}</span>
-            </dt>
+            </SectionLabel>
             <dd
               className={cn(
                 "mt-3 text-3xl font-semibold tracking-tight tabular-nums",

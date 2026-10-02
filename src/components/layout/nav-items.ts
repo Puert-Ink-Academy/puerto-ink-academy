@@ -8,7 +8,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-import { sessionUsers } from "@/lib/mock/session";
+import type { NavKey } from "@/lib/nav";
+import { getCurrentApprentice } from "@/lib/session";
 
 export type NavItem = {
   href: string;
@@ -16,10 +17,6 @@ export type NavItem = {
   icon: LucideIcon;
   activePrefixes?: string[];
 };
-
-export type NavKey = "apprentice" | "teacher" | "admin";
-
-export type StaffNav = Exclude<NavKey, "apprentice">;
 
 export const navItems: Record<NavKey, NavItem[]> = {
   apprentice: [
@@ -30,7 +27,7 @@ export const navItems: Record<NavKey, NavItem[]> = {
       activePrefixes: ["/apprentice/category"],
     },
     { href: "/apprentice/leaderboard", label: "Leaderboard", icon: Trophy },
-    { href: `/profile/${sessionUsers.apprentice.id}`, label: "Profile", icon: UserRound },
+    { href: `/profile/${getCurrentApprentice().id}`, label: "Profile", icon: UserRound },
   ],
   teacher: [
     { href: "/teacher/dashboard", label: "Dashboard", icon: LayoutDashboard },

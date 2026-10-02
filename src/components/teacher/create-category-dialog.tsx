@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { sectionLabelVariants } from "@/components/ui/section-label";
 import type { CurriculumCategory } from "@/lib/curriculum";
 import { slugify } from "@/lib/slug";
 
-const labelClass = "text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase";
+const labelClass = sectionLabelVariants();
 const fieldClass =
   "h-11 border-zinc-700 bg-zinc-950/60 text-zinc-100 focus-visible:border-amber-400 focus-visible:ring-amber-400/30";
 

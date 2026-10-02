@@ -1,6 +1,7 @@
 import { LeaderboardHeader } from "@/components/leaderboard/leaderboard-header";
 import { LeaderboardTabs } from "@/components/leaderboard/leaderboard-tabs";
-import { getRankings, leaderboardScopes } from "@/lib/mock/leaderboard";
+import { leaderboardScopes } from "@/lib/leaderboard";
+import { getRankings } from "@/lib/mock/leaderboard";
 
 export default function AdminLeaderboardPage() {
   const rankings = getRankings();

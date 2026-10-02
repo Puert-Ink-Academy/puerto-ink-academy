@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { sectionLabelVariants } from "@/components/ui/section-label";
 import {
   Select,
   SelectContent,
@@ -49,7 +50,7 @@ function ChangeRoleForm({
       <div className="flex flex-col gap-2">
         <Label
           htmlFor={triggerId}
-          className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase"
+          className={sectionLabelVariants()}
         >
           Role
         </Label>

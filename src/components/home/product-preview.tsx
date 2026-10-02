@@ -5,6 +5,7 @@ import { MasteryBadge } from "@/components/apprentice/mastery-badge";
 import { SkillTree } from "@/components/apprentice/skill-tree";
 import { PreviewFrame } from "@/components/home/preview-frame";
 import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
+import { SectionLabel } from "@/components/ui/section-label";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { getCategory, getPreviousCategory, type CategoryId } from "@/lib/mock/categories";
 import { getRanking } from "@/lib/mock/leaderboard";
@@ -27,9 +28,7 @@ export function ProductPreview() {
   return (
     <section aria-labelledby="preview-heading" className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-[0.7rem] font-medium tracking-[0.12em] text-amber-400 uppercase">
-          Inside the academy
-        </p>
+        <SectionLabel tone="marketing">Inside the academy</SectionLabel>
         <h2
           id="preview-heading"
           className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl"

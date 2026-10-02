@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { isActivePath, navAccent, navItems, type NavKey } from "@/components/layout/nav-items";
+import { isActivePath, navAccent, navItems } from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
+import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function MobileBottomNav({ nav }: { nav: NavKey }) {

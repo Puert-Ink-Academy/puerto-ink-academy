@@ -1,6 +1,7 @@
 import { Lock, Trophy } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
 import type { ScopeStanding } from "@/lib/mock/profiles";
 import { cn } from "cn";
@@ -36,10 +37,10 @@ function StandingCard({ standing }: { standing: ScopeStanding }) {
       )}
     >
       <CardContent className="flex flex-col gap-3">
-        <p className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
+        <SectionLabel className="flex items-center gap-2">
           <Icon className={cn("size-4", standing.locked ? "text-zinc-500" : iconClass)} aria-hidden />
           {standing.label} Rank
-        </p>
+        </SectionLabel>
         {standing.locked ? (
           <p className="flex items-center gap-1.5 text-lg font-semibold text-zinc-400">
             <Lock className="size-4" aria-hidden />
@@ -71,12 +72,9 @@ function StandingCard({ standing }: { standing: ScopeStanding }) {
 export function LeaderboardStandings({ standings }: { standings: ScopeStanding[] }) {
   return (
     <section aria-labelledby="standings-heading" className="flex flex-col gap-3">
-      <h2
-        id="standings-heading"
-        className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase"
-      >
+      <SectionLabel as="h2" id="standings-heading">
         Leaderboard Standings
-      </h2>
+      </SectionLabel>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {standings.map((standing) => (
           <StandingCard key={standing.scope} standing={standing} />

@@ -5,9 +5,10 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { PhotoViewer } from "@/components/submissions/photo-viewer";
+import { Panel } from "@/components/ui/panel";
 import { categoryStyles } from "@/lib/categories";
 import { MASTERY_SCORE } from "@/lib/grading";
-import type { EvolutionAttempt } from "@/lib/mock/leaderboard";
+import type { EvolutionAttempt } from "@/lib/leaderboard";
 import type { EvolutionCard } from "@/lib/mock/profiles";
 import { cn } from "cn";
 
@@ -101,7 +102,7 @@ export function FirstVsBest({ card }: { card: EvolutionCard }) {
   };
 
   return (
-    <article className="rounded-2xl border border-zinc-800 bg-zinc-900 p-4 sm:p-5">
+    <Panel as="article" className="rounded-2xl">
       <header className="flex flex-wrap items-center gap-2">
         <span
           className={cn(
@@ -140,6 +141,6 @@ export function FirstVsBest({ card }: { card: EvolutionCard }) {
         onOpenChange={setViewerOpen}
         onIndexChange={setViewerIndex}
       />
-    </article>
+    </Panel>
   );
 }

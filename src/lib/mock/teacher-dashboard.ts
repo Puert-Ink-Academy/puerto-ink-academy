@@ -1,3 +1,4 @@
+import { apprenticeDashboard } from "@/lib/mock/apprentice-dashboard";
 import type { CategoryId } from "@/lib/mock/categories";
 import { mockPhotos, type SubmissionPhoto } from "@/lib/mock/photos";
 
@@ -20,7 +21,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     apprenticeName: "John Doe",
     categoryId: "fine-line",
     level: 4,
-    xp: 3900,
+    xp: apprenticeDashboard.xp,
     lessonTitle: "Stencil Transfer",
     submittedAt: "20 minutes ago",
     photos: [mockPhotos.roseOutline, mockPhotos.evolutionClean],

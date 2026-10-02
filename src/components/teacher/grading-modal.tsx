@@ -13,6 +13,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { sectionLabelVariants } from "@/components/ui/section-label";
 import { Textarea } from "@/components/ui/textarea";
 import { isPassingScore, xpForScore } from "@/lib/grading";
 import { getCategory } from "@/lib/mock/categories";
@@ -82,7 +83,7 @@ function GradingForm({
       <div className="flex flex-col gap-3">
         <p
           id={scoreLabelId}
-          className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase"
+          className={sectionLabelVariants()}
         >
           Score (0–10)
         </p>
@@ -92,7 +93,7 @@ function GradingForm({
       <div className="flex flex-col gap-2">
         <label
           htmlFor={feedbackId}
-          className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase"
+          className={sectionLabelVariants()}
         >
           Teacher Feedback
         </label>

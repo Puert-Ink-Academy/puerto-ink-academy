@@ -8,6 +8,7 @@ import { LevelResult } from "@/components/apprentice/level-result";
 import { LevelSubmission } from "@/components/apprentice/level-submission";
 import { MasteryBadge } from "@/components/apprentice/mastery-badge";
 import { ReferenceMaterial } from "@/components/apprentice/reference-material";
+import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
 import { levelState } from "@/lib/grading";
 import { isViewableLevel, levelStatus } from "@/lib/levels";
@@ -16,9 +17,8 @@ import { getCategory, isCategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts } from "@/lib/mock/level-attempts";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
-import { sessionUsers } from "@/lib/mock/session";
 import { getPendingSubmission } from "@/lib/mock/teacher-dashboard";
-import { cn } from "cn";
+import { getCurrentApprentice } from "@/lib/session";
 
 export default async function LevelPage({
   params,
@@ -46,7 +46,7 @@ export default async function LevelPage({
   const result = getLevelResult(id, levelNumber);
   const state = levelState(result?.highestScore);
   const attempts = getLevelAttempts(id, levelNumber);
-  const pendingSubmission = getPendingSubmission(sessionUsers.apprentice.id, id, levelNumber);
+  const pendingSubmission = getPendingSubmission(getCurrentApprentice().id, id, levelNumber);
   const submission = {
     categoryId: id,
     categoryName: category.name,
@@ -65,14 +65,9 @@ export default async function LevelPage({
       </Link>
       <header>
         <div className="flex items-center gap-2">
-          <p
-            className={cn(
-              "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
-              categoryStyles[id].text,
-            )}
-          >
+          <SectionLabel className={categoryStyles[id].text}>
             {category.name} · Level {lesson.level}
-          </p>
+          </SectionLabel>
           {state === "mastered" ? (
             <span className="flex items-center gap-1 rounded-full border border-amber-400/60 bg-amber-400/15 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-amber-300 uppercase shadow-[0_0_12px_-2px_var(--color-amber-400)]">
               <Crown className="size-3" aria-hidden />

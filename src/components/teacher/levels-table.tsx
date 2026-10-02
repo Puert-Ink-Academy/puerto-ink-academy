@@ -3,6 +3,7 @@
 import { Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { Panel } from "@/components/ui/panel";
 import {
   Table,
   TableBody,
@@ -29,7 +30,7 @@ export function LevelsTable({
   const style = getCategoryStyle(categoryId);
 
   return (
-    <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
+    <Panel padding="flush">
       <Table className="table-fixed">
         <TableHeader>
           <TableRow className="border-zinc-800 hover:bg-transparent">
@@ -93,6 +94,6 @@ export function LevelsTable({
           ))}
         </TableBody>
       </Table>
-    </div>
+    </Panel>
   );
 }

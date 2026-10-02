@@ -6,8 +6,8 @@ import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { isCategoryId } from "@/lib/mock/categories";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
-import { sessionUsers } from "@/lib/mock/session";
 import { hasPendingReview } from "@/lib/mock/teacher-dashboard";
+import { getCurrentApprentice } from "@/lib/session";
 
 export type SubmissionResult = { ok: true } | { error: string; pending?: true };
 
@@ -26,7 +26,7 @@ export async function submitLevelAttempt(
     return { error: "This level is locked." };
   }
 
-  if (hasPendingReview(sessionUsers.apprentice.id, categoryId, level)) {
+  if (hasPendingReview(getCurrentApprentice().id, categoryId, level)) {
     return { error: "This level already has a submission waiting for a grade.", pending: true };
   }
 

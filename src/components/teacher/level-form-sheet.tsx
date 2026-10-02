@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { sectionLabelVariants } from "@/components/ui/section-label";
 import {
   Sheet,
   SheetContent,
@@ -35,7 +36,7 @@ function Field({
     <div className="flex flex-col gap-2">
       <Label
         htmlFor={id}
-        className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase"
+        className={sectionLabelVariants()}
       >
         {label}
       </Label>

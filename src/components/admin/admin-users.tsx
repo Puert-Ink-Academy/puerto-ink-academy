@@ -7,6 +7,7 @@ import { AddUserDialog } from "@/components/admin/add-user-dialog";
 import { ChangeRoleDialog } from "@/components/admin/change-role-dialog";
 import { UsersTable } from "@/components/admin/users-table";
 import { Button } from "@/components/ui/button";
+import { SectionLabel } from "@/components/ui/section-label";
 import type { PlatformUser } from "@/lib/mock/admin-users";
 import type { Role } from "@/lib/roles";
 
@@ -21,9 +22,7 @@ export function AdminUsers({ initialUsers }: { initialUsers: PlatformUser[] }) {
     <>
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-[0.7rem] font-medium tracking-[0.12em] text-violet-400 uppercase">
-            Admin
-          </p>
+          <SectionLabel tone="admin">Admin</SectionLabel>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
             User Management
           </h1>

@@ -11,6 +11,15 @@ export function xpForScore(score: number) {
   return isPassingScore(score) ? score * 10 : 0;
 }
 
+export function xpFromBestScores(bestScores: number[]) {
+  return bestScores.reduce((total, score) => total + xpForScore(score), 0);
+}
+
+export function averageScore(scores: number[]) {
+  if (scores.length === 0) return 0;
+  return scores.reduce((total, score) => total + score, 0) / scores.length;
+}
+
 export function levelState(bestScore: number | undefined): LevelState {
   if (bestScore === undefined) return "not-attempted";
   if (bestScore >= MASTERY_SCORE) return "mastered";

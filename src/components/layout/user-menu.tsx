@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 
 import { logout } from "@/app/actions/auth";
-import { navAccent, type NavKey } from "@/components/layout/nav-items";
+import { navAccent } from "@/components/layout/nav-items";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { sessionUsers } from "@/lib/mock/session";
+import type { NavKey } from "@/lib/nav";
+import { getSessionUser } from "@/lib/session";
 import { cn } from "cn";
 
 function Avatar({ name, className }: { name: string; className: string }) {
@@ -38,7 +39,7 @@ export function UserMenu({
   nav: NavKey;
   variant: "sidebar" | "compact";
 }) {
-  const user = sessionUsers[nav];
+  const user = getSessionUser(nav);
   const accent = navAccent[nav];
   const [pending, startTransition] = useTransition();
 

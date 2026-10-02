@@ -1,5 +1,6 @@
 import { Crown } from "lucide-react";
 
+import { SectionLabel } from "@/components/ui/section-label";
 import type { LevelResult } from "@/lib/mock/level-results";
 
 export function MasteryBadge({ result }: { result: LevelResult }) {
@@ -53,9 +54,7 @@ export function MasteryBadge({ result }: { result: LevelResult }) {
         ))}
       </dl>
       <div className="relative mt-4">
-        <h3 className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
-          Teacher Feedback
-        </h3>
+        <SectionLabel as="h3">Teacher Feedback</SectionLabel>
         <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">{result.feedback}</p>
       </div>
     </section>

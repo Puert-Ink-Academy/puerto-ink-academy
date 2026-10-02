@@ -1,12 +1,9 @@
 import { LeaderboardHeader } from "@/components/leaderboard/leaderboard-header";
 import { LeaderboardTabs } from "@/components/leaderboard/leaderboard-tabs";
+import { leaderboardScopes, type LeaderboardScope } from "@/lib/leaderboard";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { categories, getPreviousCategory } from "@/lib/mock/categories";
-import {
-  getRankings,
-  leaderboardScopes,
-  type LeaderboardScope,
-} from "@/lib/mock/leaderboard";
+import { getRankings } from "@/lib/mock/leaderboard";
 
 export default function LeaderboardPage() {
   const rankings = getRankings();

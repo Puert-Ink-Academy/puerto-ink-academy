@@ -3,16 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import {
-  isActivePath,
-  navAccent,
-  navItems,
-  type NavKey,
-} from "@/components/layout/nav-items";
+import { isActivePath, navAccent, navItems } from "@/components/layout/nav-items";
 import { Wordmark } from "@/components/brand/wordmark";
 import { RolePill } from "@/components/layout/role-pill";
 import { UserMenu } from "@/components/layout/user-menu";
 import { buttonVariants } from "@/components/ui/button";
+import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function SidebarNav({ nav }: { nav: NavKey }) {

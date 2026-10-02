@@ -1,7 +1,8 @@
 import { Wordmark } from "@/components/brand/wordmark";
-import { navAccent, type NavKey } from "@/components/layout/nav-items";
+import { navAccent } from "@/components/layout/nav-items";
 import { RolePill } from "@/components/layout/role-pill";
 import { UserMenu } from "@/components/layout/user-menu";
+import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function MobileTopBar({ nav }: { nav: NavKey }) {

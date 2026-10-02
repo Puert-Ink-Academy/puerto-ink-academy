@@ -8,8 +8,9 @@ import { requestLoginCode, verifyLoginCode } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { sectionLabelVariants } from "@/components/ui/section-label";
 
-const labelClass = "text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase";
+const labelClass = sectionLabelVariants();
 const inputClass =
   "h-11 border-zinc-700 bg-zinc-950/60 text-base text-zinc-100 focus-visible:border-amber-400 focus-visible:ring-amber-400/30 md:text-sm";
 const submitClass =

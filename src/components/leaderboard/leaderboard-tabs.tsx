@@ -5,10 +5,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
 import { UserRankBanner } from "@/components/leaderboard/user-rank-banner";
+import { Panel } from "@/components/ui/panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { categoryStyles } from "@/lib/categories";
+import type { LeaderboardEntry, LeaderboardScope } from "@/lib/leaderboard";
 import { getCategory } from "@/lib/mock/categories";
-import type { LeaderboardEntry, LeaderboardScope } from "@/lib/mock/leaderboard";
 import { cn } from "cn";
 
 type ScopeTab = {
@@ -120,11 +121,15 @@ export function LeaderboardTabs({
                   levelLabel={item === "global" ? "Cleared" : "Level"}
                 />
               ) : (
-                <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-zinc-800 bg-zinc-900/50 px-6 py-10 text-center">
+                <Panel
+                  variant="dashed"
+                  padding="none"
+                  className="flex flex-col items-center gap-2 px-6 py-10 text-center"
+                >
                   <Users className="size-6 text-zinc-600" aria-hidden />
                   <p className="text-sm font-medium text-zinc-200">No one ranked in {label} yet</p>
                   <p className="text-xs text-zinc-500">The first passed level takes the crown.</p>
-                </div>
+                </Panel>
               )}
             </TabsContent>
           );

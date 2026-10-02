@@ -1,6 +1,8 @@
 import { Crown } from "lucide-react";
 import Link from "next/link";
 
+import { Panel } from "@/components/ui/panel";
+import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
 import type { ShowcaseBadge } from "@/lib/mock/profiles";
 import { cn } from "cn";
@@ -50,22 +52,23 @@ export function MasteryShowcase({
   return (
     <section aria-labelledby="showcase-heading" className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <h2
-          id="showcase-heading"
-          className="text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase"
-        >
+        <SectionLabel as="h2" id="showcase-heading">
           Mastery Showcase
-        </h2>
+        </SectionLabel>
         <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-xs font-medium text-amber-300 tabular-nums">
           {badges.length}
         </span>
       </div>
       {badges.length === 0 ? (
-        <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-zinc-800 bg-zinc-900/50 px-6 py-10 text-center">
+        <Panel
+          variant="dashed"
+          padding="none"
+          className="flex flex-col items-center gap-2 px-6 py-10 text-center"
+        >
           <Crown className="size-6 text-zinc-600" aria-hidden />
           <p className="text-sm font-medium text-zinc-200">No perfect scores yet.</p>
           <p className="text-xs text-zinc-500">Retry a passed level to earn your first.</p>
-        </div>
+        </Panel>
       ) : (
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {badges.map((badge) => {

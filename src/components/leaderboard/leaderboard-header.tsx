@@ -1,5 +1,6 @@
-import { navAccent, type NavKey } from "@/components/layout/nav-items";
-import { cn } from "cn";
+import { navAccent } from "@/components/layout/nav-items";
+import { SectionLabel } from "@/components/ui/section-label";
+import type { NavKey } from "@/lib/nav";
 
 export function LeaderboardHeader({
   count,
@@ -10,14 +11,7 @@ export function LeaderboardHeader({
 }) {
   return (
     <header>
-      <p
-        className={cn(
-          "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
-          navAccent[nav].eyebrow,
-        )}
-      >
-        Season Rankings
-      </p>
+      <SectionLabel className={navAccent[nav].eyebrow}>Season Rankings</SectionLabel>
       <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
         Leaderboard
       </h1>

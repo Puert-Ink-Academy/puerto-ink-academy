@@ -111,15 +111,18 @@ src/
     profile/            profile header, stats, standings, portfolio, showcase
     submissions/        photo gallery and fullscreen viewer
     layout/             app shell, navigation, account menu
-    ui/                 shadcn/ui components
+    ui/                 shadcn/ui components, plus Panel and SectionLabel
   lib/
-    mock/               mock data and derived helpers (the stand-in for the database)
-    grading.ts          pass, XP and mastery rules
+    mock/               mock data (the stand-in for the database)
+    grading.ts          pass, XP, average and mastery rules
     levels.ts           level status and progress helpers
+    progression.ts      category mastery and sequential unlocks
+    leaderboard.ts      ranking types and math
+    session.ts          current user for each role (mock identity for now)
 public/mock/            mock submission photos
 ```
 
-Most numbers on screen are derived from the attempt history and the leaderboard standings in `src/lib/mock/`, rather than typed in by hand. For example, John's total XP, his ranks, the mastery crowns and the Evolution Portfolio all come from that data, so the pages stay consistent with each other.
+Rules live in `src/lib/`, and `src/lib/mock/` only supplies data. John's category XP, total XP and average score are computed from his attempt history (best score per level), and his ranks, mastery crowns and Evolution Portfolio come from the same data, so the pages stay consistent with each other. The other apprentices' standings are hand-written demo data.
 
 ## Roadmap
 

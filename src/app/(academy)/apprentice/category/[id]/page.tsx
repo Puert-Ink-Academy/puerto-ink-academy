@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { SkillTree } from "@/components/apprentice/skill-tree";
 import { Progress } from "@/components/ui/progress";
+import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
 import { categoryProgressPercent } from "@/lib/levels";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
@@ -50,14 +51,7 @@ export default async function CategoryPage({
             <Icon className="size-6" aria-hidden />
           </span>
           <div>
-            <p
-              className={cn(
-                "text-[0.7rem] font-medium tracking-[0.12em] uppercase",
-                style.text,
-              )}
-            >
-              Skill Tree
-            </p>
+            <SectionLabel className={style.text}>Skill Tree</SectionLabel>
             <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
               {category.name}
             </h1>

@@ -1,3 +1,4 @@
+import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
 import { categories } from "@/lib/mock/categories";
 import { cn } from "cn";
@@ -6,9 +7,7 @@ export function StylePath() {
   return (
     <section aria-labelledby="path-heading" className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-[0.7rem] font-medium tracking-[0.12em] text-amber-400 uppercase">
-          The path
-        </p>
+        <SectionLabel tone="marketing">The path</SectionLabel>
         <h2
           id="path-heading"
           className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl"

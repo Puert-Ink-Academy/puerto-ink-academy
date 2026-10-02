@@ -1,7 +1,8 @@
-import { isPassingScore } from "@/lib/grading";
-import { categories, getPreviousCategory, type CategoryId } from "@/lib/mock/categories";
+import { averageScore, isPassingScore, xpFromBestScores } from "@/lib/grading";
+import { categories, type CategoryId } from "@/lib/mock/categories";
 import { levelAttempts } from "@/lib/mock/level-attempts";
-import { getCategoryLessons } from "@/lib/mock/level-lessons";
+import { getCategoryResults } from "@/lib/mock/level-results";
+import { unlockedCategoryIds } from "@/lib/progression";
 
 export type CategoryProgress = {
   currentLevel: number;
@@ -12,24 +13,32 @@ export type CategoryProgress = {
 };
 
 export const apprenticeCategoryProgress: Partial<
-  Record<CategoryId, Pick<CategoryProgress, "currentLevel" | "xp">>
+  Record<CategoryId, Pick<CategoryProgress, "currentLevel">>
 > = {
-  "fine-line": { currentLevel: 5, xp: 3900 },
+  "fine-line": { currentLevel: 5 },
 };
 
-function isMastered(categoryId: CategoryId): boolean {
-  const progress = apprenticeCategoryProgress[categoryId];
-  return progress !== undefined && progress.currentLevel > getCategoryLessons(categoryId).length;
+const unlockedCategories = unlockedCategoryIds(
+  (categoryId) => apprenticeCategoryProgress[categoryId]?.currentLevel,
+);
+
+function categoryXp(categoryId: CategoryId): number {
+  return xpFromBestScores(getCategoryResults(categoryId).map((result) => result.highestScore));
 }
 
 export function getCategoryProgress(categoryId: CategoryId): CategoryProgress {
   const sequenceOrder = categories.find((entry) => entry.id === categoryId)?.sequenceOrder ?? 0;
-  const previous = getPreviousCategory(categoryId);
-  const isLocked = previous !== undefined && !isMastered(previous.id);
+  const isLocked = !unlockedCategories.has(categoryId);
   const progress = apprenticeCategoryProgress[categoryId];
 
   return progress
-    ? { ...progress, started: true, sequenceOrder, isLocked }
+    ? {
+        currentLevel: progress.currentLevel,
+        xp: categoryXp(categoryId),
+        started: true,
+        sequenceOrder,
+        isLocked,
+      }
     : { currentLevel: 1, xp: 0, started: false, sequenceOrder, isLocked };
 }
 
@@ -46,7 +55,7 @@ const categoryProgress = categories.map((category) => getCategoryProgress(catego
 
 export const apprenticeDashboard: ApprenticeDashboardData = {
   xp: categoryProgress.reduce((total, progress) => total + progress.xp, 0),
-  averageScore: 8.5,
+  averageScore: averageScore(levelAttempts.map((attempt) => attempt.score)),
   completedExercises: levelAttempts.filter((attempt) => isPassingScore(attempt.score)).length,
   failedAttempts: levelAttempts.filter((attempt) => !isPassingScore(attempt.score)).length,
   categoriesStarted: categoryProgress.filter((progress) => progress.started).length,

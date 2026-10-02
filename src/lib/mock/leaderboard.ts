@@ -1,75 +1,35 @@
-import { MASTERY_SCORE } from "@/lib/grading";
-import { apprenticeCategoryProgress, apprenticeDashboard } from "@/lib/mock/apprentice-dashboard";
-import { categories, categoryIds, type CategoryId } from "@/lib/mock/categories";
+import { averageScore, MASTERY_SCORE } from "@/lib/grading";
+import {
+  rankStandings,
+  type ApprenticeStanding,
+  type CategoryStanding,
+  type EvolutionAttempt,
+  type EvolutionEntry,
+  type LeaderboardEntry,
+  type LeaderboardScope,
+  type MasteredLevel,
+} from "@/lib/leaderboard";
+import {
+  apprenticeCategoryProgress,
+  apprenticeDashboard,
+  getCategoryProgress,
+} from "@/lib/mock/apprentice-dashboard";
+import { categoryIds, type CategoryId } from "@/lib/mock/categories";
 import { levelAttempts, type LevelAttempt } from "@/lib/mock/level-attempts";
-import { getCategoryLessons } from "@/lib/mock/level-lessons";
-import { mockPhotos, type SubmissionPhoto } from "@/lib/mock/photos";
-
-export type CategoryStanding = {
-  level: number;
-  xp: number;
-  averageScore: number;
-};
-
-export type MasteredLevel = {
-  categoryId: CategoryId;
-  level: number;
-};
-
-export type EvolutionAttempt = {
-  score: number;
-  date: string;
-  photo: SubmissionPhoto;
-};
-
-export type EvolutionEntry = {
-  categoryId: CategoryId;
-  level: number;
-  first: EvolutionAttempt;
-  best: EvolutionAttempt;
-};
-
-export type ApprenticeStanding = {
-  id: string;
-  name: string;
-  averageScore: number;
-  isCurrentUser?: boolean;
-  categories: Partial<Record<CategoryId, CategoryStanding>>;
-  masteredLevels: MasteredLevel[];
-  evolution: EvolutionEntry[];
-};
-
-export type LeaderboardScope = "global" | CategoryId;
-
-export const leaderboardScopes: LeaderboardScope[] = [
-  "global",
-  "fine-line",
-  "realism",
-  "traditional",
-];
-
-export type LeaderboardEntry = {
-  rank: number;
-  id: string;
-  name: string;
-  level: number;
-  xp: number;
-  averageScore: number;
-  isCurrentUser?: boolean;
-};
+import { mockPhotos } from "@/lib/mock/photos";
 
 function currentUserAverage(categoryId: CategoryId): number {
-  const scores = levelAttempts
-    .filter((attempt) => attempt.categoryId === categoryId)
-    .map((attempt) => attempt.score);
-  if (scores.length === 0) return apprenticeDashboard.averageScore;
-  return scores.reduce((total, score) => total + score, 0) / scores.length;
+  return averageScore(
+    levelAttempts
+      .filter((attempt) => attempt.categoryId === categoryId)
+      .map((attempt) => attempt.score),
+  );
 }
 
 const currentUserCategories: Partial<Record<CategoryId, CategoryStanding>> = {};
 for (const categoryId of categoryIds) {
-  const progress = apprenticeCategoryProgress[categoryId];
-  if (progress) {
+  if (apprenticeCategoryProgress[categoryId]) {
+    const progress = getCategoryProgress(categoryId);
     currentUserCategories[categoryId] = {
       level: progress.currentLevel,
       xp: progress.xp,
@@ -275,47 +235,8 @@ export const apprenticeStandings: ApprenticeStanding[] = [
   },
 ];
 
-function unlockedStats(
-  standing: ApprenticeStanding,
-): Partial<Record<CategoryId, CategoryStanding>> {
-  const unlocked: Partial<Record<CategoryId, CategoryStanding>> = {};
-  for (const category of categories) {
-    const stat = standing.categories[category.id];
-    if (!stat) break;
-    unlocked[category.id] = stat;
-    if (stat.level <= getCategoryLessons(category.id).length) break;
-  }
-  return unlocked;
-}
-
-function toUnranked(
-  standing: ApprenticeStanding,
-  scope: LeaderboardScope,
-): Omit<LeaderboardEntry, "rank"> | null {
-  const base = { id: standing.id, name: standing.name, isCurrentUser: standing.isCurrentUser };
-  const stats = unlockedStats(standing);
-
-  if (scope === "global") {
-    const values = Object.values(stats);
-    return {
-      ...base,
-      level: values.reduce((total, stat) => total + stat.level - 1, 0),
-      xp: values.reduce((total, stat) => total + stat.xp, 0),
-      averageScore: standing.averageScore,
-    };
-  }
-
-  const stat = stats[scope];
-  if (!stat || stat.xp === 0) return null;
-  return { ...base, level: stat.level, xp: stat.xp, averageScore: stat.averageScore };
-}
-
 export function getRanking(scope: LeaderboardScope): LeaderboardEntry[] {
-  return apprenticeStandings
-    .map((standing) => toUnranked(standing, scope))
-    .filter((entry): entry is Omit<LeaderboardEntry, "rank"> => entry !== null)
-    .sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name))
-    .map((entry, index) => ({ ...entry, rank: index + 1 }));
+  return rankStandings(apprenticeStandings, scope);
 }
 
 export function getRankings(): Record<LeaderboardScope, LeaderboardEntry[]> {

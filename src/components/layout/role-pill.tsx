@@ -1,4 +1,5 @@
-import { roleBadge, type NavKey } from "@/components/layout/nav-items";
+import { roleBadge } from "@/components/layout/nav-items";
+import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function RolePill({ nav, className }: { nav: NavKey; className?: string }) {

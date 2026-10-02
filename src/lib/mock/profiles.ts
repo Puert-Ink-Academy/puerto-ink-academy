@@ -1,13 +1,13 @@
-import { platformUsers } from "@/lib/mock/admin-users";
-import { categories, type Category } from "@/lib/mock/categories";
 import {
-  apprenticeStandings,
-  getRanking,
+  unlockedCategories,
   type ApprenticeStanding,
   type EvolutionAttempt,
   type LeaderboardScope,
-} from "@/lib/mock/leaderboard";
-import { getCategoryLessons, getLevelLesson } from "@/lib/mock/level-lessons";
+} from "@/lib/leaderboard";
+import { platformUsers } from "@/lib/mock/admin-users";
+import { categories, type Category } from "@/lib/mock/categories";
+import { apprenticeStandings, getRanking } from "@/lib/mock/leaderboard";
+import { getLevelLesson } from "@/lib/mock/level-lessons";
 
 export type ScopeStanding = {
   scope: LeaderboardScope;
@@ -44,21 +44,6 @@ export type ApprenticeProfile = {
   mastered: ShowcaseBadge[];
   evolution: EvolutionCard[];
 };
-
-function isMastered(standing: ApprenticeStanding, category: Category): boolean {
-  const stat = standing.categories[category.id];
-  return stat !== undefined && stat.level > getCategoryLessons(category.id).length;
-}
-
-function unlockedCategories(standing: ApprenticeStanding): Set<Category["id"]> {
-  const unlocked = new Set<Category["id"]>();
-  for (const [index, category] of categories.entries()) {
-    const previous = categories[index - 1];
-    if (previous && !isMastered(standing, previous)) break;
-    unlocked.add(category.id);
-  }
-  return unlocked;
-}
 
 function scopeStanding(
   standing: ApprenticeStanding,

@@ -7,6 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { SectionLabel } from "@/components/ui/section-label";
 import type { ApprenticeDashboardData } from "@/lib/mock/apprentice-dashboard";
 import { cn } from "cn";
 
@@ -46,7 +47,7 @@ export function StatGrid({ data }: { data: ApprenticeDashboardData }) {
       tone: "amber",
     },
     { label: "Total XP", value: data.xp.toLocaleString("en-US"), icon: Sparkles, tone: "amber" },
-    { label: "Avg Score", value: `${data.averageScore}/10`, icon: Target, tone: "neutral" },
+    { label: "Avg Score", value: `${data.averageScore.toFixed(1)}/10`, icon: Target, tone: "neutral" },
     { label: "Completed", value: String(data.completedExercises), icon: CheckCircle2, tone: "neutral" },
     { label: "Failed Attempts", value: String(data.failedAttempts), icon: XCircle, tone: "rose" },
   ];
@@ -66,10 +67,10 @@ export function StatGrid({ data }: { data: ApprenticeDashboardData }) {
               index === stats.length - 1 && "col-span-2 lg:col-span-1",
             )}
           >
-            <dt className="flex items-center gap-2 text-[0.7rem] font-medium tracking-[0.12em] text-zinc-400 uppercase">
+            <SectionLabel as="dt" className="flex items-center gap-2">
               <Icon className={cn("size-4", tone.icon)} aria-hidden />
               {stat.label}
-            </dt>
+            </SectionLabel>
             <dd className={cn("mt-3 text-3xl font-semibold tracking-tight tabular-nums", tone.value)}>
               {stat.value}
             </dd>
