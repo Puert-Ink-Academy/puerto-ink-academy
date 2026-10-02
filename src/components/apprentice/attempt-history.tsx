@@ -1,4 +1,5 @@
 import { CheckCircle2, Hourglass, RotateCcw } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { PhotoThumbnails } from "@/components/submissions/photo-thumbnails";
 import { Panel } from "@/components/ui/panel";
@@ -20,11 +21,13 @@ export function AttemptHistory({
   attempts: LevelAttempt[];
   pending?: PendingAttempt;
 }) {
+  const format = useFormatter();
+  const t = useTranslations("Apprentice.Attempts");
   if (attempts.length === 0 && !pending) return null;
 
   return (
     <Panel as="section">
-      <SectionLabel as="h2">Attempts</SectionLabel>
+      <SectionLabel as="h2">{t("title")}</SectionLabel>
       <ol className="mt-4 flex flex-col">
         {pending && (
           <li className="relative flex gap-3 pb-5 last:pb-0">
@@ -43,16 +46,16 @@ export function AttemptHistory({
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <p className="text-sm font-semibold text-zinc-50">
-                  Attempt {attempts.length + 1}
+                  {t("attempt", { number: attempts.length + 1 })}
                 </p>
-                <p className="text-xs text-zinc-500">{pending.submittedAt}</p>
+                <p className="text-xs text-zinc-500">
+                  {format.relativeTime(new Date(pending.submittedAt))}
+                </p>
                 <span className="ml-auto rounded-full border border-sky-400/40 bg-sky-400/10 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-sky-300 uppercase">
-                  Pending review
+                  {t("pendingReview")}
                 </span>
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">
-                Waiting for your teacher&apos;s grade and feedback.
-              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">{t("waiting")}</p>
               <div className="mt-3">
                 <PhotoThumbnails photos={pending.photos} />
               </div>
@@ -86,9 +89,11 @@ export function AttemptHistory({
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                   <p className="text-sm font-semibold text-zinc-50">
-                    Attempt {attempt.attempt}
+                    {t("attempt", { number: attempt.attempt })}
                   </p>
-                  <p className="text-xs text-zinc-500">{attempt.submittedAt}</p>
+                  <p className="text-xs text-zinc-500">
+                    {format.dateTime(new Date(attempt.submittedAt), "date")}
+                  </p>
                   <span
                     className={cn(
                       "ml-auto rounded-full border px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase tabular-nums",
@@ -97,8 +102,11 @@ export function AttemptHistory({
                         : "border-rose-500/40 bg-rose-500/10 text-rose-300",
                     )}
                   >
-                    {passed ? "Pass" : "Fail"} · {attempt.score}/10 · +
-                    {xpForScore(attempt.score)} XP
+                    {t("outcome", {
+                      passed: passed ? "true" : "false",
+                      score: attempt.score,
+                      xp: xpForScore(attempt.score),
+                    })}
                   </span>
                 </div>
                 <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">

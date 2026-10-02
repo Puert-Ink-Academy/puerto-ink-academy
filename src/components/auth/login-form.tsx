@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowLeft, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useId, useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -17,6 +18,7 @@ const submitClass =
   "h-11 w-full bg-amber-400 text-zinc-950 shadow-[0_0_24px_-6px_var(--color-amber-400)] hover:bg-amber-300";
 
 export function LoginForm() {
+  const t = useTranslations("Auth");
   const emailId = useId();
   const codeId = useId();
   const errorId = useId();
@@ -49,7 +51,7 @@ export function LoginForm() {
       >
         <div className="flex flex-col gap-2">
           <Label htmlFor={emailId} className={labelClass}>
-            Email
+            {t("email")}
           </Label>
           <Input
             id={emailId}
@@ -62,7 +64,7 @@ export function LoginForm() {
               setEmail(event.target.value);
               setError(null);
             }}
-            placeholder="you@puertoink.academy"
+            placeholder={t("emailPlaceholder")}
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? errorId : undefined}
             className={inputClass}
@@ -75,7 +77,7 @@ export function LoginForm() {
         </div>
         <Button type="submit" size="lg" disabled={pending} className={submitClass}>
           <Mail aria-hidden />
-          {pending ? "Sending…" : "Send code"}
+          {pending ? t("sending") : t("sendCode")}
         </Button>
       </form>
     );
@@ -93,11 +95,14 @@ export function LoginForm() {
       }}
     >
       <p className="text-sm text-zinc-400">
-        We sent a code to <span className="font-medium text-zinc-100">{email}</span>
+        {t.rich("codeSent", {
+          email,
+          strong: (chunks) => <span className="font-medium text-zinc-100">{chunks}</span>,
+        })}
       </p>
       <div className="flex flex-col gap-2">
         <Label htmlFor={codeId} className={labelClass}>
-          6-digit code
+          {t("codeLabel")}
         </Label>
         <Input
           id={codeId}
@@ -129,7 +134,7 @@ export function LoginForm() {
         disabled={pending || code.length !== 6}
         className={submitClass}
       >
-        {pending ? "Verifying…" : "Verify"}
+        {pending ? t("verifying") : t("verify")}
       </Button>
       <div className="flex items-center justify-between gap-2 text-sm">
         <Button
@@ -143,16 +148,16 @@ export function LoginForm() {
           className="h-10 px-2 text-zinc-400 hover:bg-zinc-800 hover:text-zinc-50"
         >
           <ArrowLeft aria-hidden />
-          Use a different email
+          {t("differentEmail")}
         </Button>
         <Button
           type="button"
           variant="ghost"
           disabled={pending}
-          onClick={() => sendCode(() => toast.success(`New code sent to ${email}`))}
+          onClick={() => sendCode(() => toast.success(t("resent", { email })))}
           className="h-10 px-2 text-amber-400 hover:bg-zinc-800 hover:text-amber-300"
         >
-          Resend code
+          {t("resend")}
         </Button>
       </div>
     </form>

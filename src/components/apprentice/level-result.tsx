@@ -1,13 +1,16 @@
 import { CheckCircle2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/section-label";
 import type { LevelResult as LevelResultData } from "@/lib/mock/level-results";
 
 export function LevelResult({ result }: { result: LevelResultData }) {
+  const t = useTranslations("Apprentice.Result");
+  const tLevel = useTranslations("Apprentice.Level");
   const stats = [
-    { label: "Best Score", value: `${result.highestScore}/10` },
-    { label: "XP Earned", value: `+${result.xp}` },
-    { label: "Attempts", value: String(result.attempts) },
+    { label: t("bestScore"), value: t("scoreValue", { score: result.highestScore }) },
+    { label: t("xpEarned"), value: t("xpValue", { xp: result.xp }) },
+    { label: t("attempts"), value: String(result.attempts) },
   ];
 
   return (
@@ -19,7 +22,7 @@ export function LevelResult({ result }: { result: LevelResultData }) {
         <span className="flex size-9 items-center justify-center rounded-full bg-emerald-500/15">
           <CheckCircle2 className="size-5 text-emerald-400" aria-hidden />
         </span>
-        <h2 className="text-lg font-semibold tracking-tight text-emerald-100">Level Passed!</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-emerald-100">{t("passed")}</h2>
       </div>
       <dl className="mt-4 grid grid-cols-3 gap-3">
         {stats.map((stat) => (
@@ -37,7 +40,7 @@ export function LevelResult({ result }: { result: LevelResultData }) {
         ))}
       </dl>
       <div className="mt-4">
-        <SectionLabel as="h3">Teacher Feedback</SectionLabel>
+        <SectionLabel as="h3">{tLevel("teacherFeedback")}</SectionLabel>
         <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">{result.feedback}</p>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getFormatter, getTranslations } from "next-intl/server";
 
 import { SkillTree } from "@/components/apprentice/skill-tree";
 import { Progress } from "@/components/ui/progress";
@@ -30,6 +31,8 @@ export default async function CategoryPage({
   const lessons = getCategoryLessons(id);
   const percent = categoryProgressPercent(progress.currentLevel, lessons.length);
   const level = Math.min(progress.currentLevel, lessons.length);
+  const format = await getFormatter();
+  const t = await getTranslations("Apprentice.Category");
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
@@ -38,7 +41,7 @@ export default async function CategoryPage({
         className="flex w-fit items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-zinc-50"
       >
         <ArrowLeft className="size-4" aria-hidden />
-        Back to dashboard
+        {t("back")}
       </Link>
       <header className="flex flex-col gap-4">
         <div className="flex items-start gap-3">
@@ -51,12 +54,12 @@ export default async function CategoryPage({
             <Icon className="size-6" aria-hidden />
           </span>
           <div>
-            <SectionLabel className={style.text}>Skill Tree</SectionLabel>
+            <SectionLabel className={style.text}>{t("eyebrow")}</SectionLabel>
             <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
               {category.name}
             </h1>
             <p className="mt-1 text-sm text-zinc-400">
-              Level {level} of {lessons.length} · {progress.xp.toLocaleString("en-US")} XP
+              {t("summary", { level, total: lessons.length, xp: format.number(progress.xp) })}
             </p>
           </div>
         </div>

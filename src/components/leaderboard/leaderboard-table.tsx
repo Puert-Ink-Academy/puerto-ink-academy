@@ -1,5 +1,6 @@
 import { Crown, Medal } from "lucide-react";
 import Link from "next/link";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { CountryFlag } from "@/components/ui/country-flag";
 import { Panel } from "@/components/ui/panel";
@@ -52,7 +53,7 @@ const defaultStyle: PodiumStyle = {
   name: "text-zinc-50",
 };
 
-function RankBadge({ rank, className }: { rank: number; className: string }) {
+function RankBadge({ rank, className, label }: { rank: number; className: string; label: string }) {
   const Icon = rank === 1 ? Crown : rank <= 3 ? Medal : null;
 
   return (
@@ -61,7 +62,7 @@ function RankBadge({ rank, className }: { rank: number; className: string }) {
         "flex size-9 items-center justify-center rounded-full border text-sm font-semibold tabular-nums",
         className,
       )}
-      aria-label={`Rank ${rank}`}
+      aria-label={label}
     >
       {Icon ? <Icon className="size-4" aria-hidden /> : `#${rank}`}
     </span>
@@ -76,16 +77,16 @@ const currentUserStyle: Pick<PodiumStyle, "edge" | "row"> = {
 export function LeaderboardTable({
   entries,
   highlightCurrentUser = false,
-  levelLabel = "Level",
   linkProfiles = false,
 }: {
   entries: LeaderboardEntry[];
   highlightCurrentUser?: boolean;
-  levelLabel?: "Level" | "Cleared";
   linkProfiles?: boolean;
 }) {
-  const levelText = (level: number) =>
-    levelLabel === "Cleared" ? `${level} cleared` : `Level ${level}`;
+  const format = useFormatter();
+  const t = useTranslations("Leaderboard.Table");
+  const tCommon = useTranslations("Common");
+  const levelText = (level: number) => t("levelValue", { level });
 
   return (
     <Panel padding="flush">
@@ -93,19 +94,19 @@ export function LeaderboardTable({
         <TableHeader>
           <TableRow className="border-zinc-800 hover:bg-transparent">
             <TableHead className="w-14 pl-4 text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase">
-              Rank
+              {t("rank")}
             </TableHead>
             <TableHead className="text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase">
-              Apprentice
+              {t("apprentice")}
             </TableHead>
             <TableHead className="hidden text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase sm:table-cell">
-              {levelLabel}
+              {t("level")}
             </TableHead>
             <TableHead className="text-right text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase">
-              XP
+              {t("xp")}
             </TableHead>
             <TableHead className="pr-4 text-right text-[0.7rem] tracking-[0.12em] text-zinc-400 uppercase">
-              Avg
+              {t("average")}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -119,7 +120,11 @@ export function LeaderboardTable({
             return (
               <TableRow key={entry.id} className={cn("border-zinc-800", style.row)}>
                 <TableCell className={cn("py-3 pl-4", style.edge)}>
-                  <RankBadge rank={entry.rank} className={style.badge} />
+                  <RankBadge
+                    rank={entry.rank}
+                    className={style.badge}
+                    label={t("rankLabel", { rank: entry.rank })}
+                  />
                 </TableCell>
                 <TableCell className="py-3">
                   <p className={cn("font-semibold", style.name)}>
@@ -139,7 +144,7 @@ export function LeaderboardTable({
                     )}
                     {isYou && (
                       <span className="ml-2 rounded-full border border-amber-400/50 bg-amber-400/10 px-1.5 py-0.5 align-middle text-[0.6rem] font-medium tracking-[0.12em] text-amber-300 uppercase">
-                        You
+                        {tCommon("you")}
                       </span>
                     )}
                   </p>
@@ -149,10 +154,10 @@ export function LeaderboardTable({
                   {levelText(entry.level)}
                 </TableCell>
                 <TableCell className="py-3 text-right font-semibold text-zinc-50 tabular-nums">
-                  {entry.xp.toLocaleString("en-US")}
+                  {format.number(entry.xp)}
                 </TableCell>
                 <TableCell className="py-3 pr-4 text-right text-zinc-300 tabular-nums">
-                  {entry.averageScore.toFixed(1)}
+                  {format.number(entry.averageScore, "score")}
                 </TableCell>
               </TableRow>
             );

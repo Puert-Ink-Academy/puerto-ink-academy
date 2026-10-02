@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 
@@ -34,7 +35,9 @@ import type { PlatformUser } from "@/lib/mock/admin-users";
 import { isRole, roles, type Role } from "@/lib/roles";
 import { slugify } from "@/lib/slug";
 
-type FieldErrors = { name?: string; email?: string };
+type FieldErrorCode = "nameRequired" | "emailRequired" | "emailInvalid" | "emailTaken";
+
+type FieldErrors = { name?: FieldErrorCode; email?: FieldErrorCode };
 
 const labelClass = sectionLabelVariants();
 const fieldClass =
@@ -43,11 +46,10 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(name: string, email: string, takenEmails: string[]): FieldErrors {
   const errors: FieldErrors = {};
-  if (!name.trim()) errors.name = "Enter a name.";
-  if (!email.trim()) errors.email = "Enter an email.";
-  else if (!EMAIL_PATTERN.test(email.trim())) errors.email = "Enter a valid email.";
-  else if (takenEmails.includes(email.trim().toLowerCase()))
-    errors.email = "Someone already uses this email.";
+  if (!name.trim()) errors.name = "nameRequired";
+  if (!email.trim()) errors.email = "emailRequired";
+  else if (!EMAIL_PATTERN.test(email.trim())) errors.email = "emailInvalid";
+  else if (takenEmails.includes(email.trim().toLowerCase())) errors.email = "emailTaken";
   return errors;
 }
 
@@ -60,6 +62,9 @@ function AddUserForm({
   onAdd: (user: PlatformUser) => void;
   onDone: () => void;
 }) {
+  const t = useTranslations("Admin.AddUser");
+  const tRoles = useTranslations("Roles");
+  const tCommon = useTranslations("Common");
   const nameId = useId();
   const emailId = useId();
   const roleId = useId();
@@ -88,39 +93,36 @@ function AddUserForm({
           name: name.trim(),
           email: trimmedEmail,
           role,
-          joinedAt: new Date().toLocaleDateString("en-US", {
-            month: "short",
-            year: "numeric",
-          }),
+          joinedAt: new Date().toISOString().slice(0, 10),
           ...parsed.details,
         });
-        toast.success(`Invite sent to ${trimmedEmail}`);
+        toast.success(t("inviteSent", { email: trimmedEmail }));
         onDone();
       }}
     >
       <div className="flex flex-col gap-2">
         <Label htmlFor={nameId} className={labelClass}>
-          Name
+          {t("name")}
         </Label>
         <Input
           id={nameId}
           autoComplete="off"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          placeholder="Maria Lopez"
+          placeholder={t("namePlaceholder")}
           aria-invalid={errors.name ? true : undefined}
           aria-describedby={errors.name ? `${nameId}-error` : undefined}
           className={fieldClass}
         />
         {errors.name && (
           <p id={`${nameId}-error`} className="text-sm text-rose-400">
-            {errors.name}
+            {t(errors.name)}
           </p>
         )}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor={emailId} className={labelClass}>
-          Email
+          {t("email")}
         </Label>
         <Input
           id={emailId}
@@ -128,20 +130,20 @@ function AddUserForm({
           autoComplete="off"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="maria@puertoink.academy"
+          placeholder={t("emailPlaceholder")}
           aria-invalid={errors.email ? true : undefined}
           aria-describedby={errors.email ? `${emailId}-error` : undefined}
           className={fieldClass}
         />
         {errors.email && (
           <p id={`${emailId}-error`} className="text-sm text-rose-400">
-            {errors.email}
+            {t(errors.email)}
           </p>
         )}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor={roleId} className={labelClass}>
-          Role
+          {t("role")}
         </Label>
         <Select
           value={role}
@@ -149,13 +151,13 @@ function AddUserForm({
             if (isRole(value)) setRole(value);
           }}
         >
-          <SelectTrigger id={roleId} className={`${fieldClass} w-full`}>
+          <SelectTrigger id={roleId} className={`${fieldClass} w-full data-[size=default]:h-11`}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {roles.map((option) => (
               <SelectItem key={option} value={option} className="min-h-10">
-                {option}
+                {tRoles(option)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -177,10 +179,10 @@ function AddUserForm({
             />
           }
         >
-          Cancel
+          {tCommon("cancel")}
         </DialogClose>
         <Button type="submit" className="h-10 bg-violet-500 px-4 text-white hover:bg-violet-400">
-          Add User
+          {t("submit")}
         </Button>
       </DialogFooter>
     </form>
@@ -200,14 +202,14 @@ export function AddUserDialog({
   onAdd: (user: PlatformUser) => void;
   formKey: number;
 }) {
+  const t = useTranslations("Admin.AddUser");
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[calc(100svh-2rem)] overflow-y-auto border-zinc-800 bg-zinc-900 sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-zinc-50">Add User</DialogTitle>
-          <DialogDescription className="text-zinc-400">
-            They&apos;ll get an email to sign in with a one-time code.
-          </DialogDescription>
+          <DialogTitle className="text-zinc-50">{t("title")}</DialogTitle>
+          <DialogDescription className="text-zinc-400">{t("description")}</DialogDescription>
         </DialogHeader>
         <AddUserForm
           key={formKey}

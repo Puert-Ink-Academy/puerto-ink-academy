@@ -1,0 +1,443 @@
+{
+  "Metadata": {
+    "title": "Puerto Ink Academy",
+    "description": "La nouvelle génération de la formation au tatouage",
+    "loginTitle": "Connexion · Puerto Ink Academy"
+  },
+  "Common": {
+    "language": "Langue",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "you": "Vous"
+  },
+  "Nav": {
+    "primary": "Académie",
+    "dashboard": "Accueil",
+    "leaderboard": "Classement",
+    "profile": "Profil",
+    "curriculum": "Programme",
+    "users": "Comptes",
+    "grading": "Notes",
+    "accountMenu": "Menu du compte",
+    "viewProfile": "Voir le profil",
+    "logOut": "Se déconnecter",
+    "loggedOut": "Vous êtes déconnecté"
+  },
+  "Roles": {
+    "APPRENTICE": "Apprenti",
+    "TEACHER": "Professeur",
+    "ADMIN": "Admin"
+  },
+  "NotFound": {
+    "title": "404 - Niveau introuvable",
+    "home": "Retour à l'accueil"
+  },
+  "Marketing": {
+    "signIn": "Se connecter",
+    "tagline": "La nouvelle génération de la formation au tatouage",
+    "intro": "Progressez niveau par niveau, faites-vous noter par de vrais artistes et grimpez au classement.",
+    "howItWorksLink": "Comment ça marche",
+    "inviteOnly": "Sur invitation. Votre studio crée votre compte.",
+    "scrollToHowItWorks": "Aller à « Comment ça marche »",
+    "ctaTitle": "Prêt à prendre la machine ?",
+    "ctaBody": "Connectez-vous avec l'e-mail enregistré par votre studio. Nous vous enverrons un code à usage unique.",
+    "homeScreen": "Ajoutez-la à votre écran d'accueil pour l'app en plein écran.",
+    "contact": "Un studio veut rejoindre ? {email}",
+    "copyright": "© {year} Puerto Ink Academy",
+    "HowItWorks": {
+      "eyebrow": "Comment ça marche",
+      "title": "Trois étapes, en boucle",
+      "learnTitle": "Apprendre le niveau",
+      "learnBody": "Chaque niveau a un objectif clair, un exercice pratique, des conseils du professeur et des références.",
+      "submitTitle": "Envoyer votre travail",
+      "submitBody": "Photographiez votre peau d'entraînement et envoyez-la. Votre professeur la voit dans sa file.",
+      "gradedTitle": "Recevoir une note et monter",
+      "gradedBody": "Vous recevez une note et un retour écrit. Réussissez pour débloquer le niveau suivant, ou recommencez autant que vous voulez.",
+      "rulePass": "{score}/10 réussit",
+      "ruleXp": "Note × 10 = XP",
+      "ruleMastery": "{score}/10 = Maîtrise"
+    },
+    "Preview": {
+      "eyebrow": "Dans l'académie",
+      "title": "Votre entraînement, conçu comme un jeu",
+      "body": "Chaque style est un arbre de compétences. Chaque niveau est un vrai exercice, noté par un vrai artiste.",
+      "chooseTitle": "Choisissez votre style",
+      "chooseCaption": "Les styles se débloquent dans l'ordre, pour maîtriser d'abord les bases.",
+      "treeTitle": "Gravir l'arbre",
+      "treeCaption": "Réussissez un niveau avec {score}/10 ou plus pour débloquer le suivant.",
+      "masteryTitle": "Gagner la maîtrise",
+      "masteryCaption": "Rejouez un niveau réussi. Un {score}/10 parfait donne le badge de maîtrise.",
+      "leaderboardTitle": "Monter au classement",
+      "leaderboardCaption": "Classements par style, mis à jour à chaque note."
+    },
+    "Path": {
+      "eyebrow": "Le parcours",
+      "title": "Cinq styles. Un seul chemin.",
+      "body": "Maîtrisez chaque style pour débloquer le suivant, du trait fin précis à l'aquarelle picturale.",
+      "startHere": "Commencer ici",
+      "step": "Étape {number}"
+    }
+  },
+  "Auth": {
+    "title": "Connexion",
+    "subtitle": "Nous vous envoyons un code à usage unique. Aucun mot de passe.",
+    "demo": "Mode démo : n'importe quel code à 6 chiffres fonctionne.",
+    "email": "E-mail",
+    "emailPlaceholder": "you@puertoink.academy",
+    "sendCode": "Envoyer le code",
+    "sending": "Envoi…",
+    "codeSent": "Nous avons envoyé un code à <strong>{email}</strong>",
+    "codeLabel": "Code à 6 chiffres",
+    "verify": "Vérifier",
+    "verifying": "Vérification…",
+    "differentEmail": "Utiliser un autre e-mail",
+    "resend": "Renvoyer le code",
+    "resent": "Nouveau code envoyé à {email}"
+  },
+  "Apprentice": {
+    "Dashboard": {
+      "eyebrow": "Choisissez votre voie",
+      "title": "Accueil",
+      "subtitle": "Choisissez un arbre à travailler aujourd'hui."
+    },
+    "Stats": {
+      "categories": "Catégories",
+      "totalXp": "XP total",
+      "averageScore": "Note moy.",
+      "completed": "Terminés",
+      "failedAttempts": "Échecs"
+    },
+    "CategoryCard": {
+      "locked": "Verrouillé",
+      "notStarted": "Pas commencé",
+      "mastered": "Maîtrisé",
+      "inProgress": "En cours",
+      "step": "Étape {number}",
+      "currentLevel": "Niveau actuel",
+      "ofTotal": "sur {total}",
+      "categoryXp": "XP de la catégorie",
+      "levelProgress": "Niveau {level} :",
+      "progressLabel": "Progression {category}",
+      "unlockHint": "Terminez {previous} pour débloquer",
+      "unlockHintGeneric": "Terminez le style précédent pour débloquer",
+      "continue": "Continuer",
+      "startTraining": "Commencer",
+      "lockedLabel": "{category} : verrouillé. {hint}",
+      "cardLabel": "{category} : {status}, niveau {level} sur {total}, {xp} XP, {percent} % terminé"
+    },
+    "Category": {
+      "back": "Retour à l'accueil",
+      "eyebrow": "Arbre de compétences",
+      "summary": "Niveau {level} sur {total} · {xp} XP"
+    },
+    "SkillTree": {
+      "level": "Niveau {level}",
+      "mastered": "Maîtrisé",
+      "completed": "Terminé",
+      "active": "Actif",
+      "continue": "Continuer",
+      "locked": "Verrouillé",
+      "score": "{score}/10",
+      "labelActive": "Niveau {level} : {title}, actif",
+      "labelCompleted": "Niveau {level} : {title}, terminé",
+      "labelScored": "Niveau {level} : {title}, {mastered, select, true {maîtrisé} other {terminé}} {score}/10"
+    },
+    "Level": {
+      "back": "Retour à {category}",
+      "eyebrow": "{category} · Niveau {level}",
+      "mastered": "Maîtrisé",
+      "completed": "Terminé",
+      "objective": "Objectif",
+      "exercise": "Exercice",
+      "tips": "Conseils",
+      "references": "Références",
+      "teacherFeedback": "Retour du professeur"
+    },
+    "Result": {
+      "passed": "Niveau réussi !",
+      "bestScore": "Meilleure note",
+      "score": "Note",
+      "xpEarned": "XP gagnés",
+      "attempts": "Essais",
+      "scoreValue": "{score}/10",
+      "xpValue": "+{xp}"
+    },
+    "Mastery": {
+      "label": "Badge de maîtrise",
+      "title": "{score}/10 exécution parfaite",
+      "subtitle": "Maîtrisé. Plus besoin d'envoyer de travail."
+    },
+    "Attempts": {
+      "title": "Essais",
+      "attempt": "Essai {number}",
+      "pendingReview": "En attente",
+      "waiting": "En attente de la note et du retour de votre professeur.",
+      "outcome": "{passed, select, true {Réussi} other {Échoué}} · {score}/10 · +{xp} XP"
+    },
+    "Submission": {
+      "headingFirst": "Votre envoi",
+      "headingRetry": "Réessayer",
+      "headingImprove": "Viser {score}/10",
+      "buttonFirst": "Envoyer l'exercice",
+      "buttonRetry": "Renvoyer l'exercice",
+      "buttonImprove": "Renvoyer pour une meilleure note (max {score})",
+      "retryScore": "Note : {score}/10. Relisez le retour et réessayez",
+      "improveHint": "Votre meilleure note compte. Un {score}/10 rapporte +{xp} XP et le badge de maîtrise.",
+      "pendingButton": "En attente de la note",
+      "pendingBody": "Votre travail attend une note. Vous pouvez revoir la théorie ou pratiquer d'autres tâches débloquées.",
+      "reviewTheory": "Revoir la théorie",
+      "backTo": "Retour à {category}",
+      "sending": "Envoi…",
+      "sent": "Votre envoi a été transmis au professeur"
+    },
+    "Upload": {
+      "locked": "Les envois sont bloqués pendant la correction",
+      "prompt": "Touchez pour ajouter des photos ou déposez-les ici",
+      "hint": "Vous pouvez ajouter plusieurs images",
+      "selected": "{count, plural, one {# photo sélectionnée} other {# photos sélectionnées}}",
+      "remove": "Retirer {name}"
+    }
+  },
+  "Submissions": {
+    "photoTitle": "Photo {index} sur {total}",
+    "closePhoto": "Fermer la photo",
+    "previousPhoto": "Photo précédente",
+    "nextPhoto": "Photo suivante",
+    "zoomIn": "Zoomer",
+    "zoomOut": "Dézoomer",
+    "tapToZoom": "Toucher pour zoomer",
+    "openFullscreen": "Ouvrir la photo {index} sur {total} en plein écran",
+    "photosGroup": "Photos de l'envoi",
+    "showPhoto": "Afficher la photo {index}",
+    "viewPhoto": "Voir la photo {index} sur {total}"
+  },
+  "Leaderboard": {
+    "eyebrow": "Classement de saison",
+    "title": "Classement",
+    "apprentices": "{count, plural, one {# apprenti} other {# apprentis}}",
+    "tabsLabel": "Classement",
+    "captionScope": "Classé par XP {scope} · {count} classés",
+    "emptyTitle": "Personne n'est encore classée en {scope}",
+    "emptyBody": "Le premier niveau réussi prend la couronne.",
+    "lockedHint": "Terminez {previous} pour débloquer {category}",
+    "Table": {
+      "rank": "Rang",
+      "apprentice": "Apprenti",
+      "level": "Niveau",
+      "xp": "XP",
+      "average": "Moy.",
+      "levelValue": "Niveau {level}",
+      "rankLabel": "Rang {rank}"
+    },
+    "Banner": {
+      "label": "Votre classement",
+      "levelInScope": "Niveau {level} · {scope}",
+      "earnToRank": "Gagnez des XP {scope} pour être classé",
+      "toPass": "{xp} XP pour passer #{rank}",
+      "xp": "XP"
+    }
+  },
+  "Profile": {
+    "avatarLabel": "Avatar de {name}",
+    "studioPrefix": "Studio :",
+    "publicSubtitle": "Apprenti de la Puerto Ink Academy",
+    "rank": "Rang : {rank}",
+    "edit": "Modifier le profil",
+    "Stats": {
+      "totalXp": "XP total",
+      "perfect": "{score}/10 parfaits obtenus",
+      "levelsCompleted": "Niveaux terminés"
+    },
+    "Edit": {
+      "title": "Modifier le profil",
+      "description": "Votre apparence sur le profil et le classement.",
+      "artistName": "Nom d'artiste",
+      "studio": "Studio de tatouage",
+      "nationality": "Nationalité",
+      "optional": "Facultatif",
+      "artistPlaceholder": "Traits par Maria",
+      "studioPlaceholder": "Laissez vide si vous n'êtes pas en studio",
+      "chooseCountry": "Choisir un pays",
+      "tooLong": "Restez sous {max} caractères.",
+      "chooseNationality": "Choisissez une nationalité.",
+      "saving": "Enregistrement…",
+      "save": "Enregistrer le profil",
+      "updated": "Profil mis à jour",
+      "ownProfile": "Vous ne pouvez modifier que votre propre profil.",
+      "checkFields": "Vérifiez les champs signalés."
+    },
+    "Standings": {
+      "title": "Classements",
+      "rankLabel": "Rang {scope}",
+      "locked": "Verrouillé",
+      "unranked": "Non classé",
+      "ofTotal": "sur {total}",
+      "xp": "{xp} XP"
+    },
+    "Evolution": {
+      "title": "Évolution",
+      "subtitle": "Votre premier essai à côté du meilleur.",
+      "emptyTitle": "Pas encore de remontée.",
+      "emptyBody": "Rejouez un niveau pour montrer le chemin parcouru.",
+      "first": "Premier essai",
+      "best": "Meilleur essai",
+      "openFirst": "Ouvrir la photo du premier essai en plein écran",
+      "openBest": "Ouvrir la photo du meilleur essai en plein écran",
+      "score": "Note : {score}/10",
+      "epic": " - ÉPIQUE",
+      "levelTitle": "Niveau {level} · {title}",
+      "gain": "+{points} points",
+      "inDays": "en {days, plural, one {# jour} other {# jours}}"
+    },
+    "Showcase": {
+      "title": "Vitrine de maîtrise",
+      "emptyTitle": "Pas encore de note parfaite.",
+      "emptyBody": "Rejouez un niveau réussi pour obtenir la première.",
+      "tileLabel": "{category} niveau {level} : {title}, {score}/10",
+      "score": "{score}/10",
+      "levelTitle": "Niveau {level} · {title}"
+    }
+  },
+  "Teacher": {
+    "Grading": {
+      "title": "Travaux à noter",
+      "summary": "{submissions, plural, one {# envoi attend} other {# envois attendent}} un retour dans {styles, plural, one {# style} other {# styles}}.",
+      "row": "{name} — Niveau {level} — {xp} XP",
+      "pass": "Réussi",
+      "fail": "Échoué",
+      "unlocks": "Débloque le niveau suivant",
+      "retry": "L'apprenti refera cet exercice",
+      "xpGain": "+{xp} XP",
+      "score": "Note (0–10)",
+      "feedback": "Retour du professeur",
+      "feedbackPlaceholder": "Ce qui a bien marché, et quoi travailler ensuite",
+      "submit": "Envoyer la note",
+      "submitted": "Note envoyée pour {name}",
+      "meta": "{category} · Niveau {level} · {title}"
+    },
+    "Curriculum": {
+      "title": "Programme",
+      "summary": "{categories, plural, one {# catégorie} other {# catégories}} · {levels, plural, one {# niveau permanent} other {# niveaux permanents}}",
+      "createCategory": "Créer une catégorie",
+      "levelCount": "{count, plural, one {# niveau} other {# niveaux}}",
+      "createLevel": "Nouveau niveau",
+      "createLevelIn": "Créer un niveau dans {category}",
+      "emptyTitle": "Pas encore de niveaux.",
+      "emptyBody": "Créez le premier.",
+      "Table": {
+        "level": "Niveau",
+        "title": "Titre",
+        "objective": "Objectif",
+        "pass": "Réussite",
+        "xp": "XP",
+        "actions": "Actions",
+        "rowTitle": "Niveau {level} : {title}",
+        "edit": "Modifier le niveau {level}"
+      },
+      "Category": {
+        "title": "Créer une catégorie",
+        "description": "Définissez un nouveau style. Vous pourrez ajouter ses niveaux juste après.",
+        "name": "Nom",
+        "namePlaceholder": "Japonais",
+        "tagline": "Accroche",
+        "optional": "(facultatif)",
+        "taglinePlaceholder": "Vagues puissantes, carpes koï et fonds fluides",
+        "submit": "Créer la catégorie",
+        "created": "Catégorie {name} créée",
+        "nameRequired": "Saisissez un nom de catégorie.",
+        "nameInvalid": "Utilisez au moins une lettre ou un chiffre.",
+        "nameTaken": "Une catégorie porte déjà ce nom."
+      },
+      "Level": {
+        "createTitle": "Nouveau niveau",
+        "editTitle": "Modifier le niveau {level}",
+        "createDescription": "Ajoutez un niveau permanent à {category}.",
+        "editDescription": "{category} · Enregistrer crée une nouvelle version, pour que les envois passés gardent leur leçon d'origine.",
+        "number": "Numéro du niveau",
+        "title": "Titre",
+        "titlePlaceholder": "Contrôle du trait",
+        "objective": "Objectif",
+        "objectivePlaceholder": "Ce que l'apprenti doit apprendre",
+        "exercise": "Description de l'exercice",
+        "exercisePlaceholder": "Description détaillée de la tâche",
+        "tips": "Conseils",
+        "tipsPlaceholder": "Conseils du professeur",
+        "passingScore": "Note de réussite",
+        "xpReward": "Récompense XP",
+        "save": "Enregistrer le niveau",
+        "duplicate": "Le niveau {level} existe déjà dans {category}.",
+        "created": "{category} niveau {level} créé",
+        "saved": "{category} niveau {level} enregistré comme nouvelle version"
+      }
+    }
+  },
+  "Admin": {
+    "eyebrow": "Admin",
+    "title": "Gestion des comptes",
+    "accounts": "{count, plural, one {# compte} other {# comptes}}",
+    "addUser": "Ajouter",
+    "showing": "{visible} sur {total} affichés",
+    "clearFilters": "Effacer les filtres",
+    "emptyTitle": "Aucun compte ne correspond",
+    "emptyBody": "Changez la recherche ou effacez les filtres.",
+    "Toolbar": {
+      "searchPlaceholder": "Nom, e-mail, studio…",
+      "searchLabel": "Rechercher des comptes",
+      "clearSearch": "Effacer la recherche",
+      "country": "Filtrer par pays",
+      "allCountries": "Tous les pays",
+      "studio": "Filtrer par studio",
+      "sort": "Trier les comptes",
+      "role": "Filtrer par rôle",
+      "all": "Tous",
+      "apprentices": "Apprentis",
+      "teachers": "Professeurs",
+      "admins": "Admins",
+      "anyStudio": "Tout studio",
+      "atStudio": "En studio",
+      "independent": "Indépendant",
+      "nameAsc": "Nom A–Z",
+      "nameDesc": "Nom Z–A",
+      "joinedDesc": "Plus récents",
+      "joinedAsc": "Plus anciens"
+    },
+    "Table": {
+      "user": "Compte",
+      "role": "Rôle",
+      "joined": "Arrivée",
+      "actions": "Actions",
+      "actionsFor": "Actions pour {name}",
+      "changeRole": "Changer le rôle"
+    },
+    "AddUser": {
+      "title": "Ajouter un compte",
+      "description": "La personne recevra un e-mail pour se connecter avec un code à usage unique.",
+      "name": "Nom",
+      "namePlaceholder": "Maria Lopez",
+      "email": "E-mail",
+      "emailPlaceholder": "maria@puertoink.academy",
+      "role": "Rôle",
+      "submit": "Ajouter",
+      "inviteSent": "Invitation envoyée à {email}",
+      "nameRequired": "Saisissez un nom.",
+      "emailRequired": "Saisissez un e-mail.",
+      "emailInvalid": "Saisissez un e-mail valide.",
+      "emailTaken": "Cet e-mail est déjà utilisé."
+    },
+    "ChangeRole": {
+      "title": "Changer le rôle",
+      "role": "Rôle",
+      "save": "Enregistrer",
+      "saved": "{name} est maintenant {role}"
+    }
+  },
+  "Errors": {
+    "unknownEmail": "Aucun compte n'utilise cet e-mail. Demandez à un admin de vous ajouter.",
+    "invalidCode": "Saisissez le code à 6 chiffres reçu par e-mail.",
+    "levelMissing": "Ce niveau n'existe pas.",
+    "levelLocked": "Ce niveau est verrouillé.",
+    "pendingReview": "Ce niveau a déjà un envoi en attente de note.",
+    "alreadyMastered": "Vous avez déjà maîtrisé ce niveau.",
+    "noPhotos": "Ajoutez au moins une photo."
+  }
+}

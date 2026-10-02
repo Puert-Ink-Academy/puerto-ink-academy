@@ -1,0 +1,443 @@
+{
+  "Metadata": {
+    "title": "Puerto Ink Academy",
+    "description": "The Next Evolution in Tattoo Education",
+    "loginTitle": "Sign in · Puerto Ink Academy"
+  },
+  "Common": {
+    "language": "Language",
+    "close": "Close",
+    "cancel": "Cancel",
+    "you": "You"
+  },
+  "Nav": {
+    "primary": "Academy",
+    "dashboard": "Dashboard",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "curriculum": "Curriculum",
+    "users": "Users",
+    "grading": "Grading",
+    "accountMenu": "Account menu",
+    "viewProfile": "View profile",
+    "logOut": "Log out",
+    "loggedOut": "You've been logged out"
+  },
+  "Roles": {
+    "APPRENTICE": "Apprentice",
+    "TEACHER": "Teacher",
+    "ADMIN": "Admin"
+  },
+  "NotFound": {
+    "title": "404 - Level Not Found",
+    "home": "Return Home"
+  },
+  "Marketing": {
+    "signIn": "Sign in",
+    "tagline": "The Next Evolution in Tattoo Education",
+    "intro": "Train level by level, get graded by real artists, and climb the leaderboard.",
+    "howItWorksLink": "How it works",
+    "inviteOnly": "Invite only. Your studio sets up your account.",
+    "scrollToHowItWorks": "Scroll to how it works",
+    "ctaTitle": "Ready to pick up the machine?",
+    "ctaBody": "Sign in with the email your studio registered. We'll send you a one-time code.",
+    "homeScreen": "Add it to your home screen for the full-screen app.",
+    "contact": "Studio wants in? {email}",
+    "copyright": "© {year} Puerto Ink Academy",
+    "HowItWorks": {
+      "eyebrow": "How it works",
+      "title": "Three steps, on repeat",
+      "learnTitle": "Learn the level",
+      "learnBody": "Each level has a clear objective, a hands-on exercise, teacher tips and reference material.",
+      "submitTitle": "Submit your work",
+      "submitBody": "Photograph your practice skin and send it in. Your teacher sees it in their grading queue.",
+      "gradedTitle": "Get graded and level up",
+      "gradedBody": "Get a score and written feedback. Pass to unlock the next level, or retry as often as you need.",
+      "rulePass": "{score}/10 passes",
+      "ruleXp": "Score × 10 = XP",
+      "ruleMastery": "{score}/10 = Mastery"
+    },
+    "Preview": {
+      "eyebrow": "Inside the academy",
+      "title": "Your training, built like a game",
+      "body": "Every style is a skill tree. Every level is a real exercise, graded by a real artist.",
+      "chooseTitle": "Choose your style",
+      "chooseCaption": "Styles unlock in order, so you master the fundamentals first.",
+      "treeTitle": "Climb the skill tree",
+      "treeCaption": "Pass a level with {score}/10 or better to unlock the next one.",
+      "masteryTitle": "Earn mastery",
+      "masteryCaption": "Retry any passed level. A perfect {score}/10 earns the Mastery Badge.",
+      "leaderboardTitle": "Rise up the leaderboard",
+      "leaderboardCaption": "Per-style rankings, refreshed with every grade."
+    },
+    "Path": {
+      "eyebrow": "The path",
+      "title": "Five styles. One journey.",
+      "body": "Master each style to unlock the next, from precise fine line to painterly watercolor.",
+      "startHere": "Start here",
+      "step": "Step {number}"
+    }
+  },
+  "Auth": {
+    "title": "Sign in",
+    "subtitle": "We'll email you a one-time code. No password needed.",
+    "demo": "Demo mode: any 6-digit code works.",
+    "email": "Email",
+    "emailPlaceholder": "you@puertoink.academy",
+    "sendCode": "Send code",
+    "sending": "Sending…",
+    "codeSent": "We sent a code to <strong>{email}</strong>",
+    "codeLabel": "6-digit code",
+    "verify": "Verify",
+    "verifying": "Verifying…",
+    "differentEmail": "Use a different email",
+    "resend": "Resend code",
+    "resent": "New code sent to {email}"
+  },
+  "Apprentice": {
+    "Dashboard": {
+      "eyebrow": "Choose your path",
+      "title": "Dashboard",
+      "subtitle": "Pick a skill tree to train today."
+    },
+    "Stats": {
+      "categories": "Categories",
+      "totalXp": "Total XP",
+      "averageScore": "Avg Score",
+      "completed": "Completed",
+      "failedAttempts": "Failed Attempts"
+    },
+    "CategoryCard": {
+      "locked": "Locked",
+      "notStarted": "Not started",
+      "mastered": "Mastered",
+      "inProgress": "In progress",
+      "step": "Step {number}",
+      "currentLevel": "Current Level",
+      "ofTotal": "of {total}",
+      "categoryXp": "Category XP",
+      "levelProgress": "Level {level}:",
+      "progressLabel": "{category} progress",
+      "unlockHint": "Complete {previous} to unlock",
+      "unlockHintGeneric": "Complete the previous style to unlock",
+      "continue": "Continue",
+      "startTraining": "Start training",
+      "lockedLabel": "{category}: locked. {hint}",
+      "cardLabel": "{category}: {status}, level {level} of {total}, {xp} XP, {percent}% complete"
+    },
+    "Category": {
+      "back": "Back to dashboard",
+      "eyebrow": "Skill Tree",
+      "summary": "Level {level} of {total} · {xp} XP"
+    },
+    "SkillTree": {
+      "level": "Level {level}",
+      "mastered": "Mastered",
+      "completed": "Completed",
+      "active": "Active",
+      "continue": "Continue",
+      "locked": "Locked",
+      "score": "{score}/10",
+      "labelActive": "Level {level}: {title}, active",
+      "labelCompleted": "Level {level}: {title}, completed",
+      "labelScored": "Level {level}: {title}, {mastered, select, true {mastered} other {completed}} {score}/10"
+    },
+    "Level": {
+      "back": "Back to {category}",
+      "eyebrow": "{category} · Level {level}",
+      "mastered": "Mastered",
+      "completed": "Completed",
+      "objective": "Objective",
+      "exercise": "Exercise",
+      "tips": "Tips",
+      "references": "Reference Material",
+      "teacherFeedback": "Teacher Feedback"
+    },
+    "Result": {
+      "passed": "Level Passed!",
+      "bestScore": "Best Score",
+      "score": "Score",
+      "xpEarned": "XP Earned",
+      "attempts": "Attempts",
+      "scoreValue": "{score}/10",
+      "xpValue": "+{xp}"
+    },
+    "Mastery": {
+      "label": "Mastery Badge",
+      "title": "{score}/10 Perfect Execution",
+      "subtitle": "Mastered. No further submissions needed."
+    },
+    "Attempts": {
+      "title": "Attempts",
+      "attempt": "Attempt {number}",
+      "pendingReview": "Pending review",
+      "waiting": "Waiting for your teacher's grade and feedback.",
+      "outcome": "{passed, select, true {Pass} other {Fail}} · {score}/10 · +{xp} XP"
+    },
+    "Submission": {
+      "headingFirst": "Your Submission",
+      "headingRetry": "Try Again",
+      "headingImprove": "Go for {score}/10",
+      "buttonFirst": "Submit Exercise",
+      "buttonRetry": "Resubmit Exercise",
+      "buttonImprove": "Resubmit for Better Score (Max {score})",
+      "retryScore": "Score: {score}/10. Review teacher feedback and try again",
+      "improveHint": "Your best score counts. A {score}/10 earns +{xp} XP and the Mastery Badge.",
+      "pendingButton": "Pending Teacher Review",
+      "pendingBody": "Your task is waiting for a grade. You can review the theory or practice other unlocked tasks while you wait.",
+      "reviewTheory": "Review the theory",
+      "backTo": "Back to {category}",
+      "sending": "Sending…",
+      "sent": "Your submission has been sent to the teacher"
+    },
+    "Upload": {
+      "locked": "Uploads are locked while your submission is reviewed",
+      "prompt": "Tap to add photos or drag them here",
+      "hint": "You can add several images",
+      "selected": "{count, plural, one {# photo} other {# photos}} selected",
+      "remove": "Remove {name}"
+    }
+  },
+  "Submissions": {
+    "photoTitle": "Photo {index} of {total}",
+    "closePhoto": "Close photo",
+    "previousPhoto": "Previous photo",
+    "nextPhoto": "Next photo",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "tapToZoom": "Tap to zoom",
+    "openFullscreen": "Open photo {index} of {total} fullscreen",
+    "photosGroup": "Submission photos",
+    "showPhoto": "Show photo {index}",
+    "viewPhoto": "View photo {index} of {total}"
+  },
+  "Leaderboard": {
+    "eyebrow": "Season Rankings",
+    "title": "Leaderboard",
+    "apprentices": "{count, plural, one {# apprentice} other {# apprentices}}",
+    "tabsLabel": "Leaderboard",
+    "captionScope": "Ranked by {scope} XP · {count} ranked",
+    "emptyTitle": "No one ranked in {scope} yet",
+    "emptyBody": "The first passed level takes the crown.",
+    "lockedHint": "Complete {previous} to unlock {category}",
+    "Table": {
+      "rank": "Rank",
+      "apprentice": "Apprentice",
+      "level": "Level",
+      "xp": "XP",
+      "average": "Avg",
+      "levelValue": "Level {level}",
+      "rankLabel": "Rank {rank}"
+    },
+    "Banner": {
+      "label": "Your ranking",
+      "levelInScope": "Level {level} · {scope}",
+      "earnToRank": "Earn {scope} XP to get ranked",
+      "toPass": "{xp} XP to pass #{rank}",
+      "xp": "XP"
+    }
+  },
+  "Profile": {
+    "avatarLabel": "{name}'s avatar",
+    "studioPrefix": "Studio:",
+    "publicSubtitle": "Puerto Ink Academy apprentice",
+    "rank": "Rank: {rank}",
+    "edit": "Edit profile",
+    "Stats": {
+      "totalXp": "Total XP",
+      "perfect": "Perfect {score}/10<lower>s</lower> Achieved",
+      "levelsCompleted": "Levels Completed"
+    },
+    "Edit": {
+      "title": "Edit Profile",
+      "description": "How you appear on your profile and the leaderboard.",
+      "artistName": "Artist Name",
+      "studio": "Tattoo Studio",
+      "nationality": "Nationality",
+      "optional": "Optional",
+      "artistPlaceholder": "Lines by Maria",
+      "studioPlaceholder": "Leave empty if not at a studio",
+      "chooseCountry": "Choose a country",
+      "tooLong": "Keep it under {max} characters.",
+      "chooseNationality": "Choose a nationality.",
+      "saving": "Saving…",
+      "save": "Save Profile",
+      "updated": "Profile updated",
+      "ownProfile": "You can only edit your own profile.",
+      "checkFields": "Check the highlighted fields."
+    },
+    "Standings": {
+      "title": "Leaderboard Standings",
+      "rankLabel": "{scope} Rank",
+      "locked": "Locked",
+      "unranked": "Unranked",
+      "ofTotal": "of {total}",
+      "xp": "{xp} XP"
+    },
+    "Evolution": {
+      "title": "Evolution Portfolio",
+      "subtitle": "Your first try next to your best.",
+      "emptyTitle": "No comebacks yet.",
+      "emptyBody": "Retry a level to show how far you've come.",
+      "first": "First Attempt",
+      "best": "Best Attempt",
+      "openFirst": "Open first attempt photo fullscreen",
+      "openBest": "Open best attempt photo fullscreen",
+      "score": "Score: {score}/10",
+      "epic": " - EPIC",
+      "levelTitle": "Level {level} · {title}",
+      "gain": "+{points} points",
+      "inDays": "in {days, plural, one {# day} other {# days}}"
+    },
+    "Showcase": {
+      "title": "Mastery Showcase",
+      "emptyTitle": "No perfect scores yet.",
+      "emptyBody": "Retry a passed level to earn your first.",
+      "tileLabel": "{category} Level {level}: {title}, {score}/10",
+      "score": "{score}/10",
+      "levelTitle": "Level {level} · {title}"
+    }
+  },
+  "Teacher": {
+    "Grading": {
+      "title": "Submissions to grade",
+      "summary": "{submissions, plural, one {# submission is} other {# submissions are}} waiting for feedback across {styles, plural, one {# style} other {# styles}}.",
+      "row": "{name} — Level {level} — {xp} XP",
+      "pass": "Pass",
+      "fail": "Fail",
+      "unlocks": "Unlocks the next level",
+      "retry": "The apprentice will retry this exercise",
+      "xpGain": "+{xp} XP",
+      "score": "Score (0–10)",
+      "feedback": "Teacher Feedback",
+      "feedbackPlaceholder": "What went well, and what to work on next",
+      "submit": "Submit Grade",
+      "submitted": "Grade submitted for {name}",
+      "meta": "{category} · Level {level} · {title}"
+    },
+    "Curriculum": {
+      "title": "Curriculum",
+      "summary": "{categories, plural, one {# category} other {# categories}} · {levels, plural, one {# permanent level} other {# permanent levels}}",
+      "createCategory": "Create Category",
+      "levelCount": "{count, plural, one {# level} other {# levels}}",
+      "createLevel": "Create New Level",
+      "createLevelIn": "Create new level in {category}",
+      "emptyTitle": "No levels yet.",
+      "emptyBody": "Create the first one.",
+      "Table": {
+        "level": "Level",
+        "title": "Title",
+        "objective": "Objective",
+        "pass": "Pass",
+        "xp": "XP",
+        "actions": "Actions",
+        "rowTitle": "Level {level}: {title}",
+        "edit": "Edit Level {level}"
+      },
+      "Category": {
+        "title": "Create Category",
+        "description": "Define a new style. You can add its levels right after.",
+        "name": "Name",
+        "namePlaceholder": "Japanese",
+        "tagline": "Tagline",
+        "optional": "(optional)",
+        "taglinePlaceholder": "Bold waves, koi and flowing backgrounds",
+        "submit": "Create Category",
+        "created": "{name} category created",
+        "nameRequired": "Enter a category name.",
+        "nameInvalid": "Use at least one letter or number.",
+        "nameTaken": "A category with this name already exists."
+      },
+      "Level": {
+        "createTitle": "Create New Level",
+        "editTitle": "Edit Level {level}",
+        "createDescription": "Add a permanent level to {category}.",
+        "editDescription": "{category} · Saving creates a new version, so past submissions keep their original lesson.",
+        "number": "Level Number",
+        "title": "Title",
+        "titlePlaceholder": "Line Control",
+        "objective": "Objective",
+        "objectivePlaceholder": "What the apprentice needs to learn",
+        "exercise": "Exercise Description",
+        "exercisePlaceholder": "Detailed description of the task",
+        "tips": "Tips",
+        "tipsPlaceholder": "Advice from the teacher",
+        "passingScore": "Passing Score",
+        "xpReward": "XP Reward",
+        "save": "Save Level",
+        "duplicate": "Level {level} already exists in {category}.",
+        "created": "{category} Level {level} created",
+        "saved": "{category} Level {level} saved as a new version"
+      }
+    }
+  },
+  "Admin": {
+    "eyebrow": "Admin",
+    "title": "User Management",
+    "accounts": "{count, plural, one {# account} other {# accounts}}",
+    "addUser": "Add user",
+    "showing": "Showing {visible} of {total}",
+    "clearFilters": "Clear filters",
+    "emptyTitle": "No users match these filters",
+    "emptyBody": "Try a different search or clear the filters.",
+    "Toolbar": {
+      "searchPlaceholder": "Search name, email, studio…",
+      "searchLabel": "Search users",
+      "clearSearch": "Clear search",
+      "country": "Filter by country",
+      "allCountries": "All countries",
+      "studio": "Filter by studio",
+      "sort": "Sort users",
+      "role": "Filter by role",
+      "all": "All",
+      "apprentices": "Apprentices",
+      "teachers": "Teachers",
+      "admins": "Admins",
+      "anyStudio": "Any studio",
+      "atStudio": "At a studio",
+      "independent": "Independent",
+      "nameAsc": "Name A–Z",
+      "nameDesc": "Name Z–A",
+      "joinedDesc": "Newest first",
+      "joinedAsc": "Oldest first"
+    },
+    "Table": {
+      "user": "User",
+      "role": "Role",
+      "joined": "Joined",
+      "actions": "Actions",
+      "actionsFor": "Actions for {name}",
+      "changeRole": "Change Role"
+    },
+    "AddUser": {
+      "title": "Add User",
+      "description": "They'll get an email to sign in with a one-time code.",
+      "name": "Name",
+      "namePlaceholder": "Maria Lopez",
+      "email": "Email",
+      "emailPlaceholder": "maria@puertoink.academy",
+      "role": "Role",
+      "submit": "Add User",
+      "inviteSent": "Invite sent to {email}",
+      "nameRequired": "Enter a name.",
+      "emailRequired": "Enter an email.",
+      "emailInvalid": "Enter a valid email.",
+      "emailTaken": "Someone already uses this email."
+    },
+    "ChangeRole": {
+      "title": "Change Role",
+      "role": "Role",
+      "save": "Save Changes",
+      "saved": "{name} is now a {role}"
+    }
+  },
+  "Errors": {
+    "unknownEmail": "No account uses this email. Ask an admin to add you.",
+    "invalidCode": "Enter the 6-digit code from your email.",
+    "levelMissing": "This level doesn't exist.",
+    "levelLocked": "This level is locked.",
+    "pendingReview": "This level already has a submission waiting for a grade.",
+    "alreadyMastered": "You've already mastered this level.",
+    "noPhotos": "Add at least one photo."
+  }
+}

@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
 export function Custom404() {
+  const t = useTranslations("NotFound");
+
   return (
     <main className="relative flex min-h-svh flex-col items-center justify-center px-6 py-16 text-center">
       <div
@@ -12,7 +15,7 @@ export function Custom404() {
       />
       <div className="relative flex max-w-xl flex-col items-center gap-6">
         <h1 className="text-4xl font-semibold tracking-tight text-foreground drop-shadow-[0_0_24px_oklch(0.985_0_0/0.45)] sm:text-5xl">
-          404 - Level Not Found
+          {t("title")}
         </h1>
         <Link
           href="/"
@@ -21,7 +24,7 @@ export function Custom404() {
             "h-11 px-5",
           )}
         >
-          Return Home
+          {t("home")}
         </Link>
       </div>
     </main>

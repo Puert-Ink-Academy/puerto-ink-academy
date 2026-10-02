@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -58,9 +59,10 @@ function LevelForm({
   initialValues: LevelFormValues;
   onSave: (values: LevelFormValues) => void;
 }) {
+  const t = useTranslations("Teacher.Curriculum.Level");
   const baseId = useId();
   const id = (name: keyof LevelFormValues) => `${baseId}-${name}`;
-  const [levelError, setLevelError] = useState<string>();
+  const [duplicateLevel, setDuplicateLevel] = useState<number>();
 
   return (
     <form
@@ -69,19 +71,20 @@ function LevelForm({
         event.preventDefault();
         const values = levelFormFromData(new FormData(event.currentTarget));
         if (takenLevels.includes(values.level)) {
-          setLevelError(`Level ${values.level} already exists in ${categoryName}.`);
+          setDuplicateLevel(values.level);
           return;
         }
         toast.success(
-          mode === "create"
-            ? `${categoryName} Level ${values.level} created`
-            : `${categoryName} Level ${values.level} saved as a new version`,
+          t(mode === "create" ? "created" : "saved", {
+            category: categoryName,
+            level: values.level,
+          }),
         );
         onSave(values);
       }}
     >
       <div className="flex flex-1 flex-col gap-5 overflow-y-auto px-5 pb-5">
-        <Field id={id("level")} label="Level Number">
+        <Field id={id("level")} label={t("number")}>
           <Input
             id={id("level")}
             name="level"
@@ -91,56 +94,56 @@ function LevelForm({
             step={1}
             required
             defaultValue={initialValues.level}
-            onChange={() => setLevelError(undefined)}
-            aria-invalid={levelError ? true : undefined}
-            aria-describedby={levelError ? `${id("level")}-error` : undefined}
+            onChange={() => setDuplicateLevel(undefined)}
+            aria-invalid={duplicateLevel !== undefined ? true : undefined}
+            aria-describedby={duplicateLevel !== undefined ? `${id("level")}-error` : undefined}
             className={`h-11 ${fieldClassName}`}
           />
-          {levelError && (
+          {duplicateLevel !== undefined && (
             <p id={`${id("level")}-error`} className="text-sm text-rose-400">
-              {levelError}
+              {t("duplicate", { level: duplicateLevel, category: categoryName })}
             </p>
           )}
         </Field>
-        <Field id={id("title")} label="Title">
+        <Field id={id("title")} label={t("title")}>
           <Input
             id={id("title")}
             name="title"
             required
             defaultValue={initialValues.title}
-            placeholder="Line Control"
+            placeholder={t("titlePlaceholder")}
             className={`h-11 ${fieldClassName}`}
           />
         </Field>
-        <Field id={id("objective")} label="Objective">
+        <Field id={id("objective")} label={t("objective")}>
           <Textarea
             id={id("objective")}
             name="objective"
             defaultValue={initialValues.objective}
-            placeholder="What the apprentice needs to learn"
+            placeholder={t("objectivePlaceholder")}
             className={`min-h-20 ${fieldClassName}`}
           />
         </Field>
-        <Field id={id("exercise")} label="Exercise Description">
+        <Field id={id("exercise")} label={t("exercise")}>
           <Textarea
             id={id("exercise")}
             name="exercise"
             defaultValue={initialValues.exercise}
-            placeholder="Detailed description of the task"
+            placeholder={t("exercisePlaceholder")}
             className={`min-h-28 ${fieldClassName}`}
           />
         </Field>
-        <Field id={id("tips")} label="Tips">
+        <Field id={id("tips")} label={t("tips")}>
           <Textarea
             id={id("tips")}
             name="tips"
             defaultValue={initialValues.tips}
-            placeholder="Advice from the teacher"
+            placeholder={t("tipsPlaceholder")}
             className={`min-h-20 ${fieldClassName}`}
           />
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field id={id("passingScore")} label="Passing Score">
+          <Field id={id("passingScore")} label={t("passingScore")}>
             <Input
               id={id("passingScore")}
               name="passingScore"
@@ -154,7 +157,7 @@ function LevelForm({
               className={`h-11 ${fieldClassName}`}
             />
           </Field>
-          <Field id={id("xpReward")} label="XP Reward">
+          <Field id={id("xpReward")} label={t("xpReward")}>
             <Input
               id={id("xpReward")}
               name="xpReward"
@@ -175,7 +178,7 @@ function LevelForm({
           size="lg"
           className="h-11 w-full bg-amber-400 text-zinc-950 hover:bg-amber-300"
         >
-          Save Level
+          {t("save")}
         </Button>
       </SheetFooter>
     </form>
@@ -199,6 +202,8 @@ export function LevelFormSheet({
   initialValues: LevelFormValues;
   onSave: (values: LevelFormValues) => void;
 }) {
+  const t = useTranslations("Teacher.Curriculum.Level");
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
@@ -207,12 +212,12 @@ export function LevelFormSheet({
       >
         <SheetHeader className="p-5 pt-[calc(1.25rem+env(safe-area-inset-top))] pr-14">
           <SheetTitle className="text-lg font-semibold text-zinc-50">
-            {mode === "create" ? "Create New Level" : `Edit Level ${initialValues.level}`}
+            {mode === "create" ? t("createTitle") : t("editTitle", { level: initialValues.level })}
           </SheetTitle>
           <SheetDescription className="text-zinc-400">
             {mode === "create"
-              ? `Add a permanent level to ${categoryName}.`
-              : `${categoryName} · Saving creates a new version, so past submissions keep their original lesson.`}
+              ? t("createDescription", { category: categoryName })
+              : t("editDescription", { category: categoryName })}
           </SheetDescription>
         </SheetHeader>
         <LevelForm

@@ -1,18 +1,23 @@
 import { Crown } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/section-label";
+import { MASTERY_SCORE } from "@/lib/grading";
 import type { LevelResult } from "@/lib/mock/level-results";
 
 export function MasteryBadge({ result }: { result: LevelResult }) {
+  const t = useTranslations("Apprentice.Mastery");
+  const tResult = useTranslations("Apprentice.Result");
+  const tLevel = useTranslations("Apprentice.Level");
   const stats = [
-    { label: "Score", value: `${result.highestScore}/10` },
-    { label: "XP Earned", value: `+${result.xp}` },
-    { label: "Attempts", value: String(result.attempts) },
+    { label: tResult("score"), value: tResult("scoreValue", { score: result.highestScore }) },
+    { label: tResult("xpEarned"), value: tResult("xpValue", { xp: result.xp }) },
+    { label: tResult("attempts"), value: String(result.attempts) },
   ];
 
   return (
     <section
-      aria-label="Mastery Badge"
+      aria-label={t("label")}
       className="relative overflow-hidden rounded-2xl border border-amber-400/50 bg-zinc-900 p-5 shadow-[0_0_48px_-12px_var(--color-amber-400)] sm:p-6"
     >
       <span
@@ -30,12 +35,12 @@ export function MasteryBadge({ result }: { result: LevelResult }) {
           </span>
         </span>
         <p className="mt-4 text-[0.7rem] font-medium tracking-[0.2em] text-amber-400 uppercase">
-          Mastery Badge
+          {t("label")}
         </p>
         <h2 className="mt-1 bg-gradient-to-b from-amber-100 to-amber-400 bg-clip-text text-2xl font-semibold tracking-tight text-transparent sm:text-3xl">
-          10/10 Perfect Execution
+          {t("title", { score: MASTERY_SCORE })}
         </h2>
-        <p className="mt-1 text-sm text-zinc-400">Mastered. No further submissions needed.</p>
+        <p className="mt-1 text-sm text-zinc-400">{t("subtitle")}</p>
       </div>
 
       <dl className="relative mt-5 grid grid-cols-3 gap-3">
@@ -54,7 +59,7 @@ export function MasteryBadge({ result }: { result: LevelResult }) {
         ))}
       </dl>
       <div className="relative mt-4">
-        <SectionLabel as="h3">Teacher Feedback</SectionLabel>
+        <SectionLabel as="h3">{tLevel("teacherFeedback")}</SectionLabel>
         <p className="mt-1.5 text-sm leading-relaxed text-zinc-300">{result.feedback}</p>
       </div>
     </section>

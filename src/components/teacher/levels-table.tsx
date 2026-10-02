@@ -1,6 +1,7 @@
 "use client";
 
 import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/panel";
@@ -27,6 +28,7 @@ export function LevelsTable({
   lessons: CurriculumLevel[];
   onEdit: (lesson: CurriculumLevel) => void;
 }) {
+  const t = useTranslations("Teacher.Curriculum.Table");
   const style = getCategoryStyle(categoryId);
 
   return (
@@ -35,22 +37,22 @@ export function LevelsTable({
         <TableHeader>
           <TableRow className="border-zinc-800 hover:bg-transparent">
             <TableHead className="w-16 pl-4 text-[0.7rem] tracking-[0.12em] text-zinc-500 uppercase">
-              Level
+              {t("level")}
             </TableHead>
             <TableHead className="text-[0.7rem] tracking-[0.12em] text-zinc-500 uppercase">
-              Title
+              {t("title")}
             </TableHead>
             <TableHead className="hidden text-[0.7rem] tracking-[0.12em] text-zinc-500 uppercase md:table-cell">
-              Objective
+              {t("objective")}
             </TableHead>
             <TableHead className="hidden w-16 text-[0.7rem] tracking-[0.12em] text-zinc-500 uppercase sm:table-cell">
-              Pass
+              {t("pass")}
             </TableHead>
             <TableHead className="hidden w-16 text-[0.7rem] tracking-[0.12em] text-zinc-500 uppercase sm:table-cell">
-              XP
+              {t("xp")}
             </TableHead>
             <TableHead className="w-14 pr-4">
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">{t("actions")}</span>
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -68,7 +70,7 @@ export function LevelsTable({
                 </span>
               </TableCell>
               <TableCell className="truncate font-medium text-zinc-50">
-                Level {lesson.level}: {lesson.title}
+                {t("rowTitle", { level: lesson.level, title: lesson.title })}
               </TableCell>
               <TableCell className="hidden truncate text-zinc-400 md:table-cell">
                 {lesson.objective}
@@ -83,7 +85,7 @@ export function LevelsTable({
                 <Button
                   variant="ghost"
                   size="icon"
-                  aria-label={`Edit Level ${lesson.level}`}
+                  aria-label={t("edit", { level: lesson.level })}
                   onClick={() => onEdit(lesson)}
                   className="size-10 text-zinc-400 hover:bg-zinc-800 hover:text-amber-300"
                 >

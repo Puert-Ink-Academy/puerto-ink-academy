@@ -1,6 +1,7 @@
 "use client";
 
 import { Mail, Pencil, ShieldCheck, Store } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { EditArtistSheet } from "@/components/profile/edit-artist-sheet";
@@ -30,6 +31,9 @@ export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
     nationality: profile.nationality,
   });
   const [editOpen, setEditOpen] = useState(false);
+  const t = useTranslations("Profile");
+  const tCommon = useTranslations("Common");
+  const tRoles = useTranslations("Roles");
 
   return (
     <header className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 p-5 sm:p-6">
@@ -40,7 +44,7 @@ export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
       <div className="relative flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
         <span
           role="img"
-          aria-label={`${profile.name}'s avatar`}
+          aria-label={t("avatarLabel", { name: profile.name })}
           className="flex size-24 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-orange-700 text-3xl font-semibold text-zinc-950 shadow-[0_0_32px_-4px_var(--color-amber-400)] ring-4 ring-amber-400/30 ring-offset-4 ring-offset-zinc-900"
         >
           {initials(profile.name)}
@@ -53,7 +57,7 @@ export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
             </h1>
             {profile.isCurrentUser && (
               <span className="rounded-full border border-amber-400/50 bg-amber-400/10 px-2 py-0.5 text-[0.6rem] font-medium tracking-[0.12em] text-amber-300 uppercase">
-                You
+                {tCommon("you")}
               </span>
             )}
           </div>
@@ -65,7 +69,7 @@ export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
           {details.studio && (
             <p className="mt-1.5 flex items-center justify-center gap-1.5 text-sm text-zinc-300 sm:justify-start">
               <Store className="size-4 shrink-0 text-zinc-500" aria-hidden />
-              <span className="sr-only">Studio:</span>
+              <span className="sr-only">{t("studioPrefix")}</span>
               <span className="truncate">{details.studio}</span>
             </p>
           )}
@@ -76,13 +80,13 @@ export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
                 <span className="truncate">{profile.email}</span>
               </>
             ) : (
-              "Puerto Ink Academy apprentice"
+              t("publicSubtitle")
             )}
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
             <p className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-medium text-amber-300">
               <ShieldCheck className="size-3.5" aria-hidden />
-              Rank: {profile.rankTitle}
+              {t("rank", { rank: tRoles("APPRENTICE") })}
             </p>
             {profile.isCurrentUser && (
               <Button
@@ -92,7 +96,7 @@ export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
                 className="h-8 rounded-full border-zinc-700 bg-zinc-950/40 px-3 text-xs text-zinc-200 hover:border-amber-400/60 hover:text-amber-300"
               >
                 <Pencil className="size-3.5" aria-hidden />
-                Edit profile
+                {t("edit")}
               </Button>
             )}
           </div>

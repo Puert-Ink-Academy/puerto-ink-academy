@@ -6,6 +6,7 @@ import {
   XCircle,
   type LucideIcon,
 } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/section-label";
 import type { ApprenticeDashboardData } from "@/lib/mock/apprentice-dashboard";
@@ -39,17 +40,34 @@ const toneStyles: Record<StatTone, { icon: string; value: string; card: string }
 };
 
 export function StatGrid({ data }: { data: ApprenticeDashboardData }) {
+  const t = useTranslations("Apprentice.Stats");
+  const format = useFormatter();
   const stats: Stat[] = [
     {
-      label: "Categories",
+      label: t("categories"),
       value: `${data.categoriesStarted}/${data.totalCategories}`,
       icon: LayoutGrid,
       tone: "amber",
     },
-    { label: "Total XP", value: data.xp.toLocaleString("en-US"), icon: Sparkles, tone: "amber" },
-    { label: "Avg Score", value: `${data.averageScore.toFixed(1)}/10`, icon: Target, tone: "neutral" },
-    { label: "Completed", value: String(data.completedExercises), icon: CheckCircle2, tone: "neutral" },
-    { label: "Failed Attempts", value: String(data.failedAttempts), icon: XCircle, tone: "rose" },
+    { label: t("totalXp"), value: format.number(data.xp), icon: Sparkles, tone: "amber" },
+    {
+      label: t("averageScore"),
+      value: `${format.number(data.averageScore, "score")}/10`,
+      icon: Target,
+      tone: "neutral",
+    },
+    {
+      label: t("completed"),
+      value: format.number(data.completedExercises),
+      icon: CheckCircle2,
+      tone: "neutral",
+    },
+    {
+      label: t("failedAttempts"),
+      value: format.number(data.failedAttempts),
+      icon: XCircle,
+      tone: "rose",
+    },
   ];
 
   return (

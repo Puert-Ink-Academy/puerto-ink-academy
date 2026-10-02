@@ -8,7 +8,7 @@ export default function AdminLeaderboardPage() {
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6 sm:py-8">
-      <LeaderboardHeader nav="admin" count={rankings.global.length} />
+      <LeaderboardHeader nav="admin" count={rankings["fine-line"].length} />
       <LeaderboardTabs scopes={leaderboardScopes} rankings={rankings} />
     </main>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { FolderPlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { navAccent, roleBadge } from "@/components/layout/nav-items";
@@ -31,6 +32,8 @@ export function CurriculumManager({
   categories: CurriculumCategory[];
   lessons: CurriculumLevel[];
 }) {
+  const t = useTranslations("Teacher.Curriculum");
+  const tRoles = useTranslations("Roles");
   const [categoryList, setCategoryList] = useState(categories);
   const [levelList, setLevelList] = useState(lessons);
   const [openItems, setOpenItems] = useState<string[]>(
@@ -94,12 +97,12 @@ export function CurriculumManager({
     <>
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <SectionLabel className={navAccent[nav].eyebrow}>{roleBadge[nav].label}</SectionLabel>
+          <SectionLabel className={navAccent[nav].eyebrow}>{tRoles(roleBadge[nav].role)}</SectionLabel>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
-            Curriculum
+            {t("title")}
           </h1>
           <p className="mt-1 text-sm text-zinc-400">
-            {categoryList.length} categories · {levelList.length} permanent levels
+            {t("summary", { categories: categoryList.length, levels: levelList.length })}
           </p>
         </div>
         <Button
@@ -112,7 +115,7 @@ export function CurriculumManager({
           className="h-11 w-full px-4 text-amber-300 hover:text-amber-200 sm:w-auto dark:border-amber-400/50 dark:bg-amber-400/10 dark:hover:bg-amber-400/20"
         >
           <FolderPlus />
-          Create Category
+          {t("createCategory")}
         </Button>
       </header>
       <CategoryAccordion

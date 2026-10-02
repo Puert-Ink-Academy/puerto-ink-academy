@@ -103,8 +103,8 @@ export const apprenticeStandings: ApprenticeStanding[] = [
       {
         categoryId: "realism",
         level: 2,
-        first: { score: 7, date: "Jun 3, 2026", photo: mockPhotos.whipShading },
-        best: { score: 10, date: "Jun 11, 2026", photo: mockPhotos.gradientShading },
+        first: { score: 7, date: "2026-06-03", photo: mockPhotos.whipShading },
+        best: { score: 10, date: "2026-06-11", photo: mockPhotos.gradientShading },
       },
     ],
   },
@@ -125,8 +125,8 @@ export const apprenticeStandings: ApprenticeStanding[] = [
       {
         categoryId: "fine-line",
         level: 6,
-        first: { score: 6, date: "Apr 9, 2026", photo: mockPhotos.evolutionRough },
-        best: { score: 10, date: "Apr 21, 2026", photo: mockPhotos.liningDrills },
+        first: { score: 6, date: "2026-04-09", photo: mockPhotos.evolutionRough },
+        best: { score: 10, date: "2026-04-21", photo: mockPhotos.liningDrills },
       },
     ],
   },
@@ -149,8 +149,8 @@ export const apprenticeStandings: ApprenticeStanding[] = [
       {
         categoryId: "fine-line",
         level: 8,
-        first: { score: 7, date: "May 2, 2026", photo: mockPhotos.whipShading },
-        best: { score: 10, date: "May 9, 2026", photo: mockPhotos.gradientShading },
+        first: { score: 7, date: "2026-05-02", photo: mockPhotos.whipShading },
+        best: { score: 10, date: "2026-05-09", photo: mockPhotos.gradientShading },
       },
     ],
   },
@@ -199,8 +199,8 @@ export const apprenticeStandings: ApprenticeStanding[] = [
       {
         categoryId: "fine-line",
         level: 1,
-        first: { score: 8, date: "Feb 6, 2026", photo: mockPhotos.liningDrills },
-        best: { score: 10, date: "Feb 14, 2026", photo: mockPhotos.evolutionClean },
+        first: { score: 8, date: "2026-02-06", photo: mockPhotos.liningDrills },
+        best: { score: 10, date: "2026-02-14", photo: mockPhotos.evolutionClean },
       },
     ],
   },
@@ -244,12 +244,8 @@ export function getRanking(scope: LeaderboardScope): LeaderboardEntry[] {
 }
 
 export function getRankings(): Record<LeaderboardScope, LeaderboardEntry[]> {
-  return {
-    global: getRanking("global"),
-    "fine-line": getRanking("fine-line"),
-    realism: getRanking("realism"),
-    japanese: getRanking("japanese"),
-    traditional: getRanking("traditional"),
-    watercolor: getRanking("watercolor"),
-  };
+  return Object.fromEntries(categoryIds.map((id) => [id, getRanking(id)])) as Record<
+    LeaderboardScope,
+    LeaderboardEntry[]
+  >;
 }

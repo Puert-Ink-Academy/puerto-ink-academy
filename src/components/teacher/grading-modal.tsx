@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2, RotateCcw } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 
@@ -21,6 +22,7 @@ import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
 import { cn } from "cn";
 
 function GradeResult({ score }: { score: number }) {
+  const t = useTranslations("Teacher.Grading");
   const passed = isPassingScore(score);
 
   return (
@@ -45,14 +47,12 @@ function GradeResult({ score }: { score: number }) {
             passed ? "text-emerald-300" : "text-rose-300",
           )}
         >
-          {passed ? "Pass" : "Fail"}
+          {passed ? t("pass") : t("fail")}
         </p>
-        <p className="text-xs text-zinc-400">
-          {passed ? "Unlocks the next level" : "The apprentice will retry this exercise"}
-        </p>
+        <p className="text-xs text-zinc-400">{passed ? t("unlocks") : t("retry")}</p>
       </div>
       <p className="text-sm font-semibold text-amber-300 tabular-nums">
-        +{xpForScore(score)} XP
+        {t("xpGain", { xp: xpForScore(score) })}
       </p>
     </div>
   );
@@ -65,6 +65,7 @@ function GradingForm({
   submission: PendingSubmission;
   onSubmitted: () => void;
 }) {
+  const t = useTranslations("Teacher.Grading");
   const scoreLabelId = useId();
   const feedbackId = useId();
   const [score, setScore] = useState<number | null>(null);
@@ -76,7 +77,7 @@ function GradingForm({
       onSubmit={(event) => {
         event.preventDefault();
         if (score === null) return;
-        toast.success(`Grade submitted for ${submission.apprenticeName}`);
+        toast.success(t("submitted", { name: submission.apprenticeName }));
         onSubmitted();
       }}
     >
@@ -85,7 +86,7 @@ function GradingForm({
           id={scoreLabelId}
           className={sectionLabelVariants()}
         >
-          Score (0–10)
+          {t("score")}
         </p>
         <ScoreInput value={score} onChange={setScore} labelId={scoreLabelId} />
         {score !== null && <GradeResult score={score} />}
@@ -95,13 +96,13 @@ function GradingForm({
           htmlFor={feedbackId}
           className={sectionLabelVariants()}
         >
-          Teacher Feedback
+          {t("feedback")}
         </label>
         <Textarea
           id={feedbackId}
           value={feedback}
           onChange={(event) => setFeedback(event.target.value)}
-          placeholder="What went well, and what to work on next"
+          placeholder={t("feedbackPlaceholder")}
           className="min-h-28 border-zinc-700 bg-zinc-950/60 text-zinc-100 focus-visible:border-amber-400 focus-visible:ring-amber-400/30"
         />
       </div>
@@ -111,7 +112,7 @@ function GradingForm({
         disabled={score === null}
         className="h-11 w-full bg-amber-400 text-zinc-950 hover:bg-amber-300"
       >
-        Submit Grade
+        {t("submit")}
       </Button>
     </form>
   );
@@ -126,6 +127,9 @@ export function GradingModal({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const format = useFormatter();
+  const t = useTranslations("Teacher.Grading");
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {submission && (
@@ -139,9 +143,12 @@ export function GradingModal({
                 {submission.apprenticeName}
               </DialogTitle>
               <DialogDescription className="mt-1 text-zinc-400">
-                {getCategory(submission.categoryId).name} · Level {submission.level} ·{" "}
-                {submission.lessonTitle} ·{" "}
-                {submission.submittedAt}
+                {t("meta", {
+                  category: getCategory(submission.categoryId).name,
+                  level: submission.level,
+                  title: submission.lessonTitle,
+                })}{" "}
+                · {format.relativeTime(new Date(submission.submittedAt))}
               </DialogDescription>
             </div>
             <GradingForm

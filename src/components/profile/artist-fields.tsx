@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { useId, type ReactNode } from "react";
 
 import { CountryFlag } from "@/components/ui/country-flag";
@@ -18,8 +19,9 @@ import {
   STUDIO_MAX_LENGTH,
   type ArtistDetailsErrors,
   type ArtistDetailsInput,
+  type ArtistFieldError,
 } from "@/lib/artist";
-import { countryCodes, countryName, isCountryCode } from "@/lib/countries";
+import { countryName, isCountryCode, sortedCountryCodes } from "@/lib/countries";
 import { cn } from "cn";
 
 const accentFields = {
@@ -30,17 +32,19 @@ const accentFields = {
 function FieldLabel({
   htmlFor,
   optional,
+  optionalLabel,
   children,
 }: {
   htmlFor: string;
   optional?: boolean;
+  optionalLabel?: string;
   children: ReactNode;
 }) {
   return (
     <Label htmlFor={htmlFor} className={sectionLabelVariants()}>
       {children}
       {optional && (
-        <span className="font-normal tracking-normal text-zinc-500 normal-case">Optional</span>
+        <span className="font-normal tracking-normal text-zinc-500 normal-case">{optionalLabel}</span>
       )}
     </Label>
   );
@@ -67,6 +71,17 @@ export function ArtistFields({
   accent: keyof typeof accentFields;
 }) {
   const baseId = useId();
+  const locale = useLocale();
+  const t = useTranslations("Profile.Edit");
+  const fieldError = (field: keyof ArtistDetailsInput, code?: ArtistFieldError) => {
+    if (!code) return undefined;
+    if (code === "tooLong") {
+      return t("tooLong", {
+        max: field === "studio" ? STUDIO_MAX_LENGTH : ARTIST_NAME_MAX_LENGTH,
+      });
+    }
+    return t("chooseNationality");
+  };
   const id = (field: keyof ArtistDetailsInput) => `${baseId}-${field}`;
   const errorId = (field: keyof ArtistDetailsInput) => `${id(field)}-error`;
   const fieldClass = cn(
@@ -79,8 +94,8 @@ export function ArtistFields({
   return (
     <>
       <div className="flex flex-col gap-2">
-        <FieldLabel htmlFor={id("artistName")} optional>
-          Artist Name
+        <FieldLabel htmlFor={id("artistName")} optional optionalLabel={t("optional")}>
+          {t("artistName")}
         </FieldLabel>
         <Input
           id={id("artistName")}
@@ -88,16 +103,16 @@ export function ArtistFields({
           maxLength={ARTIST_NAME_MAX_LENGTH}
           value={value.artistName}
           onChange={(event) => update("artistName", event.target.value)}
-          placeholder="Lines by Maria"
+          placeholder={t("artistPlaceholder")}
           aria-invalid={errors.artistName ? true : undefined}
           aria-describedby={errors.artistName ? errorId("artistName") : undefined}
           className={fieldClass}
         />
-        <FieldError id={errorId("artistName")} message={errors.artistName} />
+        <FieldError id={errorId("artistName")} message={fieldError("artistName", errors.artistName)} />
       </div>
       <div className="flex flex-col gap-2">
-        <FieldLabel htmlFor={id("studio")} optional>
-          Tattoo Studio
+        <FieldLabel htmlFor={id("studio")} optional optionalLabel={t("optional")}>
+          {t("studio")}
         </FieldLabel>
         <Input
           id={id("studio")}
@@ -105,15 +120,15 @@ export function ArtistFields({
           maxLength={STUDIO_MAX_LENGTH}
           value={value.studio}
           onChange={(event) => update("studio", event.target.value)}
-          placeholder="Leave empty if not at a studio"
+          placeholder={t("studioPlaceholder")}
           aria-invalid={errors.studio ? true : undefined}
           aria-describedby={errors.studio ? errorId("studio") : undefined}
           className={fieldClass}
         />
-        <FieldError id={errorId("studio")} message={errors.studio} />
+        <FieldError id={errorId("studio")} message={fieldError("studio", errors.studio)} />
       </div>
       <div className="flex flex-col gap-2">
-        <FieldLabel htmlFor={id("nationality")}>Nationality</FieldLabel>
+        <FieldLabel htmlFor={id("nationality")}>{t("nationality")}</FieldLabel>
         <Select
           value={isCountryCode(value.nationality) ? value.nationality : null}
           onValueChange={(next) => {
@@ -124,31 +139,39 @@ export function ArtistFields({
             id={id("nationality")}
             aria-invalid={errors.nationality ? true : undefined}
             aria-describedby={errors.nationality ? errorId("nationality") : undefined}
-            className={cn(fieldClass, "w-full")}
+            className={cn(fieldClass, "w-full data-[size=default]:h-11")}
           >
             <SelectValue>
               {(selected: unknown) =>
                 isCountryCode(selected) ? (
                   <>
                     <CountryFlag code={selected} />
-                    {countryName(selected)}
+                    {countryName(selected, locale)}
                   </>
                 ) : (
-                  <span className="text-zinc-500">Choose a country</span>
+                  <span className="text-zinc-500">{t("chooseCountry")}</span>
                 )
               }
             </SelectValue>
           </SelectTrigger>
           <SelectContent alignItemWithTrigger={false} className="max-h-72">
-            {countryCodes.map((code) => (
-              <SelectItem key={code} value={code} label={countryName(code)} className="min-h-10">
+            {sortedCountryCodes(locale).map((code) => (
+              <SelectItem
+                key={code}
+                value={code}
+                label={countryName(code, locale)}
+                className="min-h-10"
+              >
                 <CountryFlag code={code} className="self-center" />
-                {countryName(code)}
+                {countryName(code, locale)}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-        <FieldError id={errorId("nationality")} message={errors.nationality} />
+        <FieldError
+          id={errorId("nationality")}
+          message={fieldError("nationality", errors.nationality)}
+        />
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { GradingModal } from "@/components/teacher/grading-modal";
@@ -11,6 +12,8 @@ import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
 import { cn } from "cn";
 
 export function TeacherDashboard({ submissions }: { submissions: PendingSubmission[] }) {
+  const format = useFormatter();
+  const t = useTranslations("Teacher.Grading");
   const [selected, setSelected] = useState<PendingSubmission | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -68,11 +71,15 @@ export function TeacherDashboard({ submissions }: { submissions: PendingSubmissi
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block text-sm font-semibold text-zinc-50">
-                          {submission.apprenticeName} — Level {submission.level} —{" "}
-                          {submission.xp.toLocaleString("en-US")} XP
+                          {t("row", {
+                            name: submission.apprenticeName,
+                            level: submission.level,
+                            xp: format.number(submission.xp),
+                          })}
                         </span>
                         <span className="mt-0.5 block truncate text-xs text-zinc-400">
-                          {submission.lessonTitle} · {submission.submittedAt}
+                          {submission.lessonTitle} ·{" "}
+                          {format.relativeTime(new Date(submission.submittedAt))}
                         </span>
                       </span>
                       <ChevronRight className="size-4 shrink-0 text-zinc-500" aria-hidden />

@@ -10,9 +10,16 @@ export type PendingSubmission = {
   level: number;
   xp: number;
   lessonTitle: string;
+  /** ISO 8601 timestamp. */
   submittedAt: string;
   photos: SubmissionPhoto[];
 };
+
+const loadedAt = Date.now();
+
+function minutesAgo(minutes: number): string {
+  return new Date(loadedAt - minutes * 60_000).toISOString();
+}
 
 export const pendingSubmissions: PendingSubmission[] = [
   {
@@ -23,7 +30,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 4,
     xp: apprenticeDashboard.xp,
     lessonTitle: "Stencil Transfer",
-    submittedAt: "20 minutes ago",
+    submittedAt: minutesAgo(20),
     photos: [mockPhotos.roseOutline, mockPhotos.evolutionClean],
   },
   {
@@ -34,7 +41,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 9,
     xp: 4280,
     lessonTitle: "Color Packing",
-    submittedAt: "1 hour ago",
+    submittedAt: minutesAgo(60),
     photos: [mockPhotos.colorPacking, mockPhotos.roseOutline],
   },
   {
@@ -45,7 +52,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 8,
     xp: 3610,
     lessonTitle: "Shading Gradients",
-    submittedAt: "2 hours ago",
+    submittedAt: minutesAgo(120),
     photos: [mockPhotos.gradientShading, mockPhotos.whipShading, mockPhotos.roseOutline],
   },
   {
@@ -56,7 +63,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 6,
     xp: 2150,
     lessonTitle: "Line Weight",
-    submittedAt: "Yesterday",
+    submittedAt: minutesAgo(26 * 60),
     photos: [mockPhotos.liningDrills],
   },
   {
@@ -67,7 +74,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 5,
     xp: 6920,
     lessonTitle: "Photo-Reference Piece",
-    submittedAt: "3 hours ago",
+    submittedAt: minutesAgo(180),
     photos: [mockPhotos.gradientShading, mockPhotos.whipShading],
   },
   {
@@ -78,7 +85,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 3,
     xp: 2740,
     lessonTitle: "Skin Textures",
-    submittedAt: "5 hours ago",
+    submittedAt: minutesAgo(300),
     photos: [mockPhotos.whipShading, mockPhotos.gradientShading],
   },
   {
@@ -89,7 +96,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 2,
     xp: 6400,
     lessonTitle: "Wave Patterns",
-    submittedAt: "4 hours ago",
+    submittedAt: minutesAgo(240),
     photos: [mockPhotos.liningDrills, mockPhotos.colorPacking],
   },
   {
@@ -100,7 +107,7 @@ export const pendingSubmissions: PendingSubmission[] = [
     level: 2,
     xp: 7850,
     lessonTitle: "Solid Black Fill",
-    submittedAt: "Yesterday",
+    submittedAt: minutesAgo(30 * 60),
     photos: [mockPhotos.colorPacking],
   },
 ];

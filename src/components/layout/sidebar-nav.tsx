@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { isActivePath, navAccent, navItems } from "@/components/layout/nav-items";
 import { Wordmark } from "@/components/brand/wordmark";
@@ -12,6 +13,7 @@ import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function SidebarNav({ nav }: { nav: NavKey }) {
+  const t = useTranslations("Nav");
   const pathname = usePathname();
   const accent = navAccent[nav];
 
@@ -22,7 +24,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
         <Wordmark />
         <RolePill nav={nav} className="ml-auto" />
       </div>
-      <nav aria-label="Academy" className="flex flex-1 flex-col gap-1 px-3">
+      <nav aria-label={t("primary")} className="flex flex-1 flex-col gap-1 px-3">
         {navItems[nav].map((item) => {
           const active = isActivePath(pathname, item);
           const Icon = item.icon;
@@ -39,7 +41,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
               )}
             >
               <Icon className={cn("size-4", active && accent.icon)} />
-              {item.label}
+              {t(item.label)}
             </Link>
           );
         })}

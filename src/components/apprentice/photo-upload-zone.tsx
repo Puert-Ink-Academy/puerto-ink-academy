@@ -2,6 +2,7 @@
 
 import { ImagePlus, Lock, X } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { cn } from "cn";
@@ -21,6 +22,7 @@ export function PhotoUploadZone({
   onPhotosChange: (photos: SelectedPhoto[]) => void;
   disabled?: boolean;
 }) {
+  const t = useTranslations("Apprentice.Upload");
   const inputId = useId();
   const [isDragging, setIsDragging] = useState(false);
   const photosRef = useRef(photos);
@@ -90,11 +92,9 @@ export function PhotoUploadZone({
           )}
         </span>
         <span className="text-sm font-medium text-zinc-50">
-          {disabled
-            ? "Uploads are locked while your submission is reviewed"
-            : "Tap to add photos or drag them here"}
+          {disabled ? t("locked") : t("prompt")}
         </span>
-        {!disabled && <span className="text-xs text-zinc-500">You can add several images</span>}
+        {!disabled && <span className="text-xs text-zinc-500">{t("hint")}</span>}
         <input
           id={inputId}
           type="file"
@@ -113,7 +113,7 @@ export function PhotoUploadZone({
       {photos.length > 0 && (
         <div>
           <p className="text-xs text-zinc-400">
-            {photos.length} {photos.length === 1 ? "photo" : "photos"} selected
+            {t("selected", { count: photos.length })}
           </p>
           <ul className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-4">
             {photos.map((photo) => (
@@ -132,7 +132,7 @@ export function PhotoUploadZone({
                 <button
                   type="button"
                   onClick={() => removePhoto(photo.id)}
-                  aria-label={`Remove ${photo.file.name}`}
+                  aria-label={t("remove", { name: photo.file.name })}
                   className="absolute top-1.5 right-1.5 flex size-7 items-center justify-center rounded-full bg-zinc-950/80 text-zinc-200 backdrop-blur hover:text-rose-300"
                 >
                   <X className="size-4" aria-hidden />

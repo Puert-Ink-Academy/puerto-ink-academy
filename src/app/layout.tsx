@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Pirata_One } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -21,19 +23,23 @@ const pirataOne = Pirata_One({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Puerto Ink Academy",
-  description: "The Next Evolution in Tattoo Education",
-  applicationName: "Puerto Ink",
-  appleWebApp: {
-    capable: true,
-    title: "Puerto Ink",
-    statusBarStyle: "black-translucent",
-  },
-  other: {
-    "apple-mobile-web-app-capable": "yes",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Metadata");
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    applicationName: "Puerto Ink",
+    appleWebApp: {
+      capable: true,
+      title: "Puerto Ink",
+      statusBarStyle: "black-translucent",
+    },
+    other: {
+      "apple-mobile-web-app-capable": "yes",
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -43,23 +49,27 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`dark ${geistSans.variable} ${geistMono.variable} ${pirataOne.variable}`}
     >
       <body className="antialiased">
-        {children}
-        <Toaster
-          theme="dark"
-          position="top-center"
-          mobileOffset={{ top: "calc(env(safe-area-inset-top) + 16px)" }}
-        />
+        <NextIntlClientProvider>
+          {children}
+          <Toaster
+            theme="dark"
+            position="top-center"
+            mobileOffset={{ top: "calc(env(safe-area-inset-top) + 16px)" }}
+          />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

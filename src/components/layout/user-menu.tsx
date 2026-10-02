@@ -1,19 +1,26 @@
 "use client";
 
-import { ChevronsUpDown, LogOut, UserRound } from "lucide-react";
+import { ChevronsUpDown, Globe, LogOut, UserRound } from "lucide-react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { useTransition } from "react";
 import { toast } from "sonner";
 
 import { logout } from "@/app/actions/auth";
+import { useChangeLocale } from "@/components/i18n/use-change-locale";
 import { navAccent } from "@/components/layout/nav-items";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { isLocale, localeNames, locales } from "@/i18n/config";
 import type { NavKey } from "@/lib/nav";
 import { getSessionUser } from "@/lib/session";
 import { cn } from "cn";
@@ -39,6 +46,10 @@ export function UserMenu({
   nav: NavKey;
   variant: "sidebar" | "compact";
 }) {
+  const t = useTranslations("Nav");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale();
+  const { changeLocale, pending: changingLocale } = useChangeLocale();
   const user = getSessionUser(nav);
   const accent = navAccent[nav];
   const [pending, startTransition] = useTransition();
@@ -46,7 +57,7 @@ export function UserMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label={variant === "compact" ? "Account menu" : undefined}
+        aria-label={variant === "compact" ? t("accountMenu") : undefined}
         className={cn(
           "flex items-center outline-none focus-visible:ring-2 focus-visible:ring-zinc-500",
           variant === "sidebar"
@@ -83,20 +94,45 @@ export function UserMenu({
             render={<Link href={`/profile/${user.id}`} />}
           >
             <UserRound />
-            View profile
+            {t("viewProfile")}
           </DropdownMenuItem>
         )}
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex items-center gap-1.5 text-xs text-zinc-500">
+            <Globe className="size-3.5" aria-hidden />
+            {tCommon("language")}
+          </DropdownMenuLabel>
+          <DropdownMenuRadioGroup
+            value={locale}
+            onValueChange={(next) => {
+              if (isLocale(next) && next !== locale) changeLocale(next);
+            }}
+          >
+            {locales.map((option) => (
+              <DropdownMenuRadioItem
+                key={option}
+                value={option}
+                lang={option}
+                disabled={changingLocale}
+                className="min-h-10"
+              >
+                {localeNames[option]}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
         <DropdownMenuItem
           variant="destructive"
           disabled={pending}
           className="min-h-10"
           onClick={() => {
-            toast.success("You've been logged out");
+            toast.success(t("loggedOut"));
             startTransition(() => logout());
           }}
         >
           <LogOut />
-          Log out
+          {t("logOut")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

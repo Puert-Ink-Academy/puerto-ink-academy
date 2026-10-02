@@ -15,7 +15,9 @@ export type ArtistDetailsInput = {
   nationality: string;
 };
 
-export type ArtistDetailsErrors = Partial<Record<keyof ArtistDetailsInput, string>>;
+export type ArtistFieldError = "tooLong" | "required";
+
+export type ArtistDetailsErrors = Partial<Record<keyof ArtistDetailsInput, ArtistFieldError>>;
 
 export type ParsedArtistDetails =
   | { ok: true; details: ArtistDetails }
@@ -42,13 +44,13 @@ export function parseArtistDetails(input: unknown): ParsedArtistDetails {
   const errors: ArtistDetailsErrors = {};
 
   if (artistName.length > ARTIST_NAME_MAX_LENGTH) {
-    errors.artistName = `Keep it under ${ARTIST_NAME_MAX_LENGTH} characters.`;
+    errors.artistName = "tooLong";
   }
   if (studio.length > STUDIO_MAX_LENGTH) {
-    errors.studio = `Keep it under ${STUDIO_MAX_LENGTH} characters.`;
+    errors.studio = "tooLong";
   }
   if (!isCountryCode(nationality)) {
-    errors.nationality = "Choose a nationality.";
+    errors.nationality = "required";
   }
 
   if (errors.artistName || errors.studio || !isCountryCode(nationality)) {

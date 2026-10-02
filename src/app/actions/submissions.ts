@@ -1,5 +1,7 @@
 "use server";
 
+import { getTranslations } from "next-intl/server";
+
 import { MASTERY_SCORE } from "@/lib/grading";
 import { isViewableLevel } from "@/lib/levels";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
@@ -17,25 +19,27 @@ export async function submitLevelAttempt(
   level: unknown,
   photoCount: unknown,
 ): Promise<SubmissionResult> {
+  const t = await getTranslations("Errors");
+
   if (!isCategoryId(categoryId) || typeof level !== "number" || !getLevelLesson(categoryId, level)) {
-    return { error: "This level doesn't exist." };
+    return { error: t("levelMissing") };
   }
 
   const progress = getCategoryProgress(categoryId);
   if (progress.isLocked || !isViewableLevel(level, progress.currentLevel)) {
-    return { error: "This level is locked." };
+    return { error: t("levelLocked") };
   }
 
   if (hasPendingReview(getCurrentApprentice().id, categoryId, level)) {
-    return { error: "This level already has a submission waiting for a grade.", pending: true };
+    return { error: t("pendingReview"), pending: true };
   }
 
   if (getLevelResult(categoryId, level)?.highestScore === MASTERY_SCORE) {
-    return { error: "You've already mastered this level." };
+    return { error: t("alreadyMastered") };
   }
 
   if (typeof photoCount !== "number" || photoCount < 1) {
-    return { error: "Add at least one photo." };
+    return { error: t("noPhotos") };
   }
 
   return { ok: true };

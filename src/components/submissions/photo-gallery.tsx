@@ -2,6 +2,7 @@
 
 import { ZoomIn } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { PhotoViewer } from "@/components/submissions/photo-viewer";
@@ -9,6 +10,7 @@ import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
 
 export function PhotoGallery({ photos }: { photos: SubmissionPhoto[] }) {
+  const t = useTranslations("Submissions");
   const [index, setIndex] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
   const photo = photos[index];
@@ -21,7 +23,7 @@ export function PhotoGallery({ photos }: { photos: SubmissionPhoto[] }) {
       <button
         type="button"
         onClick={() => setViewerOpen(true)}
-        aria-label={`Open photo ${index + 1} of ${photos.length} fullscreen`}
+        aria-label={t("openFullscreen", { index: index + 1, total: photos.length })}
         className="group relative flex cursor-zoom-in items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-amber-400/60"
       >
         <Image
@@ -38,17 +40,17 @@ export function PhotoGallery({ photos }: { photos: SubmissionPhoto[] }) {
         />
         <span className="absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-zinc-950/75 px-2.5 py-1 text-xs font-medium text-zinc-200 backdrop-blur transition-colors group-hover:text-amber-300">
           <ZoomIn className="size-3.5" aria-hidden />
-          Tap to zoom
+          {t("tapToZoom")}
         </span>
       </button>
       {hasMany && (
-        <div className="flex gap-2 overflow-x-auto p-3" role="group" aria-label="Submission photos">
+        <div className="flex gap-2 overflow-x-auto p-3" role="group" aria-label={t("photosGroup")}>
           {photos.map((item, itemIndex) => (
             <button
               key={item.src + itemIndex}
               type="button"
               onClick={() => setIndex(itemIndex)}
-              aria-label={`Show photo ${itemIndex + 1}`}
+              aria-label={t("showPhoto", { index: itemIndex + 1 })}
               aria-pressed={itemIndex === index}
               className={cn(
                 "relative h-14 w-[4.5rem] shrink-0 overflow-hidden rounded-md border-2 transition-colors outline-none focus-visible:border-amber-300",

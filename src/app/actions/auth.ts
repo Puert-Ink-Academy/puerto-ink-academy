@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 import { platformUsers, type PlatformUser } from "@/lib/mock/admin-users";
 import type { Role } from "@/lib/roles";
@@ -21,7 +22,8 @@ function findUser(email: string): PlatformUser | undefined {
 // Auth.js email sign-in replaces this: it will create and email a one-time code.
 export async function requestLoginCode(email: string): Promise<AuthActionResult> {
   if (!findUser(email)) {
-    return { error: "No account uses this email. Ask an admin to add you." };
+    const t = await getTranslations("Errors");
+    return { error: t("unknownEmail") };
   }
   return { ok: true };
 }
@@ -31,12 +33,13 @@ export async function verifyLoginCode(
   email: string,
   code: string,
 ): Promise<AuthActionResult> {
+  const t = await getTranslations("Errors");
   const user = findUser(email);
   if (!user) {
-    return { error: "No account uses this email. Ask an admin to add you." };
+    return { error: t("unknownEmail") };
   }
   if (!/^\d{6}$/.test(code.trim())) {
-    return { error: "Enter the 6-digit code from your email." };
+    return { error: t("invalidCode") };
   }
   redirect(dashboardForRole[user.role]);
 }

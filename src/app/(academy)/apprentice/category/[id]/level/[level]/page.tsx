@@ -1,6 +1,7 @@
 import { ArrowLeft, Crown } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 import { AttemptHistory } from "@/components/apprentice/attempt-history";
 import { LessonSections } from "@/components/apprentice/lesson-sections";
@@ -47,6 +48,7 @@ export default async function LevelPage({
   const state = levelState(result?.highestScore);
   const attempts = getLevelAttempts(id, levelNumber);
   const pendingSubmission = getPendingSubmission(getCurrentApprentice().id, id, levelNumber);
+  const t = await getTranslations("Apprentice.Level");
   const submission = {
     categoryId: id,
     categoryName: category.name,
@@ -61,22 +63,22 @@ export default async function LevelPage({
         className="flex w-fit items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-zinc-50"
       >
         <ArrowLeft className="size-4" aria-hidden />
-        Back to {category.name}
+        {t("back", { category: category.name })}
       </Link>
       <header>
         <div className="flex items-center gap-2">
           <SectionLabel className={categoryStyles[id].text}>
-            {category.name} · Level {lesson.level}
+            {t("eyebrow", { category: category.name, level: lesson.level })}
           </SectionLabel>
           {state === "mastered" ? (
             <span className="flex items-center gap-1 rounded-full border border-amber-400/60 bg-amber-400/15 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-amber-300 uppercase shadow-[0_0_12px_-2px_var(--color-amber-400)]">
               <Crown className="size-3" aria-hidden />
-              Mastered
+              {t("mastered")}
             </span>
           ) : (
             isCompleted && (
               <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-[0.65rem] font-medium tracking-wide text-emerald-300 uppercase">
-                Completed
+                {t("completed")}
               </span>
             )
           )}

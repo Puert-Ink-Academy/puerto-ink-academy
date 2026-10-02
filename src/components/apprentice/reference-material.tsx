@@ -1,13 +1,16 @@
 import { ImageIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
 import type { LevelReference } from "@/lib/mock/level-lessons";
 
 export function ReferenceMaterial({ references }: { references: LevelReference[] }) {
+  const t = useTranslations("Apprentice.Level");
+
   return (
     <Panel as="section">
-      <SectionLabel as="h2">Reference Material</SectionLabel>
+      <SectionLabel as="h2">{t("references")}</SectionLabel>
       <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {references.map((reference) => (
           <li key={reference.id}>

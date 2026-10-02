@@ -9,11 +9,20 @@ import {
 } from "lucide-react";
 
 import type { NavKey } from "@/lib/nav";
+import type { Role } from "@/lib/roles";
 import { getCurrentApprentice } from "@/lib/session";
+
+export type NavLabel =
+  | "dashboard"
+  | "leaderboard"
+  | "profile"
+  | "curriculum"
+  | "users"
+  | "grading";
 
 export type NavItem = {
   href: string;
-  label: string;
+  label: NavLabel;
   icon: LucideIcon;
   activePrefixes?: string[];
 };
@@ -22,23 +31,23 @@ export const navItems: Record<NavKey, NavItem[]> = {
   apprentice: [
     {
       href: "/apprentice/dashboard",
-      label: "Dashboard",
+      label: "dashboard",
       icon: LayoutDashboard,
       activePrefixes: ["/apprentice/category"],
     },
-    { href: "/apprentice/leaderboard", label: "Leaderboard", icon: Trophy },
-    { href: `/profile/${getCurrentApprentice().id}`, label: "Profile", icon: UserRound },
+    { href: "/apprentice/leaderboard", label: "leaderboard", icon: Trophy },
+    { href: `/profile/${getCurrentApprentice().id}`, label: "profile", icon: UserRound },
   ],
   teacher: [
-    { href: "/teacher/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/teacher/curriculum", label: "Curriculum", icon: BookOpen },
-    { href: "/teacher/leaderboard", label: "Leaderboard", icon: Trophy },
+    { href: "/teacher/dashboard", label: "dashboard", icon: LayoutDashboard },
+    { href: "/teacher/curriculum", label: "curriculum", icon: BookOpen },
+    { href: "/teacher/leaderboard", label: "leaderboard", icon: Trophy },
   ],
   admin: [
-    { href: "/admin/dashboard", label: "Users", icon: Users },
-    { href: "/admin/grading", label: "Grading", icon: ClipboardCheck },
-    { href: "/admin/curriculum", label: "Curriculum", icon: BookOpen },
-    { href: "/admin/leaderboard", label: "Leaderboard", icon: Trophy },
+    { href: "/admin/dashboard", label: "users", icon: Users },
+    { href: "/admin/grading", label: "grading", icon: ClipboardCheck },
+    { href: "/admin/curriculum", label: "curriculum", icon: BookOpen },
+    { href: "/admin/leaderboard", label: "leaderboard", icon: Trophy },
   ],
 };
 
@@ -73,10 +82,10 @@ export const navAccent: Record<NavKey, NavAccent> = {
   },
 };
 
-export const roleBadge: Record<NavKey, { label: string; className: string }> = {
-  apprentice: { label: "Apprentice", className: "border-zinc-700 text-zinc-400" },
-  teacher: { label: "Teacher", className: "border-zinc-700 text-zinc-400" },
-  admin: { label: "Admin", className: "border-violet-400/40 text-violet-300" },
+export const roleBadge: Record<NavKey, { role: Role; className: string }> = {
+  apprentice: { role: "APPRENTICE", className: "border-zinc-700 text-zinc-400" },
+  teacher: { role: "TEACHER", className: "border-zinc-700 text-zinc-400" },
+  admin: { role: "ADMIN", className: "border-violet-400/40 text-violet-300" },
 };
 
 function matchesPath(pathname: string, href: string) {

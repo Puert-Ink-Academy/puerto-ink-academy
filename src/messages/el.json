@@ -1,0 +1,443 @@
+{
+  "Metadata": {
+    "title": "Puerto Ink Academy",
+    "description": "Η επόμενη γενιά στην εκπαίδευση τατουάζ",
+    "loginTitle": "Σύνδεση · Puerto Ink Academy"
+  },
+  "Common": {
+    "language": "Γλώσσα",
+    "close": "Κλείσιμο",
+    "cancel": "Ακύρωση",
+    "you": "Εσύ"
+  },
+  "Nav": {
+    "primary": "Ακαδημία",
+    "dashboard": "Αρχική",
+    "leaderboard": "Κατάταξη",
+    "profile": "Προφίλ",
+    "curriculum": "Πρόγραμμα",
+    "users": "Χρήστες",
+    "grading": "Βαθμοί",
+    "accountMenu": "Μενού λογαριασμού",
+    "viewProfile": "Προβολή προφίλ",
+    "logOut": "Αποσύνδεση",
+    "loggedOut": "Αποσυνδέθηκες"
+  },
+  "Roles": {
+    "APPRENTICE": "Μαθητευόμενος",
+    "TEACHER": "Δάσκαλος",
+    "ADMIN": "Admin"
+  },
+  "NotFound": {
+    "title": "404 - Το επίπεδο δεν βρέθηκε",
+    "home": "Επιστροφή στην αρχική"
+  },
+  "Marketing": {
+    "signIn": "Σύνδεση",
+    "tagline": "Η επόμενη γενιά στην εκπαίδευση τατουάζ",
+    "intro": "Προπονήσου επίπεδο το επίπεδο, βαθμολογήσου από αληθινούς καλλιτέχνες και ανέβα στην κατάταξη.",
+    "howItWorksLink": "Πώς λειτουργεί",
+    "inviteOnly": "Μόνο με πρόσκληση. Το στούντιό σου φτιάχνει τον λογαριασμό σου.",
+    "scrollToHowItWorks": "Μετάβαση στο «Πώς λειτουργεί»",
+    "ctaTitle": "Έτοιμος να πιάσεις τη μηχανή;",
+    "ctaBody": "Συνδέσου με το email που δήλωσε το στούντιό σου. Θα σου στείλουμε έναν κωδικό μίας χρήσης.",
+    "homeScreen": "Πρόσθεσέ την στην αρχική οθόνη για την εφαρμογή σε πλήρη οθόνη.",
+    "contact": "Το στούντιο θέλει να μπει; {email}",
+    "copyright": "© {year} Puerto Ink Academy",
+    "HowItWorks": {
+      "eyebrow": "Πώς λειτουργεί",
+      "title": "Τρία βήματα, ξανά και ξανά",
+      "learnTitle": "Μάθε το επίπεδο",
+      "learnBody": "Κάθε επίπεδο έχει σαφή στόχο, πρακτική άσκηση, συμβουλές δασκάλου και υλικό αναφοράς.",
+      "submitTitle": "Στείλε τη δουλειά σου",
+      "submitBody": "Φωτογράφισε το δέρμα εξάσκησης και στείλε το. Ο δάσκαλός σου το βλέπει στη σειρά βαθμολόγησης.",
+      "gradedTitle": "Πάρε βαθμό και ανέβα",
+      "gradedBody": "Παίρνεις βαθμό και γραπτό σχόλιο. Πέρασε για να ξεκλειδώσεις το επόμενο επίπεδο, ή ξαναδοκίμασε όσες φορές χρειάζεται.",
+      "rulePass": "Το {score}/10 περνάει",
+      "ruleXp": "Βαθμός × 10 = XP",
+      "ruleMastery": "{score}/10 = Μαεστρία"
+    },
+    "Preview": {
+      "eyebrow": "Μέσα στην ακαδημία",
+      "title": "Η προπόνησή σου, φτιαγμένη σαν παιχνίδι",
+      "body": "Κάθε στυλ είναι ένα δέντρο δεξιοτήτων. Κάθε επίπεδο είναι μια αληθινή άσκηση, βαθμολογημένη από αληθινό καλλιτέχνη.",
+      "chooseTitle": "Διάλεξε το στυλ σου",
+      "chooseCaption": "Τα στυλ ξεκλειδώνουν με τη σειρά, για να μάθεις πρώτα τα βασικά.",
+      "treeTitle": "Ανέβα το δέντρο",
+      "treeCaption": "Πέρασε ένα επίπεδο με {score}/10 ή καλύτερα για να ξεκλειδώσεις το επόμενο.",
+      "masteryTitle": "Κέρδισε μαεστρία",
+      "masteryCaption": "Ξαναδοκίμασε κάθε επίπεδο που πέρασες. Ένα τέλειο {score}/10 δίνει το σήμα μαεστρίας.",
+      "leaderboardTitle": "Ανέβα στην κατάταξη",
+      "leaderboardCaption": "Κατατάξεις ανά στυλ, που ανανεώνονται με κάθε βαθμό."
+    },
+    "Path": {
+      "eyebrow": "Η διαδρομή",
+      "title": "Πέντε στυλ. Ένα ταξίδι.",
+      "body": "Κατάκτησε κάθε στυλ για να ξεκλειδώσεις το επόμενο, από τη λεπτή γραμμή μέχρι την ακουαρέλα.",
+      "startHere": "Ξεκίνα εδώ",
+      "step": "Βήμα {number}"
+    }
+  },
+  "Auth": {
+    "title": "Σύνδεση",
+    "subtitle": "Θα σου στείλουμε έναν κωδικό μίας χρήσης. Δεν χρειάζεται κωδικός πρόσβασης.",
+    "demo": "Λειτουργία demo: οποιοσδήποτε 6ψήφιος κωδικός δουλεύει.",
+    "email": "Email",
+    "emailPlaceholder": "you@puertoink.academy",
+    "sendCode": "Αποστολή κωδικού",
+    "sending": "Αποστολή…",
+    "codeSent": "Στείλαμε κωδικό στο <strong>{email}</strong>",
+    "codeLabel": "6ψήφιος κωδικός",
+    "verify": "Επιβεβαίωση",
+    "verifying": "Επιβεβαίωση…",
+    "differentEmail": "Χρήση άλλου email",
+    "resend": "Επαναποστολή κωδικού",
+    "resent": "Νέος κωδικός στάλθηκε στο {email}"
+  },
+  "Apprentice": {
+    "Dashboard": {
+      "eyebrow": "Διάλεξε τη διαδρομή σου",
+      "title": "Αρχική",
+      "subtitle": "Διάλεξε ένα δέντρο δεξιοτήτων για σήμερα."
+    },
+    "Stats": {
+      "categories": "Κατηγορίες",
+      "totalXp": "Συνολικά XP",
+      "averageScore": "Μ.Ο. βαθμού",
+      "completed": "Ολοκληρωμένα",
+      "failedAttempts": "Αποτυχημένες"
+    },
+    "CategoryCard": {
+      "locked": "Κλειδωμένο",
+      "notStarted": "Δεν ξεκίνησε",
+      "mastered": "Κατακτημένο",
+      "inProgress": "Σε εξέλιξη",
+      "step": "Βήμα {number}",
+      "currentLevel": "Τρέχον επίπεδο",
+      "ofTotal": "από {total}",
+      "categoryXp": "XP κατηγορίας",
+      "levelProgress": "Επίπεδο {level}:",
+      "progressLabel": "Πρόοδος {category}",
+      "unlockHint": "Ολοκλήρωσε το {previous} για ξεκλείδωμα",
+      "unlockHintGeneric": "Ολοκλήρωσε το προηγούμενο στυλ για ξεκλείδωμα",
+      "continue": "Συνέχεια",
+      "startTraining": "Έναρξη",
+      "lockedLabel": "{category}: κλειδωμένο. {hint}",
+      "cardLabel": "{category}: {status}, επίπεδο {level} από {total}, {xp} XP, {percent}% ολοκληρωμένο"
+    },
+    "Category": {
+      "back": "Πίσω στην αρχική",
+      "eyebrow": "Δέντρο δεξιοτήτων",
+      "summary": "Επίπεδο {level} από {total} · {xp} XP"
+    },
+    "SkillTree": {
+      "level": "Επίπεδο {level}",
+      "mastered": "Κατακτημένο",
+      "completed": "Ολοκληρωμένο",
+      "active": "Ενεργό",
+      "continue": "Συνέχεια",
+      "locked": "Κλειδωμένο",
+      "score": "{score}/10",
+      "labelActive": "Επίπεδο {level}: {title}, ενεργό",
+      "labelCompleted": "Επίπεδο {level}: {title}, ολοκληρωμένο",
+      "labelScored": "Επίπεδο {level}: {title}, {mastered, select, true {κατακτημένο} other {ολοκληρωμένο}} {score}/10"
+    },
+    "Level": {
+      "back": "Πίσω στο {category}",
+      "eyebrow": "{category} · Επίπεδο {level}",
+      "mastered": "Κατακτημένο",
+      "completed": "Ολοκληρωμένο",
+      "objective": "Στόχος",
+      "exercise": "Άσκηση",
+      "tips": "Συμβουλές",
+      "references": "Υλικό αναφοράς",
+      "teacherFeedback": "Σχόλιο δασκάλου"
+    },
+    "Result": {
+      "passed": "Το επίπεδο πέρασε!",
+      "bestScore": "Καλύτερος βαθμός",
+      "score": "Βαθμός",
+      "xpEarned": "XP που κέρδισες",
+      "attempts": "Προσπάθειες",
+      "scoreValue": "{score}/10",
+      "xpValue": "+{xp}"
+    },
+    "Mastery": {
+      "label": "Σήμα μαεστρίας",
+      "title": "{score}/10 τέλεια εκτέλεση",
+      "subtitle": "Κατακτημένο. Δεν χρειάζονται άλλες υποβολές."
+    },
+    "Attempts": {
+      "title": "Προσπάθειες",
+      "attempt": "Προσπάθεια {number}",
+      "pendingReview": "Αναμονή ελέγχου",
+      "waiting": "Αναμονή για τον βαθμό και το σχόλιο του δασκάλου σου.",
+      "outcome": "{passed, select, true {Επιτυχία} other {Αποτυχία}} · {score}/10 · +{xp} XP"
+    },
+    "Submission": {
+      "headingFirst": "Η υποβολή σου",
+      "headingRetry": "Ξαναπροσπάθησε",
+      "headingImprove": "Πήγαινε για {score}/10",
+      "buttonFirst": "Υποβολή άσκησης",
+      "buttonRetry": "Επανυποβολή άσκησης",
+      "buttonImprove": "Επανυποβολή για καλύτερο βαθμό (έως {score})",
+      "retryScore": "Βαθμός: {score}/10. Δες το σχόλιο και ξαναπροσπάθησε",
+      "improveHint": "Μετράει ο καλύτερος βαθμός σου. Το {score}/10 δίνει +{xp} XP και το σήμα μαεστρίας.",
+      "pendingButton": "Αναμονή βαθμολόγησης",
+      "pendingBody": "Η εργασία σου περιμένει βαθμό. Μπορείς να ξαναδείς τη θεωρία ή να εξασκηθείς σε άλλες ξεκλείδωτες εργασίες.",
+      "reviewTheory": "Επανάληψη θεωρίας",
+      "backTo": "Πίσω στο {category}",
+      "sending": "Αποστολή…",
+      "sent": "Η υποβολή σου στάλθηκε στον δάσκαλο"
+    },
+    "Upload": {
+      "locked": "Οι μεταφορτώσεις είναι κλειδωμένες όσο ελέγχεται η υποβολή σου",
+      "prompt": "Πάτα για φωτογραφίες ή σύρε τες εδώ",
+      "hint": "Μπορείς να προσθέσεις πολλές εικόνες",
+      "selected": "{count, plural, one {# φωτογραφία επιλεγμένη} other {# φωτογραφίες επιλεγμένες}}",
+      "remove": "Αφαίρεση {name}"
+    }
+  },
+  "Submissions": {
+    "photoTitle": "Φωτογραφία {index} από {total}",
+    "closePhoto": "Κλείσιμο φωτογραφίας",
+    "previousPhoto": "Προηγούμενη φωτογραφία",
+    "nextPhoto": "Επόμενη φωτογραφία",
+    "zoomIn": "Μεγέθυνση",
+    "zoomOut": "Σμίκρυνση",
+    "tapToZoom": "Πάτα για ζουμ",
+    "openFullscreen": "Άνοιγμα φωτογραφίας {index} από {total} σε πλήρη οθόνη",
+    "photosGroup": "Φωτογραφίες υποβολής",
+    "showPhoto": "Εμφάνιση φωτογραφίας {index}",
+    "viewPhoto": "Προβολή φωτογραφίας {index} από {total}"
+  },
+  "Leaderboard": {
+    "eyebrow": "Κατάταξη σεζόν",
+    "title": "Κατάταξη",
+    "apprentices": "{count, plural, one {# μαθητευόμενος} other {# μαθητευόμενοι}}",
+    "tabsLabel": "Κατάταξη",
+    "captionScope": "Κατάταξη με XP {scope} · {count} στην κατάταξη",
+    "emptyTitle": "Κανείς δεν έχει μπει ακόμα στο {scope}",
+    "emptyBody": "Το πρώτο επίπεδο που περνάει παίρνει το στέμμα.",
+    "lockedHint": "Ολοκλήρωσε το {previous} για να ξεκλειδώσεις το {category}",
+    "Table": {
+      "rank": "Θέση",
+      "apprentice": "Μαθητευόμενος",
+      "level": "Επίπεδο",
+      "xp": "XP",
+      "average": "Μ.Ο.",
+      "levelValue": "Επίπεδο {level}",
+      "rankLabel": "Θέση {rank}"
+    },
+    "Banner": {
+      "label": "Η κατάταξή σου",
+      "levelInScope": "Επίπεδο {level} · {scope}",
+      "earnToRank": "Κέρδισε XP {scope} για να μπεις στην κατάταξη",
+      "toPass": "{xp} XP για να περάσεις τον #{rank}",
+      "xp": "XP"
+    }
+  },
+  "Profile": {
+    "avatarLabel": "Άβαταρ του {name}",
+    "studioPrefix": "Στούντιο:",
+    "publicSubtitle": "Μαθητευόμενος της Puerto Ink Academy",
+    "rank": "Βαθμίδα: {rank}",
+    "edit": "Επεξεργασία προφίλ",
+    "Stats": {
+      "totalXp": "Συνολικά XP",
+      "perfect": "Τέλεια {score}/10",
+      "levelsCompleted": "Επίπεδα που ολοκληρώθηκαν"
+    },
+    "Edit": {
+      "title": "Επεξεργασία προφίλ",
+      "description": "Πώς εμφανίζεσαι στο προφίλ και στην κατάταξη.",
+      "artistName": "Καλλιτεχνικό όνομα",
+      "studio": "Στούντιο τατουάζ",
+      "nationality": "Εθνικότητα",
+      "optional": "Προαιρετικό",
+      "artistPlaceholder": "Γραμμές της Μαρίας",
+      "studioPlaceholder": "Άφησέ το κενό αν δεν είσαι σε στούντιο",
+      "chooseCountry": "Επίλεξε χώρα",
+      "tooLong": "Κράτησέ το κάτω από {max} χαρακτήρες.",
+      "chooseNationality": "Επίλεξε εθνικότητα.",
+      "saving": "Αποθήκευση…",
+      "save": "Αποθήκευση προφίλ",
+      "updated": "Το προφίλ ενημερώθηκε",
+      "ownProfile": "Μπορείς να επεξεργαστείς μόνο το δικό σου προφίλ.",
+      "checkFields": "Έλεγξε τα επισημασμένα πεδία."
+    },
+    "Standings": {
+      "title": "Κατατάξεις",
+      "rankLabel": "Θέση {scope}",
+      "locked": "Κλειδωμένο",
+      "unranked": "Εκτός κατάταξης",
+      "ofTotal": "από {total}",
+      "xp": "{xp} XP"
+    },
+    "Evolution": {
+      "title": "Εξέλιξη",
+      "subtitle": "Η πρώτη σου προσπάθεια δίπλα στην καλύτερη.",
+      "emptyTitle": "Ακόμα καμία επιστροφή.",
+      "emptyBody": "Ξαναδοκίμασε ένα επίπεδο για να φανεί πόσο προχώρησες.",
+      "first": "Πρώτη προσπάθεια",
+      "best": "Καλύτερη προσπάθεια",
+      "openFirst": "Άνοιγμα φωτογραφίας πρώτης προσπάθειας σε πλήρη οθόνη",
+      "openBest": "Άνοιγμα φωτογραφίας καλύτερης προσπάθειας σε πλήρη οθόνη",
+      "score": "Βαθμός: {score}/10",
+      "epic": " - ΕΠΙΚΟ",
+      "levelTitle": "Επίπεδο {level} · {title}",
+      "gain": "+{points} βαθμοί",
+      "inDays": "σε {days, plural, one {# ημέρα} other {# ημέρες}}"
+    },
+    "Showcase": {
+      "title": "Βιτρίνα μαεστρίας",
+      "emptyTitle": "Ακόμα κανένας τέλειος βαθμός.",
+      "emptyBody": "Ξαναδοκίμασε ένα επίπεδο που πέρασες για τον πρώτο.",
+      "tileLabel": "{category} επίπεδο {level}: {title}, {score}/10",
+      "score": "{score}/10",
+      "levelTitle": "Επίπεδο {level} · {title}"
+    }
+  },
+  "Teacher": {
+    "Grading": {
+      "title": "Υποβολές για βαθμολόγηση",
+      "summary": "{submissions, plural, one {# υποβολή περιμένει} other {# υποβολές περιμένουν}} σχόλιο σε {styles, plural, one {# στυλ} other {# στυλ}}.",
+      "row": "{name} — Επίπεδο {level} — {xp} XP",
+      "pass": "Επιτυχία",
+      "fail": "Αποτυχία",
+      "unlocks": "Ξεκλειδώνει το επόμενο επίπεδο",
+      "retry": "Ο μαθητευόμενος θα ξανακάνει αυτή την άσκηση",
+      "xpGain": "+{xp} XP",
+      "score": "Βαθμός (0–10)",
+      "feedback": "Σχόλιο δασκάλου",
+      "feedbackPlaceholder": "Τι πήγε καλά και τι να δουλέψει μετά",
+      "submit": "Υποβολή βαθμού",
+      "submitted": "Ο βαθμός υποβλήθηκε για τον/την {name}",
+      "meta": "{category} · Επίπεδο {level} · {title}"
+    },
+    "Curriculum": {
+      "title": "Πρόγραμμα",
+      "summary": "{categories, plural, one {# κατηγορία} other {# κατηγορίες}} · {levels, plural, one {# μόνιμο επίπεδο} other {# μόνιμα επίπεδα}}",
+      "createCategory": "Νέα κατηγορία",
+      "levelCount": "{count, plural, one {# επίπεδο} other {# επίπεδα}}",
+      "createLevel": "Νέο επίπεδο",
+      "createLevelIn": "Νέο επίπεδο στο {category}",
+      "emptyTitle": "Ακόμα κανένα επίπεδο.",
+      "emptyBody": "Φτιάξε το πρώτο.",
+      "Table": {
+        "level": "Επίπεδο",
+        "title": "Τίτλος",
+        "objective": "Στόχος",
+        "pass": "Βάση",
+        "xp": "XP",
+        "actions": "Ενέργειες",
+        "rowTitle": "Επίπεδο {level}: {title}",
+        "edit": "Επεξεργασία επιπέδου {level}"
+      },
+      "Category": {
+        "title": "Νέα κατηγορία",
+        "description": "Όρισε ένα νέο στυλ. Μπορείς να προσθέσεις τα επίπεδά του αμέσως μετά.",
+        "name": "Όνομα",
+        "namePlaceholder": "Ιαπωνικό",
+        "tagline": "Σύνθημα",
+        "optional": "(προαιρετικό)",
+        "taglinePlaceholder": "Δυνατά κύματα, koi και ρευστά φόντα",
+        "submit": "Δημιουργία κατηγορίας",
+        "created": "Η κατηγορία {name} δημιουργήθηκε",
+        "nameRequired": "Γράψε όνομα κατηγορίας.",
+        "nameInvalid": "Χρησιμοποίησε τουλάχιστον ένα γράμμα ή αριθμό.",
+        "nameTaken": "Υπάρχει ήδη κατηγορία με αυτό το όνομα."
+      },
+      "Level": {
+        "createTitle": "Νέο επίπεδο",
+        "editTitle": "Επεξεργασία επιπέδου {level}",
+        "createDescription": "Πρόσθεσε ένα μόνιμο επίπεδο στο {category}.",
+        "editDescription": "{category} · Η αποθήκευση δημιουργεί νέα έκδοση, ώστε οι παλιές υποβολές να κρατούν το αρχικό μάθημα.",
+        "number": "Αριθμός επιπέδου",
+        "title": "Τίτλος",
+        "titlePlaceholder": "Έλεγχος γραμμής",
+        "objective": "Στόχος",
+        "objectivePlaceholder": "Τι πρέπει να μάθει ο μαθητευόμενος",
+        "exercise": "Περιγραφή άσκησης",
+        "exercisePlaceholder": "Αναλυτική περιγραφή της εργασίας",
+        "tips": "Συμβουλές",
+        "tipsPlaceholder": "Συμβουλή του δασκάλου",
+        "passingScore": "Βαθμός βάσης",
+        "xpReward": "Ανταμοιβή XP",
+        "save": "Αποθήκευση επιπέδου",
+        "duplicate": "Το επίπεδο {level} υπάρχει ήδη στο {category}.",
+        "created": "Το {category} επίπεδο {level} δημιουργήθηκε",
+        "saved": "Το {category} επίπεδο {level} αποθηκεύτηκε ως νέα έκδοση"
+      }
+    }
+  },
+  "Admin": {
+    "eyebrow": "Admin",
+    "title": "Διαχείριση χρηστών",
+    "accounts": "{count, plural, one {# λογαριασμός} other {# λογαριασμοί}}",
+    "addUser": "Προσθήκη",
+    "showing": "Εμφάνιση {visible} από {total}",
+    "clearFilters": "Καθαρισμός φίλτρων",
+    "emptyTitle": "Κανένας χρήστης δεν ταιριάζει",
+    "emptyBody": "Δοκίμασε άλλη αναζήτηση ή καθάρισε τα φίλτρα.",
+    "Toolbar": {
+      "searchPlaceholder": "Όνομα, email, στούντιο…",
+      "searchLabel": "Αναζήτηση χρηστών",
+      "clearSearch": "Καθαρισμός αναζήτησης",
+      "country": "Φίλτρο χώρας",
+      "allCountries": "Όλες οι χώρες",
+      "studio": "Φίλτρο στούντιο",
+      "sort": "Ταξινόμηση",
+      "role": "Φίλτρο ρόλου",
+      "all": "Όλοι",
+      "apprentices": "Μαθητευόμενοι",
+      "teachers": "Δάσκαλοι",
+      "admins": "Admins",
+      "anyStudio": "Κάθε στούντιο",
+      "atStudio": "Σε στούντιο",
+      "independent": "Ανεξάρτητος",
+      "nameAsc": "Όνομα Α–Ω",
+      "nameDesc": "Όνομα Ω–Α",
+      "joinedDesc": "Νεότεροι πρώτα",
+      "joinedAsc": "Παλαιότεροι πρώτα"
+    },
+    "Table": {
+      "user": "Χρήστης",
+      "role": "Ρόλος",
+      "joined": "Εγγραφή",
+      "actions": "Ενέργειες",
+      "actionsFor": "Ενέργειες για {name}",
+      "changeRole": "Αλλαγή ρόλου"
+    },
+    "AddUser": {
+      "title": "Προσθήκη χρήστη",
+      "description": "Θα λάβει email για να συνδεθεί με κωδικό μίας χρήσης.",
+      "name": "Όνομα",
+      "namePlaceholder": "Maria Lopez",
+      "email": "Email",
+      "emailPlaceholder": "maria@puertoink.academy",
+      "role": "Ρόλος",
+      "submit": "Προσθήκη",
+      "inviteSent": "Η πρόσκληση στάλθηκε στο {email}",
+      "nameRequired": "Γράψε ένα όνομα.",
+      "emailRequired": "Γράψε ένα email.",
+      "emailInvalid": "Γράψε έγκυρο email.",
+      "emailTaken": "Αυτό το email χρησιμοποιείται ήδη."
+    },
+    "ChangeRole": {
+      "title": "Αλλαγή ρόλου",
+      "role": "Ρόλος",
+      "save": "Αποθήκευση",
+      "saved": "Ο/Η {name} είναι πλέον {role}"
+    }
+  },
+  "Errors": {
+    "unknownEmail": "Κανένας λογαριασμός δεν χρησιμοποιεί αυτό το email. Ζήτησε από έναν admin να σε προσθέσει.",
+    "invalidCode": "Γράψε τον 6ψήφιο κωδικό από το email σου.",
+    "levelMissing": "Αυτό το επίπεδο δεν υπάρχει.",
+    "levelLocked": "Αυτό το επίπεδο είναι κλειδωμένο.",
+    "pendingReview": "Αυτό το επίπεδο έχει ήδη υποβολή που περιμένει βαθμό.",
+    "alreadyMastered": "Έχεις ήδη κατακτήσει αυτό το επίπεδο.",
+    "noPhotos": "Πρόσθεσε τουλάχιστον μία φωτογραφία."
+  }
+}

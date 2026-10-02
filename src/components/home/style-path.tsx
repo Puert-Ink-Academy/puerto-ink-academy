@@ -1,22 +1,24 @@
+import { useTranslations } from "next-intl";
+
 import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
 import { categories } from "@/lib/mock/categories";
 import { cn } from "cn";
 
 export function StylePath() {
+  const t = useTranslations("Marketing.Path");
+
   return (
     <section aria-labelledby="path-heading" className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <div className="mx-auto max-w-2xl text-center">
-        <SectionLabel tone="marketing">The path</SectionLabel>
+        <SectionLabel tone="marketing">{t("eyebrow")}</SectionLabel>
         <h2
           id="path-heading"
           className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl"
         >
-          Five styles. One journey.
+          {t("title")}
         </h2>
-        <p className="mt-3 text-zinc-400">
-          Master each style to unlock the next, from precise fine line to painterly watercolor.
-        </p>
+        <p className="mt-3 text-zinc-400">{t("body")}</p>
       </div>
 
       <ol className="relative mt-10 grid gap-3 sm:grid-cols-5 sm:gap-4">
@@ -44,7 +46,7 @@ export function StylePath() {
               </span>
               <span className="min-w-0">
                 <span className="block text-[0.65rem] font-medium tracking-[0.12em] text-zinc-500 uppercase">
-                  {isFirst ? "Start here" : `Step ${category.sequenceOrder}`}
+                  {isFirst ? t("startHere") : t("step", { number: category.sequenceOrder })}
                 </span>
                 <span className="mt-0.5 block font-semibold text-zinc-50">{category.name}</span>
                 <span className="mt-0.5 block text-xs text-zinc-400">{category.tagline}</span>

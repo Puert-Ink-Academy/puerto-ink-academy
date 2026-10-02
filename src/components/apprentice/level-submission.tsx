@@ -2,6 +2,7 @@
 
 import { ArrowLeft, BookOpen, Clock, Hourglass, RefreshCw, RotateCcw, Send } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -29,19 +30,20 @@ export type LevelSubmissionProps = Variant & {
   pending: boolean;
 };
 
-const headings: Record<Variant["variant"], string> = {
-  first: "Your Submission",
-  retry: "Try Again",
-  improve: "Go for 10/10",
-};
+const headingKeys = {
+  first: "headingFirst",
+  retry: "headingRetry",
+  improve: "headingImprove",
+} as const;
 
-const buttonLabels: Record<Variant["variant"], string> = {
-  first: "Submit Exercise",
-  retry: "Resubmit Exercise",
-  improve: `Resubmit for Better Score (Max ${MASTERY_SCORE})`,
-};
+const buttonKeys = {
+  first: "buttonFirst",
+  retry: "buttonRetry",
+  improve: "buttonImprove",
+} as const;
 
 export function LevelSubmission(props: LevelSubmissionProps) {
+  const t = useTranslations("Apprentice.Submission");
   const { variant, categoryId, categoryName, level } = props;
   const [photos, setPhotos] = useState<SelectedPhoto[]>([]);
   const [isPending, setIsPending] = useState(props.pending);
@@ -62,14 +64,16 @@ export function LevelSubmission(props: LevelSubmissionProps) {
         if (result.pending) lockForReview();
         return;
       }
-      toast("Your submission has been sent to the teacher");
+      toast(t("sent"));
       lockForReview();
     });
   };
 
   return (
     <Panel as="section">
-      <SectionLabel as="h2">{headings[variant]}</SectionLabel>
+      <SectionLabel as="h2">
+        {t(headingKeys[variant], { score: MASTERY_SCORE })}
+      </SectionLabel>
 
       {props.variant === "retry" && (
         <div
@@ -78,7 +82,7 @@ export function LevelSubmission(props: LevelSubmissionProps) {
         >
           <p className="flex items-start gap-2 text-sm font-medium text-rose-200">
             <RotateCcw className="mt-0.5 size-4 shrink-0 text-rose-400" aria-hidden />
-            Score: {props.latestScore}/10. Review teacher feedback and try again
+            {t("retryScore", { score: props.latestScore })}
           </p>
           <blockquote className="mt-2 border-l-2 border-rose-500/40 pl-3 text-sm leading-relaxed text-zinc-300">
             {props.latestFeedback}
@@ -88,8 +92,7 @@ export function LevelSubmission(props: LevelSubmissionProps) {
 
       {variant === "improve" && (
         <p className="mt-2 text-sm text-zinc-400">
-          Your best score counts. A {MASTERY_SCORE}/10 earns +{xpForScore(MASTERY_SCORE)} XP and
-          the Mastery Badge.
+          {t("improveHint", { score: MASTERY_SCORE, xp: xpForScore(MASTERY_SCORE) })}
         </p>
       )}
 
@@ -107,7 +110,7 @@ export function LevelSubmission(props: LevelSubmissionProps) {
             className="mt-5 h-11 w-full bg-zinc-800 text-zinc-300 sm:w-auto sm:px-6"
           >
             <Clock aria-hidden />
-            Pending Teacher Review
+            {t("pendingButton")}
           </Button>
           <div
             role="status"
@@ -116,8 +119,7 @@ export function LevelSubmission(props: LevelSubmissionProps) {
             <Hourglass className="mt-0.5 size-5 shrink-0 text-sky-300" aria-hidden />
             <div className="min-w-0">
               <p className="text-sm leading-relaxed text-sky-100">
-                Your task is waiting for a grade. You can review the theory or practice other
-                unlocked tasks while you wait.
+                {t("pendingBody")}
               </p>
               <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-2 text-sm font-medium">
                 <a
@@ -125,14 +127,14 @@ export function LevelSubmission(props: LevelSubmissionProps) {
                   className="flex items-center gap-1.5 text-sky-300 hover:text-sky-200"
                 >
                   <BookOpen className="size-4" aria-hidden />
-                  Review the theory
+                  {t("reviewTheory")}
                 </a>
                 <Link
                   href={`/apprentice/category/${categoryId}`}
                   className="flex items-center gap-1.5 text-sky-300 hover:text-sky-200"
                 >
                   <ArrowLeft className="size-4" aria-hidden />
-                  Back to {categoryName}
+                  {t("backTo", { category: categoryName })}
                 </Link>
               </div>
             </div>
@@ -153,7 +155,7 @@ export function LevelSubmission(props: LevelSubmissionProps) {
           )}
         >
           <ButtonIcon aria-hidden />
-          {sending ? "Sending…" : buttonLabels[variant]}
+          {sending ? t("sending") : t(buttonKeys[variant], { score: MASTERY_SCORE })}
         </Button>
       )}
     </Panel>

@@ -1,8 +1,11 @@
+import { useTranslations } from "next-intl";
+
 import { roleBadge } from "@/components/layout/nav-items";
 import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function RolePill({ nav, className }: { nav: NavKey; className?: string }) {
+  const t = useTranslations("Roles");
   const badge = roleBadge[nav];
 
   return (
@@ -13,7 +16,7 @@ export function RolePill({ nav, className }: { nav: NavKey; className?: string }
         className,
       )}
     >
-      {badge.label}
+      {t(badge.role)}
     </span>
   );
 }

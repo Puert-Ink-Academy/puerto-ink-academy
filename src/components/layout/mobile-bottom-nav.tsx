@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { isActivePath, navAccent, navItems } from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
@@ -9,13 +10,14 @@ import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
 export function MobileBottomNav({ nav }: { nav: NavKey }) {
+  const t = useTranslations("Nav");
   const pathname = usePathname();
   const items = navItems[nav];
   const accent = navAccent[nav];
 
   return (
     <nav
-      aria-label="Academy"
+      aria-label={t("primary")}
       className="fixed inset-x-0 bottom-0 z-50 border-t border-zinc-800 bg-zinc-950/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
     >
       <ul
@@ -38,7 +40,7 @@ export function MobileBottomNav({ nav }: { nav: NavKey }) {
                 )}
               >
                 <Icon className={cn("size-5", active && accent.icon)} />
-                {item.label}
+                {t(item.label)}
               </Link>
             </li>
           );

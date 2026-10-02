@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { useLocale } from "next-intl"
 import { cn } from "cn"
 
 import { countryName, type CountryCode } from "@/lib/countries"
@@ -17,7 +18,7 @@ function CountryFlag({
   size?: keyof typeof sizes
   className?: string
 }) {
-  const name = countryName(code)
+  const name = countryName(code, useLocale())
   const { width, height } = sizes[size]
 
   return (

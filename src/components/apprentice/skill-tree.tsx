@@ -1,5 +1,6 @@
 import { Check, ChevronRight, Crown, Lock } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { MASTERY_SCORE } from "@/lib/grading";
 import { levelStatus, type LevelStatus } from "@/lib/levels";
@@ -52,6 +53,8 @@ function CardBody({
   result: LevelResult | undefined;
   mastered: boolean;
 }) {
+  const t = useTranslations("Apprentice.SkillTree");
+
   return (
     <>
       <p
@@ -62,7 +65,7 @@ function CardBody({
           status === "locked" && "text-zinc-600",
         )}
       >
-        Level {lesson.level}
+        {t("level", { level: lesson.level })}
       </p>
       <p
         className={cn(
@@ -78,23 +81,23 @@ function CardBody({
             {mastered ? (
               <span className="flex items-center gap-1 font-medium text-amber-300">
                 <Crown className="size-3.5" aria-hidden />
-                Mastered
+                {t("mastered")}
               </span>
             ) : (
-              <span className="text-emerald-400">Completed</span>
+              <span className="text-emerald-400">{t("completed")}</span>
             )}
             {result && (
               <span className="font-semibold text-amber-300 tabular-nums">
-                {result.highestScore}/10
+                {t("score", { score: result.highestScore })}
               </span>
             )}
           </>
         )}
         {status === "active" && (
           <>
-            <span className="text-amber-300">Active</span>
+            <span className="text-amber-300">{t("active")}</span>
             <span className="flex items-center gap-0.5 font-medium text-amber-300">
-              Continue
+              {t("continue")}
               <ChevronRight className="size-3.5" aria-hidden />
             </span>
           </>
@@ -102,20 +105,12 @@ function CardBody({
         {status === "locked" && (
           <span className="flex items-center gap-1 text-zinc-600">
             <Lock className="size-3" aria-hidden />
-            Locked
+            {t("locked")}
           </span>
         )}
       </div>
     </>
   );
-}
-
-function linkLabel(lesson: LevelLesson, status: LevelStatus, result: LevelResult | undefined) {
-  const base = `Level ${lesson.level}: ${lesson.title}`;
-  if (status === "active") return `${base}, active`;
-  if (!result) return `${base}, completed`;
-  const state = result.highestScore === MASTERY_SCORE ? "mastered" : "completed";
-  return `${base}, ${state} ${result.highestScore}/10`;
 }
 
 export function SkillTree({
@@ -129,6 +124,19 @@ export function SkillTree({
   results: LevelResult[];
   currentLevel: number;
 }) {
+  const t = useTranslations("Apprentice.SkillTree");
+
+  function linkLabel(lesson: LevelLesson, status: LevelStatus, result: LevelResult | undefined) {
+    const values = { level: lesson.level, title: lesson.title };
+    if (status === "active") return t("labelActive", values);
+    if (!result) return t("labelCompleted", values);
+    return t("labelScored", {
+      ...values,
+      mastered: result.highestScore === MASTERY_SCORE ? "true" : "false",
+      score: result.highestScore,
+    });
+  }
+
   return (
     <ol className="flex flex-col">
       {lessons.map((lesson, index) => {

@@ -1,7 +1,9 @@
 import { CheckCircle2, Crown, Sparkles, type LucideIcon } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { SectionLabel } from "@/components/ui/section-label";
+import { MASTERY_SCORE } from "@/lib/grading";
 import type { ApprenticeProfile } from "@/lib/mock/profiles";
 import { cn } from "cn";
 
@@ -16,11 +18,13 @@ type Stat = {
 };
 
 export function ProfileStatsGrid({ profile }: { profile: ApprenticeProfile }) {
+  const format = useFormatter();
+  const t = useTranslations("Profile.Stats");
   const stats: Stat[] = [
     {
       id: "xp",
-      label: "Total Global XP",
-      value: profile.totalXp.toLocaleString("en-US"),
+      label: t("totalXp"),
+      value: format.number(profile.totalXp),
       icon: Sparkles,
       card: "border-amber-400/20 bg-gradient-to-b from-amber-400/10 to-zinc-900",
       iconClass: "text-amber-400",
@@ -28,11 +32,10 @@ export function ProfileStatsGrid({ profile }: { profile: ApprenticeProfile }) {
     },
     {
       id: "perfect",
-      label: (
-        <>
-          Perfect 10/10<span className="normal-case">s</span> Achieved
-        </>
-      ),
+      label: t.rich("perfect", {
+        score: MASTERY_SCORE,
+        lower: (chunks) => <span className="normal-case">{chunks}</span>,
+      }),
       value: String(profile.mastered.length),
       icon: Crown,
       card: "border-amber-300/40 bg-gradient-to-b from-amber-300/15 to-zinc-900 shadow-[0_0_28px_-12px_var(--color-amber-400)]",
@@ -41,7 +44,7 @@ export function ProfileStatsGrid({ profile }: { profile: ApprenticeProfile }) {
     },
     {
       id: "completed",
-      label: "Levels Completed",
+      label: t("levelsCompleted"),
       value: String(profile.levelsCompleted),
       icon: CheckCircle2,
       card: "border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 to-zinc-900",

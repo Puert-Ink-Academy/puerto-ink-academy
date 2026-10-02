@@ -1,4 +1,5 @@
 import { Crown, LayoutGrid, Network, Trophy } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { CategoryGrid } from "@/components/apprentice/category-grid";
 import { MasteryBadge } from "@/components/apprentice/mastery-badge";
@@ -6,6 +7,7 @@ import { SkillTree } from "@/components/apprentice/skill-tree";
 import { PreviewFrame } from "@/components/home/preview-frame";
 import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
 import { SectionLabel } from "@/components/ui/section-label";
+import { MASTERY_SCORE, PASS_SCORE } from "@/lib/grading";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { getCategory, getPreviousCategory, type CategoryId } from "@/lib/mock/categories";
 import { getRanking } from "@/lib/mock/leaderboard";
@@ -15,6 +17,7 @@ import { getCategoryResults, getLevelResult } from "@/lib/mock/level-results";
 const previewCategories: CategoryId[] = ["fine-line", "realism"];
 
 export function ProductPreview() {
+  const t = useTranslations("Marketing.Preview");
   const categoryItems = previewCategories.map((id) => ({
     category: getCategory(id),
     progress: getCategoryProgress(id),
@@ -23,37 +26,31 @@ export function ProductPreview() {
   }));
   const fineLine = getCategoryProgress("fine-line");
   const masteredResult = getLevelResult("fine-line", 3);
-  const podium = getRanking("global").slice(0, 3);
+  const podium = getRanking("fine-line").slice(0, 3);
 
   return (
     <section aria-labelledby="preview-heading" className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <div className="mx-auto max-w-2xl text-center">
-        <SectionLabel tone="marketing">Inside the academy</SectionLabel>
+        <SectionLabel tone="marketing">{t("eyebrow")}</SectionLabel>
         <h2
           id="preview-heading"
           className="mt-2 text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl"
         >
-          Your training, built like a game
+          {t("title")}
         </h2>
-        <p className="mt-3 text-zinc-400">
-          Every style is a skill tree. Every level is a real exercise, graded by a real artist.
-        </p>
+        <p className="mt-3 text-zinc-400">{t("body")}</p>
       </div>
 
       <div className="mt-10 flex flex-col gap-6">
-        <PreviewFrame
-          icon={LayoutGrid}
-          title="Choose your style"
-          caption="Styles unlock in order, so you master the fundamentals first."
-        >
+        <PreviewFrame icon={LayoutGrid} title={t("chooseTitle")} caption={t("chooseCaption")}>
           <CategoryGrid items={categoryItems} />
         </PreviewFrame>
 
         <div className="grid gap-6 lg:grid-cols-2">
           <PreviewFrame
             icon={Network}
-            title="Climb the skill tree"
-            caption="Pass a level with 8/10 or better to unlock the next one."
+            title={t("treeTitle")}
+            caption={t("treeCaption", { score: PASS_SCORE })}
           >
             <SkillTree
               categoryId="fine-line"
@@ -67,18 +64,18 @@ export function ProductPreview() {
             {masteredResult && (
               <PreviewFrame
                 icon={Crown}
-                title="Earn mastery"
-                caption="Retry any passed level. A perfect 10/10 earns the Mastery Badge."
+                title={t("masteryTitle")}
+                caption={t("masteryCaption", { score: MASTERY_SCORE })}
               >
                 <MasteryBadge result={masteredResult} />
               </PreviewFrame>
             )}
             <PreviewFrame
               icon={Trophy}
-              title="Rise up the leaderboard"
-              caption="Global and per-style rankings, refreshed with every grade."
+              title={t("leaderboardTitle")}
+              caption={t("leaderboardCaption")}
             >
-              <LeaderboardTable entries={podium} levelLabel="Cleared" />
+              <LeaderboardTable entries={podium} />
             </PreviewFrame>
           </div>
         </div>

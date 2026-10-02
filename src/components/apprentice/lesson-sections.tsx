@@ -1,13 +1,16 @@
+import { useTranslations } from "next-intl";
+
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
 import type { LevelLesson } from "@/lib/mock/level-lessons";
 import { cn } from "cn";
 
 export function LessonSections({ lesson }: { lesson: LevelLesson }) {
+  const t = useTranslations("Apprentice.Level");
   const sections = [
-    { title: "Objective", body: lesson.objective, teacherNote: false },
-    { title: "Exercise", body: lesson.exercise, teacherNote: false },
-    { title: "Tips", body: lesson.tips, teacherNote: true },
+    { title: t("objective"), body: lesson.objective, teacherNote: false },
+    { title: t("exercise"), body: lesson.exercise, teacherNote: false },
+    { title: t("tips"), body: lesson.tips, teacherNote: true },
   ];
 
   return (

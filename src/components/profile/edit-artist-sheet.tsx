@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
@@ -30,6 +31,7 @@ function EditArtistForm({
   initial: Partial<ArtistDetails>;
   onSaved: (details: ArtistDetails) => void;
 }) {
+  const t = useTranslations("Profile.Edit");
   const [values, setValues] = useState(artistDetailsInput(initial));
   const [errors, setErrors] = useState<ArtistDetailsErrors>({});
   const [pending, startTransition] = useTransition();
@@ -51,10 +53,10 @@ function EditArtistForm({
           const result = await updateArtistDetails(profileId, values);
           if ("error" in result) {
             setErrors(result.fieldErrors ?? {});
-            toast.error(result.error);
+            toast.error(t(result.error));
             return;
           }
-          toast.success("Profile updated");
+          toast.success(t("updated"));
           onSaved(result.details);
         });
       }}
@@ -69,7 +71,7 @@ function EditArtistForm({
           disabled={pending}
           className="h-11 w-full bg-amber-400 text-zinc-950 hover:bg-amber-300"
         >
-          {pending ? "Saving..." : "Save Profile"}
+          {pending ? t("saving") : t("save")}
         </Button>
       </SheetFooter>
     </form>
@@ -89,6 +91,8 @@ export function EditArtistSheet({
   initial: Partial<ArtistDetails>;
   onSaved: (details: ArtistDetails) => void;
 }) {
+  const t = useTranslations("Profile.Edit");
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
@@ -96,10 +100,8 @@ export function EditArtistSheet({
         className="gap-0 border-zinc-800 bg-zinc-900 data-[side=right]:w-full data-[side=right]:sm:max-w-md [&>[data-slot=sheet-close]]:top-[calc(0.75rem+env(safe-area-inset-top))]"
       >
         <SheetHeader className="p-5 pt-[calc(1.25rem+env(safe-area-inset-top))] pr-14">
-          <SheetTitle className="text-lg font-semibold text-zinc-50">Edit Profile</SheetTitle>
-          <SheetDescription className="text-zinc-400">
-            How you appear on your profile and the leaderboard.
-          </SheetDescription>
+          <SheetTitle className="text-lg font-semibold text-zinc-50">{t("title")}</SheetTitle>
+          <SheetDescription className="text-zinc-400">{t("description")}</SheetDescription>
         </SheetHeader>
         <EditArtistForm
           profileId={profileId}

@@ -1,13 +1,16 @@
 import { Crown } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
 import { categoryStyles } from "@/lib/categories";
+import { MASTERY_SCORE } from "@/lib/grading";
 import type { ShowcaseBadge } from "@/lib/mock/profiles";
 import { cn } from "cn";
 
 function BadgeTile({ badge }: { badge: ShowcaseBadge }) {
+  const t = useTranslations("Profile.Showcase");
   const style = categoryStyles[badge.category.id];
   const Icon = style.icon;
 
@@ -21,7 +24,7 @@ function BadgeTile({ badge }: { badge: ShowcaseBadge }) {
         <Crown className="size-6" aria-hidden />
       </span>
       <span className="relative mt-3 bg-gradient-to-b from-amber-100 to-amber-400 bg-clip-text text-xl font-semibold text-transparent tabular-nums">
-        10/10
+        {t("score", { score: MASTERY_SCORE })}
       </span>
       <span
         className={cn(
@@ -33,7 +36,7 @@ function BadgeTile({ badge }: { badge: ShowcaseBadge }) {
         {badge.category.name}
       </span>
       <span className="relative mt-2 text-xs text-zinc-300">
-        Level {badge.level} · {badge.title}
+        {t("levelTitle", { level: badge.level, title: badge.title })}
       </span>
     </>
   );
@@ -46,6 +49,7 @@ export function MasteryShowcase({
   badges: ShowcaseBadge[];
   linkable: boolean;
 }) {
+  const t = useTranslations("Profile.Showcase");
   const tileClass =
     "relative flex flex-col items-center overflow-hidden rounded-xl border border-amber-400/30 bg-zinc-900 px-3 py-4 text-center shadow-[0_0_24px_-14px_var(--color-amber-400)]";
 
@@ -53,7 +57,7 @@ export function MasteryShowcase({
     <section aria-labelledby="showcase-heading" className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <SectionLabel as="h2" id="showcase-heading">
-          Mastery Showcase
+          {t("title")}
         </SectionLabel>
         <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-0.5 text-xs font-medium text-amber-300 tabular-nums">
           {badges.length}
@@ -66,14 +70,19 @@ export function MasteryShowcase({
           className="flex flex-col items-center gap-2 px-6 py-10 text-center"
         >
           <Crown className="size-6 text-zinc-600" aria-hidden />
-          <p className="text-sm font-medium text-zinc-200">No perfect scores yet.</p>
-          <p className="text-xs text-zinc-500">Retry a passed level to earn your first.</p>
+          <p className="text-sm font-medium text-zinc-200">{t("emptyTitle")}</p>
+          <p className="text-xs text-zinc-500">{t("emptyBody")}</p>
         </Panel>
       ) : (
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {badges.map((badge) => {
             const key = `${badge.category.id}-${badge.level}`;
-            const label = `${badge.category.name} Level ${badge.level}: ${badge.title}, 10/10`;
+            const label = t("tileLabel", {
+              category: badge.category.name,
+              level: badge.level,
+              title: badge.title,
+              score: MASTERY_SCORE,
+            });
             return (
               <li key={key} className="flex">
                 {linkable ? (

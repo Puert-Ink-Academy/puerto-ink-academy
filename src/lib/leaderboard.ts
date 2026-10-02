@@ -16,6 +16,7 @@ export type MasteredLevel = {
 
 export type EvolutionAttempt = {
   score: number;
+  /** ISO 8601 date. */
   date: string;
   photo: SubmissionPhoto;
 };
@@ -37,14 +38,9 @@ export type ApprenticeStanding = {
   evolution: EvolutionEntry[];
 };
 
-export type LeaderboardScope = "global" | CategoryId;
+export type LeaderboardScope = CategoryId;
 
-export const leaderboardScopes: LeaderboardScope[] = [
-  "global",
-  "fine-line",
-  "realism",
-  "traditional",
-];
+export const leaderboardScopes: LeaderboardScope[] = ["fine-line", "realism", "traditional"];
 
 export type LeaderboardEntry = {
   rank: number;
@@ -61,8 +57,12 @@ export function unlockedCategories(standing: ApprenticeStanding): Set<CategoryId
   return unlockedCategoryIds((categoryId) => standing.categories[categoryId]?.level);
 }
 
-function unlockedStats(standing: ApprenticeStanding): CategoryStanding[] {
-  return [...unlockedCategories(standing)].flatMap((id) => standing.categories[id] ?? []);
+export function unlockedTotals(standing: ApprenticeStanding): { xp: number; levelsCompleted: number } {
+  const stats = [...unlockedCategories(standing)].flatMap((id) => standing.categories[id] ?? []);
+  return {
+    xp: stats.reduce((total, stat) => total + stat.xp, 0),
+    levelsCompleted: stats.reduce((total, stat) => total + stat.level - 1, 0),
+  };
 }
 
 function toUnranked(
@@ -70,16 +70,6 @@ function toUnranked(
   scope: LeaderboardScope,
 ): Omit<LeaderboardEntry, "rank"> | null {
   const base = { id: standing.id, name: standing.name, isCurrentUser: standing.isCurrentUser };
-
-  if (scope === "global") {
-    const stats = unlockedStats(standing);
-    return {
-      ...base,
-      level: stats.reduce((total, stat) => total + stat.level - 1, 0),
-      xp: stats.reduce((total, stat) => total + stat.xp, 0),
-      averageScore: standing.averageScore,
-    };
-  }
 
   const stat = unlockedCategories(standing).has(scope) ? standing.categories[scope] : undefined;
   if (!stat || stat.xp === 0) return null;

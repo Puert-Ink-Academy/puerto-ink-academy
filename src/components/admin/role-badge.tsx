@@ -1,4 +1,6 @@
-import { roleLabels, type Role } from "@/lib/roles";
+import { useTranslations } from "next-intl";
+
+import type { Role } from "@/lib/roles";
 import { cn } from "cn";
 
 const roleBadgeClassName: Record<Role, string> = {
@@ -8,6 +10,8 @@ const roleBadgeClassName: Record<Role, string> = {
 };
 
 export function RoleBadge({ role }: { role: Role }) {
+  const t = useTranslations("Roles");
+
   return (
     <span
       className={cn(
@@ -15,7 +19,7 @@ export function RoleBadge({ role }: { role: Role }) {
         roleBadgeClassName[role],
       )}
     >
-      {roleLabels[role]}
+      {t(role)}
     </span>
   );
 }

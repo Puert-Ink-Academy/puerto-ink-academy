@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 
@@ -23,15 +24,17 @@ const labelClass = sectionLabelVariants();
 const fieldClass =
   "h-11 border-zinc-700 bg-zinc-950/60 text-zinc-100 focus-visible:border-amber-400 focus-visible:ring-amber-400/30";
 
-function validateName(name: string, existing: CurriculumCategory[]): string | undefined {
+type NameError = "nameRequired" | "nameInvalid" | "nameTaken";
+
+function validateName(name: string, existing: CurriculumCategory[]): NameError | undefined {
   const trimmed = name.trim();
-  if (!trimmed) return "Enter a category name.";
+  if (!trimmed) return "nameRequired";
   const slug = slugify(trimmed);
-  if (!slug) return "Use at least one letter or number.";
+  if (!slug) return "nameInvalid";
   const taken = existing.some(
     (category) => category.id === slug || category.name.toLowerCase() === trimmed.toLowerCase(),
   );
-  if (taken) return "A category with this name already exists.";
+  if (taken) return "nameTaken";
   return undefined;
 }
 
@@ -48,7 +51,9 @@ function CreateCategoryForm({
   const taglineId = useId();
   const [name, setName] = useState("");
   const [tagline, setTagline] = useState("");
-  const [error, setError] = useState<string>();
+  const t = useTranslations("Teacher.Curriculum.Category");
+  const tCommon = useTranslations("Common");
+  const [error, setError] = useState<NameError>();
 
   return (
     <form
@@ -62,13 +67,13 @@ function CreateCategoryForm({
 
         const trimmedName = name.trim();
         onCreate({ id: slugify(trimmedName), name: trimmedName, tagline: tagline.trim() });
-        toast.success(`${trimmedName} category created`);
+        toast.success(t("created", { name: trimmedName }));
         onDone();
       }}
     >
       <div className="flex flex-col gap-2">
         <Label htmlFor={nameId} className={labelClass}>
-          Name
+          {t("name")}
         </Label>
         <Input
           id={nameId}
@@ -78,27 +83,28 @@ function CreateCategoryForm({
             setName(event.target.value);
             setError(undefined);
           }}
-          placeholder="Japanese"
+          placeholder={t("namePlaceholder")}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${nameId}-error` : undefined}
           className={fieldClass}
         />
         {error && (
           <p id={`${nameId}-error`} className="text-sm text-rose-400">
-            {error}
+            {t(error)}
           </p>
         )}
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor={taglineId} className={labelClass}>
-          Tagline <span className="tracking-normal text-zinc-600 normal-case">(optional)</span>
+          {t("tagline")}{" "}
+          <span className="tracking-normal text-zinc-600 normal-case">{t("optional")}</span>
         </Label>
         <Input
           id={taglineId}
           autoComplete="off"
           value={tagline}
           onChange={(event) => setTagline(event.target.value)}
-          placeholder="Bold waves, koi and flowing backgrounds"
+          placeholder={t("taglinePlaceholder")}
           className={fieldClass}
         />
       </div>
@@ -112,10 +118,10 @@ function CreateCategoryForm({
             />
           }
         >
-          Cancel
+          {tCommon("cancel")}
         </DialogClose>
         <Button type="submit" className="h-10 bg-amber-400 px-4 text-zinc-950 hover:bg-amber-300">
-          Create Category
+          {t("submit")}
         </Button>
       </DialogFooter>
     </form>
@@ -135,14 +141,14 @@ export function CreateCategoryDialog({
   onCreate: (category: CurriculumCategory) => void;
   formKey: number;
 }) {
+  const t = useTranslations("Teacher.Curriculum.Category");
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border-zinc-800 bg-zinc-900 sm:max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-zinc-50">Create Category</DialogTitle>
-          <DialogDescription className="text-zinc-400">
-            Define a new style. You can add its levels right after.
-          </DialogDescription>
+          <DialogTitle className="text-zinc-50">{t("title")}</DialogTitle>
+          <DialogDescription className="text-zinc-400">{t("description")}</DialogDescription>
         </DialogHeader>
         <CreateCategoryForm
           key={formKey}

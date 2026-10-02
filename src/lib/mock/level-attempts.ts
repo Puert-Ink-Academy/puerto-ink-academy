@@ -6,6 +6,7 @@ export type LevelAttempt = {
   categoryId: CategoryId;
   level: number;
   attempt: number;
+  /** ISO 8601 date. */
   submittedAt: string;
   photos: SubmissionPhoto[];
   score: number;
@@ -18,7 +19,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-1-attempt-1",
     level: 1,
     attempt: 1,
-    submittedAt: "Mar 4, 2026",
+    submittedAt: "2026-03-04",
     photos: [mockPhotos.liningDrills],
     score: 9,
     feedback: "Clean station and solid glove discipline. Great start.",
@@ -28,7 +29,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-2-attempt-1",
     level: 2,
     attempt: 1,
-    submittedAt: "Mar 11, 2026",
+    submittedAt: "2026-03-11",
     photos: [mockPhotos.roseOutline, mockPhotos.liningDrills],
     score: 6,
     feedback:
@@ -39,7 +40,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-2-attempt-2",
     level: 2,
     attempt: 2,
-    submittedAt: "Mar 14, 2026",
+    submittedAt: "2026-03-14",
     photos: [mockPhotos.liningDrills],
     score: 8,
     feedback: "Hang is right now. Keep an eye on your voltage for lining.",
@@ -49,7 +50,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-3-attempt-1",
     level: 3,
     attempt: 1,
-    submittedAt: "Mar 18, 2026",
+    submittedAt: "2026-03-18",
     photos: [mockPhotos.evolutionRough],
     score: 6,
     feedback:
@@ -60,7 +61,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-3-attempt-2",
     level: 3,
     attempt: 2,
-    submittedAt: "Mar 22, 2026",
+    submittedAt: "2026-03-22",
     photos: [mockPhotos.evolutionClean, mockPhotos.liningDrills],
     score: 10,
     feedback: "Perfectly even depth across the whole sheet. No notes.",
@@ -70,7 +71,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-4-attempt-1",
     level: 4,
     attempt: 1,
-    submittedAt: "Apr 2, 2026",
+    submittedAt: "2026-04-02",
     photos: [mockPhotos.roseOutline],
     score: 8,
     feedback: "Placement is good. Use a little less solution for crisper lines.",
@@ -80,7 +81,7 @@ export const levelAttempts: LevelAttempt[] = [
     id: "fine-line-level-5-attempt-1",
     level: 5,
     attempt: 1,
-    submittedAt: "Apr 12, 2026",
+    submittedAt: "2026-04-12",
     photos: [mockPhotos.liningDrills, mockPhotos.roseOutline],
     score: 6,
     feedback:

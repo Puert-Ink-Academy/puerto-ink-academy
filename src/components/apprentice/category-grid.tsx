@@ -1,5 +1,6 @@
 import { ChevronRight, Lock } from "lucide-react";
 import Link from "next/link";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { Progress } from "@/components/ui/progress";
 import { categoryStyles } from "@/lib/categories";
@@ -15,11 +16,13 @@ export type CategoryCardData = {
   previousCategoryName?: string;
 };
 
-function statusLabel(progress: CategoryProgress, totalLevels: number) {
-  if (progress.isLocked) return "Locked";
-  if (!progress.started) return "Not started";
-  if (progress.currentLevel > totalLevels) return "Mastered";
-  return "In progress";
+type CategoryStatus = "locked" | "notStarted" | "mastered" | "inProgress";
+
+function categoryStatus(progress: CategoryProgress, totalLevels: number): CategoryStatus {
+  if (progress.isLocked) return "locked";
+  if (!progress.started) return "notStarted";
+  if (progress.currentLevel > totalLevels) return "mastered";
+  return "inProgress";
 }
 
 const lockedStyle = {
@@ -29,12 +32,17 @@ const lockedStyle = {
 };
 
 function CategoryCard({ category, progress, totalLevels, previousCategoryName }: CategoryCardData) {
+  const t = useTranslations("Apprentice.CategoryCard");
+  const format = useFormatter();
   const locked = progress.isLocked;
   const style = categoryStyles[category.id];
   const Icon = locked ? Lock : style.icon;
   const percent = categoryProgressPercent(progress.currentLevel, totalLevels);
   const level = Math.min(progress.currentLevel, totalLevels);
-  const unlockHint = `Complete ${previousCategoryName ?? "the previous style"} to unlock`;
+  const status = t(categoryStatus(progress, totalLevels));
+  const unlockHint = previousCategoryName
+    ? t("unlockHint", { previous: previousCategoryName })
+    : t("unlockHintGeneric");
 
   const body = (
     <>
@@ -60,7 +68,7 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <h2 className="text-lg font-semibold tracking-tight text-zinc-50">{category.name}</h2>
             <span className="rounded-md border border-zinc-700 px-1.5 py-px text-[0.6rem] font-medium tracking-[0.12em] text-zinc-400 uppercase tabular-nums">
-              Step {category.sequenceOrder}
+              {t("step", { number: category.sequenceOrder })}
             </span>
           </div>
           <p className="mt-0.5 text-sm text-zinc-400">{category.tagline}</p>
@@ -76,14 +84,14 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
           )}
         >
           {locked && <Lock className="size-3" aria-hidden />}
-          {statusLabel(progress, totalLevels)}
+          {status}
         </span>
       </div>
 
       <dl className="relative mt-6 grid grid-cols-2 gap-3">
         <div>
           <dt className="text-[0.65rem] font-medium tracking-[0.12em] text-zinc-500 uppercase">
-            Current Level
+            {t("currentLevel")}
           </dt>
           <dd className="mt-1 flex items-baseline gap-1.5">
             <span
@@ -94,12 +102,12 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
             >
               {level}
             </span>
-            <span className="text-sm text-zinc-500">of {totalLevels}</span>
+            <span className="text-sm text-zinc-500">{t("ofTotal", { total: totalLevels })}</span>
           </dd>
         </div>
         <div>
           <dt className="text-[0.65rem] font-medium tracking-[0.12em] text-zinc-500 uppercase">
-            Category XP
+            {t("categoryXp")}
           </dt>
           <dd
             className={cn(
@@ -107,23 +115,23 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
               locked ? lockedStyle.text : "text-zinc-50",
             )}
           >
-            {progress.xp.toLocaleString("en-US")}
+            {format.number(progress.xp)}
           </dd>
         </div>
       </dl>
 
       <div className="relative mt-5">
         <p className="text-xs text-zinc-400">
-          Level {level}:{" "}
+          {t("levelProgress", { level })}{" "}
           <span
             className={cn("font-semibold tabular-nums", locked ? lockedStyle.text : style.text)}
           >
-            {percent}%
+            {format.number(percent / 100, { style: "percent" })}
           </span>
         </p>
         <Progress
           value={percent}
-          aria-label={`${category.name} progress`}
+          aria-label={t("progressLabel", { category: category.name })}
           className={cn(
             "mt-2 [&_[data-slot=progress-track]]:h-2 [&_[data-slot=progress-track]]:bg-zinc-800",
             !locked && style.progress,
@@ -144,7 +152,7 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
           </>
         ) : (
           <>
-            {progress.started ? "Continue" : "Start training"}
+            {progress.started ? t("continue") : t("startTraining")}
             <ChevronRight
               className="size-4 transition-transform group-hover:translate-x-0.5"
               aria-hidden
@@ -163,7 +171,7 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
       <div
         role="group"
         aria-disabled="true"
-        aria-label={`${category.name}: locked. ${unlockHint}`}
+        aria-label={t("lockedLabel", { category: category.name, hint: unlockHint })}
         className={cn(baseClassName, lockedStyle.card)}
       >
         {body}
@@ -174,7 +182,14 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
   return (
     <Link
       href={`/apprentice/category/${category.id}`}
-      aria-label={`${category.name}: ${statusLabel(progress, totalLevels)}, level ${level} of ${totalLevels}, ${progress.xp.toLocaleString("en-US")} XP, ${percent}% complete`}
+      aria-label={t("cardLabel", {
+        category: category.name,
+        status,
+        level,
+        total: totalLevels,
+        xp: format.number(progress.xp),
+        percent,
+      })}
       className={cn(
         baseClassName,
         "transition-all duration-200 outline-none hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950",

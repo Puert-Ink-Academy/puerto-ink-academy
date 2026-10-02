@@ -2,6 +2,7 @@
 
 import { ArrowDown, ArrowRight, Crown, TrendingUp } from "lucide-react";
 import Image from "next/image";
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { PhotoViewer } from "@/components/submissions/photo-viewer";
@@ -27,9 +28,11 @@ function AttemptPanel({
   attempt: EvolutionAttempt;
   onOpen: () => void;
 }) {
+  const format = useFormatter();
+  const t = useTranslations("Profile.Evolution");
   const isBest = kind === "best";
   const isEpic = isBest && attempt.score === MASTERY_SCORE;
-  const label = isBest ? "Best Attempt" : "First Attempt";
+  const label = t(isBest ? "best" : "first");
 
   return (
     <figure
@@ -43,7 +46,7 @@ function AttemptPanel({
       <button
         type="button"
         onClick={onOpen}
-        aria-label={`Open ${label.toLowerCase()} photo fullscreen`}
+        aria-label={t(isBest ? "openBest" : "openFirst")}
         className="group relative aspect-[4/3] w-full cursor-zoom-in overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-inset"
       >
         <Image
@@ -71,7 +74,9 @@ function AttemptPanel({
         </span>
       </button>
       <figcaption className="flex items-center justify-between gap-3 px-3.5 py-3">
-        <span className="text-xs text-zinc-500">{attempt.date}</span>
+        <span className="text-xs text-zinc-500">
+          {format.dateTime(new Date(attempt.date), "date")}
+        </span>
         <span
           className={cn(
             "text-sm font-semibold tabular-nums",
@@ -81,7 +86,8 @@ function AttemptPanel({
               "bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent",
           )}
         >
-          Score: {attempt.score}/10{isEpic && " - EPIC"}
+          {t("score", { score: attempt.score })}
+          {isEpic && t("epic")}
         </span>
       </figcaption>
     </figure>
@@ -91,6 +97,7 @@ function AttemptPanel({
 export function FirstVsBest({ card }: { card: EvolutionCard }) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [viewerIndex, setViewerIndex] = useState(0);
+  const t = useTranslations("Profile.Evolution");
   const style = categoryStyles[card.category.id];
   const Icon = style.icon;
   const gain = card.best.score - card.first.score;
@@ -114,11 +121,12 @@ export function FirstVsBest({ card }: { card: EvolutionCard }) {
           {card.category.name}
         </span>
         <h3 className="text-sm font-semibold text-zinc-50">
-          Level {card.level} · {card.title}
+          {t("levelTitle", { level: card.level, title: card.title })}
         </h3>
         <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-xs font-medium text-emerald-300 tabular-nums">
-          <TrendingUp className="size-3.5" aria-hidden />+{gain} points
-          {days > 0 && <span className="text-emerald-400/70"> · in {days} days</span>}
+          <TrendingUp className="size-3.5" aria-hidden />
+          {t("gain", { points: gain })}
+          {days > 0 && <span className="text-emerald-400/70"> · {t("inDays", { days })}</span>}
         </span>
       </header>
 

@@ -1,4 +1,5 @@
-import { Lock, Trophy } from "lucide-react";
+import { Lock } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionLabel } from "@/components/ui/section-label";
@@ -22,9 +23,10 @@ const podium: Record<number, { card: string; rank: string }> = {
 };
 
 function StandingCard({ standing }: { standing: ScopeStanding }) {
-  const Icon = standing.scope === "global" ? Trophy : categoryStyles[standing.scope].icon;
-  const iconClass =
-    standing.scope === "global" ? "text-amber-400" : categoryStyles[standing.scope].text;
+  const format = useFormatter();
+  const t = useTranslations("Profile.Standings");
+  const Icon = categoryStyles[standing.scope].icon;
+  const iconClass = categoryStyles[standing.scope].text;
   const medal = standing.rank !== null ? podium[standing.rank] : undefined;
 
   return (
@@ -39,15 +41,15 @@ function StandingCard({ standing }: { standing: ScopeStanding }) {
       <CardContent className="flex flex-col gap-3">
         <SectionLabel className="flex items-center gap-2">
           <Icon className={cn("size-4", standing.locked ? "text-zinc-500" : iconClass)} aria-hidden />
-          {standing.label} Rank
+          {t("rankLabel", { scope: standing.label })}
         </SectionLabel>
         {standing.locked ? (
           <p className="flex items-center gap-1.5 text-lg font-semibold text-zinc-400">
             <Lock className="size-4" aria-hidden />
-            Locked
+            {t("locked")}
           </p>
         ) : standing.rank === null ? (
-          <p className="text-lg font-semibold text-zinc-400">Unranked</p>
+          <p className="text-lg font-semibold text-zinc-400">{t("unranked")}</p>
         ) : (
           <p className="flex items-baseline gap-1.5">
             <span
@@ -58,11 +60,11 @@ function StandingCard({ standing }: { standing: ScopeStanding }) {
             >
               #{standing.rank}
             </span>
-            <span className="text-xs text-zinc-500">of {standing.ranked}</span>
+            <span className="text-xs text-zinc-500">{t("ofTotal", { total: standing.ranked })}</span>
           </p>
         )}
         <p className="text-xs text-zinc-500 tabular-nums">
-          {standing.xp.toLocaleString("en-US")} XP
+          {t("xp", { xp: format.number(standing.xp) })}
         </p>
       </CardContent>
     </Card>
@@ -70,10 +72,12 @@ function StandingCard({ standing }: { standing: ScopeStanding }) {
 }
 
 export function LeaderboardStandings({ standings }: { standings: ScopeStanding[] }) {
+  const t = useTranslations("Profile.Standings");
+
   return (
     <section aria-labelledby="standings-heading" className="flex flex-col gap-3">
       <SectionLabel as="h2" id="standings-heading">
-        Leaderboard Standings
+        {t("title")}
       </SectionLabel>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {standings.map((standing) => (

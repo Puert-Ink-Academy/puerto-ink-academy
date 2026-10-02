@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreHorizontal, UserCog } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
 
 import { RoleBadge } from "@/components/admin/role-badge";
 import { Button } from "@/components/ui/button";
@@ -31,18 +32,19 @@ export function UsersTable({
   users: PlatformUser[];
   onChangeRole: (user: PlatformUser) => void;
 }) {
+  const format = useFormatter();
+  const t = useTranslations("Admin.Table");
+
   return (
     <Panel padding="flush">
       <Table className="table-fixed">
         <TableHeader>
           <TableRow className="border-zinc-800 hover:bg-transparent">
-            <TableHead className={`pl-4 ${headClassName}`}>User</TableHead>
-            <TableHead className={`w-28 ${headClassName}`}>Role</TableHead>
-            <TableHead className={`hidden w-28 sm:table-cell ${headClassName}`}>
-              Joined
-            </TableHead>
+            <TableHead className={`pl-4 ${headClassName}`}>{t("user")}</TableHead>
+            <TableHead className={`w-28 ${headClassName}`}>{t("role")}</TableHead>
+            <TableHead className={`hidden w-28 sm:table-cell ${headClassName}`}>{t("joined")}</TableHead>
             <TableHead className="w-14 pr-4">
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">{t("actions")}</span>
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -73,7 +75,7 @@ export function UsersTable({
                 <RoleBadge role={user.role} />
               </TableCell>
               <TableCell className="hidden text-zinc-400 sm:table-cell">
-                {user.joinedAt}
+                {format.dateTime(new Date(user.joinedAt), "monthYear")}
               </TableCell>
               <TableCell className="pr-4 text-right">
                 <DropdownMenu>
@@ -82,7 +84,7 @@ export function UsersTable({
                       <Button
                         variant="ghost"
                         size="icon"
-                        aria-label={`Actions for ${user.name}`}
+                        aria-label={t("actionsFor", { name: user.name })}
                         className="size-10 text-zinc-400 hover:bg-zinc-800 hover:text-violet-300 aria-expanded:bg-zinc-800 aria-expanded:text-violet-300"
                       />
                     }
@@ -92,7 +94,7 @@ export function UsersTable({
                   <DropdownMenuContent align="end" className="w-44">
                     <DropdownMenuItem onClick={() => onChangeRole(user)}>
                       <UserCog />
-                      Change Role
+                      {t("changeRole")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

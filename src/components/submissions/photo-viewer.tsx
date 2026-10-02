@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useLayoutEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ function ViewerStage({
   photo: SubmissionPhoto;
   onSwipe: (direction: 1 | -1) => void;
 }) {
+  const t = useTranslations("Submissions");
   const scrollRef = useRef<HTMLDivElement>(null);
   const pointerStart = useRef<{ x: number; y: number } | null>(null);
   const lastTap = useRef(0);
@@ -105,7 +107,7 @@ function ViewerStage({
         type="button"
         size="icon"
         variant="ghost"
-        aria-label={zoomed ? "Zoom out" : "Zoom in"}
+        aria-label={zoomed ? t("zoomOut") : t("zoomIn")}
         onClick={() => toggleZoom({ x: 0.5, y: 0.5 })}
         className={cn(
           controlClass,
@@ -131,6 +133,7 @@ export function PhotoViewer({
   onOpenChange: (open: boolean) => void;
   onIndexChange: (index: number) => void;
 }) {
+  const t = useTranslations("Submissions");
   const photo = photos[index];
   const hasMany = photos.length > 1;
 
@@ -151,7 +154,7 @@ export function PhotoViewer({
           className="inset-0 top-0 left-0 flex h-svh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 rounded-none bg-black p-0 ring-0 sm:max-w-none"
         >
           <DialogTitle className="sr-only">
-            Photo {index + 1} of {photos.length}
+            {t("photoTitle", { index: index + 1, total: photos.length })}
           </DialogTitle>
           <div className="flex items-center justify-between px-3 pt-[calc(0.75rem+env(safe-area-inset-top))] pb-3">
             <p className="rounded-full bg-zinc-900/80 px-3 py-1 text-xs font-medium text-zinc-300 tabular-nums">
@@ -163,7 +166,7 @@ export function PhotoViewer({
                   type="button"
                   size="icon"
                   variant="ghost"
-                  aria-label="Close photo"
+                  aria-label={t("closePhoto")}
                   className={controlClass}
                 />
               }
@@ -178,7 +181,7 @@ export function PhotoViewer({
                 type="button"
                 size="icon"
                 variant="ghost"
-                aria-label="Previous photo"
+                aria-label={t("previousPhoto")}
                 onClick={() => step(-1)}
                 className={cn(controlClass, "absolute top-1/2 left-3 -translate-y-1/2")}
               >
@@ -188,7 +191,7 @@ export function PhotoViewer({
                 type="button"
                 size="icon"
                 variant="ghost"
-                aria-label="Next photo"
+                aria-label={t("nextPhoto")}
                 onClick={() => step(1)}
                 className={cn(controlClass, "absolute top-1/2 right-3 -translate-y-1/2")}
               >

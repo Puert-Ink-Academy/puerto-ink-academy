@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 
@@ -34,6 +35,9 @@ function ChangeRoleForm({
   onSave: (userId: string, role: Role) => void;
   onDone: () => void;
 }) {
+  const t = useTranslations("Admin.ChangeRole");
+  const tRoles = useTranslations("Roles");
+  const tCommon = useTranslations("Common");
   const triggerId = useId();
   const [role, setRole] = useState<Role>(user.role);
 
@@ -43,7 +47,7 @@ function ChangeRoleForm({
       onSubmit={(event) => {
         event.preventDefault();
         onSave(user.id, role);
-        toast.success(`${user.name} is now a ${role}`);
+        toast.success(t("saved", { name: user.name, role: tRoles(role) }));
         onDone();
       }}
     >
@@ -52,7 +56,7 @@ function ChangeRoleForm({
           htmlFor={triggerId}
           className={sectionLabelVariants()}
         >
-          Role
+          {t("role")}
         </Label>
         <Select
           value={role}
@@ -62,14 +66,14 @@ function ChangeRoleForm({
         >
           <SelectTrigger
             id={triggerId}
-            className="h-11 w-full border-zinc-700 bg-zinc-950/60 text-zinc-100 focus-visible:border-violet-400 focus-visible:ring-violet-400/30"
+            className="w-full border-zinc-700 data-[size=default]:h-11 bg-zinc-950/60 text-zinc-100 focus-visible:border-violet-400 focus-visible:ring-violet-400/30"
           >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
             {roles.map((option) => (
               <SelectItem key={option} value={option} className="min-h-10">
-                {option}
+                {tRoles(option)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -85,13 +89,13 @@ function ChangeRoleForm({
             />
           }
         >
-          Cancel
+          {tCommon("cancel")}
         </DialogClose>
         <Button
           type="submit"
           className="h-10 bg-violet-500 px-4 text-white hover:bg-violet-400"
         >
-          Save Changes
+          {t("save")}
         </Button>
       </DialogFooter>
     </form>
@@ -109,12 +113,14 @@ export function ChangeRoleDialog({
   onOpenChange: (open: boolean) => void;
   onSave: (userId: string, role: Role) => void;
 }) {
+  const t = useTranslations("Admin.ChangeRole");
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {user && (
         <DialogContent className="border-zinc-800 bg-zinc-900 sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle className="text-zinc-50">Change Role</DialogTitle>
+            <DialogTitle className="text-zinc-50">{t("title")}</DialogTitle>
             <DialogDescription className="truncate text-zinc-400">
               {user.name} · {user.email}
             </DialogDescription>

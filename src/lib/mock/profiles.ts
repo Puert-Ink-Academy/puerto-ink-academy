@@ -1,17 +1,17 @@
 import type { CountryCode } from "@/lib/countries";
 import {
   unlockedCategories,
+  unlockedTotals,
   type ApprenticeStanding,
   type EvolutionAttempt,
-  type LeaderboardScope,
 } from "@/lib/leaderboard";
 import { getPlatformUser } from "@/lib/mock/admin-users";
-import { categories, type Category } from "@/lib/mock/categories";
+import { categories, type Category, type CategoryId } from "@/lib/mock/categories";
 import { apprenticeStandings, getRanking } from "@/lib/mock/leaderboard";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 
 export type ScopeStanding = {
-  scope: LeaderboardScope;
+  scope: CategoryId;
   label: string;
   locked: boolean;
   rank: number | null;
@@ -51,7 +51,7 @@ export type ApprenticeProfile = {
 
 function scopeStanding(
   standing: ApprenticeStanding,
-  scope: LeaderboardScope,
+  scope: CategoryId,
   label: string,
   locked: boolean,
 ): ScopeStanding {
@@ -72,7 +72,7 @@ export function getProfile(id: string): ApprenticeProfile | undefined {
   if (!standing) return undefined;
 
   const unlocked = unlockedCategories(standing);
-  const global = getRanking("global").find((entry) => entry.id === id);
+  const totals = unlockedTotals(standing);
 
   const completedLevel = (categoryId: Category["id"], level: number) => {
     const category = categories.find((entry) => entry.id === categoryId);
@@ -106,14 +106,11 @@ export function getProfile(id: string): ApprenticeProfile | undefined {
     nationality: user?.nationality,
     rankTitle: "Apprentice",
     isCurrentUser: standing.isCurrentUser === true,
-    totalXp: global?.xp ?? 0,
-    levelsCompleted: global?.level ?? 0,
-    standings: [
-      scopeStanding(standing, "global", "Global", false),
-      ...categories.map((category) =>
-        scopeStanding(standing, category.id, category.name, !unlocked.has(category.id)),
-      ),
-    ],
+    totalXp: totals.xp,
+    levelsCompleted: totals.levelsCompleted,
+    standings: categories.map((category) =>
+      scopeStanding(standing, category.id, category.name, !unlocked.has(category.id)),
+    ),
     mastered,
     evolution,
   };

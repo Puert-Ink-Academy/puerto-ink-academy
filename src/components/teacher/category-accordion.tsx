@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { LevelsTable } from "@/components/teacher/levels-table";
 import {
@@ -29,6 +30,8 @@ export function CategoryAccordion({
   onCreateLevel: (categoryId: string) => void;
   onEditLevel: (lesson: CurriculumLevel) => void;
 }) {
+  const t = useTranslations("Teacher.Curriculum");
+
   return (
     <Accordion
       multiple
@@ -68,27 +71,27 @@ export function CategoryAccordion({
                 )}
               </span>
               <span className="shrink-0 rounded-full border border-zinc-700 bg-zinc-950/60 px-2 py-0.5 text-xs font-medium text-zinc-300 tabular-nums">
-                {levels.length} {levels.length === 1 ? "level" : "levels"}
+                {t("levelCount", { count: levels.length })}
               </span>
             </AccordionTrigger>
             <AccordionContent className="flex flex-col gap-3 border-t border-zinc-800 p-4 [&_p:not(:last-child)]:mb-0">
               <div className="flex justify-end">
                 <Button
                   size="lg"
-                  aria-label={`Create new level in ${category.name}`}
+                  aria-label={t("createLevelIn", { category: category.name })}
                   onClick={() => onCreateLevel(category.id)}
                   className="h-11 w-full bg-amber-400 px-4 text-zinc-950 shadow-[0_0_24px_-6px_var(--color-amber-400)] hover:bg-amber-300 sm:w-auto"
                 >
                   <Plus />
-                  Create New Level
+                  {t("createLevel")}
                 </Button>
               </div>
               {levels.length > 0 ? (
                 <LevelsTable categoryId={category.id} lessons={levels} onEdit={onEditLevel} />
               ) : (
                 <div className="rounded-xl border border-dashed border-zinc-800 px-6 py-8 text-center">
-                  <p className="text-sm font-medium text-zinc-200">No levels yet.</p>
-                  <p className="mt-1 text-xs text-zinc-500">Create the first one.</p>
+                  <p className="text-sm font-medium text-zinc-200">{t("emptyTitle")}</p>
+                  <p className="mt-1 text-xs text-zinc-500">{t("emptyBody")}</p>
                 </div>
               )}
             </AccordionContent>
