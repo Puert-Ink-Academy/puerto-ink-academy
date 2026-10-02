@@ -4,9 +4,6 @@ import { useTranslations } from "next-intl";
 
 import { MASTERY_SCORE } from "@/lib/grading";
 import { levelStatus, type LevelStatus } from "@/lib/levels";
-import type { CategoryId } from "@/lib/mock/categories";
-import type { LevelLesson } from "@/lib/mock/level-lessons";
-import type { LevelResult } from "@/lib/mock/level-results";
 import { cn } from "cn";
 
 function SkillNode({
@@ -48,9 +45,9 @@ function CardBody({
   result,
   mastered,
 }: {
-  lesson: LevelLesson;
+  lesson: { level: number; title: string };
   status: LevelStatus;
-  result: LevelResult | undefined;
+  result: { highestScore: number } | undefined;
   mastered: boolean;
 }) {
   const t = useTranslations("Apprentice.SkillTree");
@@ -119,14 +116,18 @@ export function SkillTree({
   results,
   currentLevel,
 }: {
-  categoryId: CategoryId;
-  lessons: LevelLesson[];
-  results: LevelResult[];
+  categoryId: string;
+  lessons: { level: number; title: string }[];
+  results: { level: number; highestScore: number }[];
   currentLevel: number;
 }) {
   const t = useTranslations("Apprentice.SkillTree");
 
-  function linkLabel(lesson: LevelLesson, status: LevelStatus, result: LevelResult | undefined) {
+  function linkLabel(
+    lesson: { level: number; title: string },
+    status: LevelStatus,
+    result: { highestScore: number } | undefined,
+  ) {
     const values = { level: lesson.level, title: lesson.title };
     if (status === "active") return t("labelActive", values);
     if (!result) return t("labelCompleted", values);

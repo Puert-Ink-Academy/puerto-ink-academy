@@ -17,8 +17,7 @@ import {
 import { sectionLabelVariants } from "@/components/ui/section-label";
 import { Textarea } from "@/components/ui/textarea";
 import { isPassingScore, xpForScore } from "@/lib/grading";
-import { getCategory } from "@/lib/mock/categories";
-import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
+import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
 
 function GradeResult({ score }: { score: number }) {
@@ -62,7 +61,7 @@ function GradingForm({
   submission,
   onSubmitted,
 }: {
-  submission: PendingSubmission;
+  submission: { apprenticeName: string };
   onSubmitted: () => void;
 }) {
   const t = useTranslations("Teacher.Grading");
@@ -124,7 +123,14 @@ export function GradingModal({
   onOpenChange,
   onDrop,
 }: {
-  submission: PendingSubmission | null;
+  submission: {
+    apprenticeName: string;
+    categoryName: string;
+    level: number;
+    lessonTitle: string;
+    submittedAt: string;
+    photos: SubmissionPhoto[];
+  } | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onDrop?: () => void;
@@ -146,7 +152,7 @@ export function GradingModal({
               </DialogTitle>
               <DialogDescription className="mt-1 text-zinc-400">
                 {t("meta", {
-                  category: getCategory(submission.categoryId).name,
+                  category: submission.categoryName,
                   level: submission.level,
                   title: submission.lessonTitle,
                 })}{" "}

@@ -1,6 +1,6 @@
 "use client";
 
-import { Users, type LucideIcon } from "lucide-react";
+import { Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
@@ -8,16 +8,10 @@ import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
 import { UserRankBanner } from "@/components/leaderboard/user-rank-banner";
 import { Panel } from "@/components/ui/panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { categoryStyles } from "@/lib/categories";
+import { getCategoryStyle } from "@/lib/categories";
 import type { LeaderboardEntry, LeaderboardScope } from "@/lib/leaderboard";
-import { getCategory } from "@/lib/mock/categories";
+import { isCategoryId } from "@/lib/mock/categories";
 import { cn } from "cn";
-
-type ScopeTab = {
-  label: string;
-  icon: LucideIcon;
-  active: string;
-};
 
 const scopeActive: Record<LeaderboardScope, string> = {
   "fine-line":
@@ -32,16 +26,8 @@ const scopeActive: Record<LeaderboardScope, string> = {
     "dark:data-active:border-sky-400/50 dark:data-active:bg-sky-400/10 dark:data-active:text-sky-300 group-data-[variant=default]/tabs-list:data-active:shadow-[0_0_18px_-6px_var(--color-sky-400)]",
 };
 
-function scopeTab(scope: LeaderboardScope): ScopeTab {
-  return {
-    label: getCategory(scope).name,
-    icon: categoryStyles[scope].icon,
-    active: scopeActive[scope],
-  };
-}
-
 export function LeaderboardTabs({
-  scopes,
+  tabs,
   rankings,
   highlightCurrentUser = false,
   linkProfiles = false,
@@ -49,16 +35,16 @@ export function LeaderboardTabs({
   viewerPersonalLevel,
   lockedHints = {},
 }: {
-  scopes: LeaderboardScope[];
-  rankings: Record<LeaderboardScope, LeaderboardEntry[]>;
+  tabs: { id: string; label: string; slug: string }[];
+  rankings: Record<string, LeaderboardEntry[]>;
   highlightCurrentUser?: boolean;
   linkProfiles?: boolean;
   showBanner?: boolean;
   viewerPersonalLevel?: number;
-  lockedHints?: Partial<Record<LeaderboardScope, string>>;
+  lockedHints?: Record<string, string>;
 }) {
   const t = useTranslations("Leaderboard");
-  const [scope, setScope] = useState<LeaderboardScope>(scopes[0] ?? "fine-line");
+  const [scope, setScope] = useState(tabs[0]?.id ?? "");
   const listRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,8 +53,10 @@ export function LeaderboardTabs({
       ?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
   }, [scope]);
 
-  const ranking = rankings[scope];
-  const activeLabel = scopeTab(scope).label;
+  if (tabs.length === 0) return null;
+
+  const ranking = rankings[scope] ?? [];
+  const active = tabs.find((tab) => tab.id === scope) ?? tabs[0];
   const currentEntry = ranking.find((entry) => entry.isCurrentUser);
   const entryAbove = currentEntry
     ? ranking.find((entry) => entry.rank === currentEntry.rank - 1)
@@ -76,22 +64,22 @@ export function LeaderboardTabs({
 
   return (
     <>
-      <Tabs value={scope} onValueChange={(value: LeaderboardScope) => setScope(value)} className="gap-4">
+      <Tabs value={scope} onValueChange={setScope} className="gap-4">
         <TabsList
           ref={listRef}
           aria-label={t("tabsLabel")}
           className="-mx-4 h-auto w-auto justify-start gap-2 overflow-x-auto rounded-none bg-transparent px-4 py-0 pb-1 [scrollbar-width:none] group-data-horizontal/tabs:h-auto sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
         >
-          {scopes.map((item) => {
-            const tab = scopeTab(item);
-            const Icon = tab.icon;
+          {tabs.map((tab) => {
+            const Icon = getCategoryStyle(tab.slug).icon;
+            const activeClass = isCategoryId(tab.slug) ? scopeActive[tab.slug] : scopeActive["fine-line"];
             return (
               <TabsTrigger
-                key={item}
-                value={item}
+                key={tab.id}
+                value={tab.id}
                 className={cn(
                   "h-9 flex-none rounded-full border-zinc-800 bg-zinc-900 px-3.5 text-zinc-400 hover:border-zinc-700 hover:text-zinc-100",
-                  tab.active,
+                  activeClass,
                 )}
               >
                 <Icon aria-hidden />
@@ -101,13 +89,12 @@ export function LeaderboardTabs({
           })}
         </TabsList>
 
-        {scopes.map((item) => {
-          const entries = rankings[item];
-          const label = scopeTab(item).label;
+        {tabs.map((tab) => {
+          const entries = rankings[tab.id] ?? [];
           return (
-            <TabsContent key={item} value={item} className="flex flex-col gap-3">
+            <TabsContent key={tab.id} value={tab.id} className="flex flex-col gap-3">
               <p className="text-xs text-zinc-500">
-                {t("captionScope", { scope: label, count: entries.length })}
+                {t("captionScope", { scope: tab.label, count: entries.length })}
               </p>
               {entries.length > 0 ? (
                 <LeaderboardTable
@@ -119,11 +106,10 @@ export function LeaderboardTabs({
                 <Panel
                   variant="dashed"
                   padding="none"
-                  className="flex flex-col items-center gap-2 px-6 py-10 text-center"
+                  className="flex flex-col items-center gap-2 border-amber-400/20 px-6 py-10 text-center"
                 >
-                  <Users className="size-6 text-zinc-600" aria-hidden />
-                  <p className="text-sm font-medium text-zinc-200">{t("emptyTitle", { scope: label })}</p>
-                  <p className="text-xs text-zinc-500">{t("emptyBody")}</p>
+                  <Users className="size-6 text-amber-400/70" aria-hidden />
+                  <p className="text-sm font-medium text-zinc-200">{t("emptyBody")}</p>
                 </Panel>
               )}
             </TabsContent>
@@ -134,7 +120,7 @@ export function LeaderboardTabs({
       {showBanner && (
         <UserRankBanner
           rank={currentEntry?.rank ?? null}
-          scopeLabel={activeLabel}
+          scopeLabel={active.label}
           lockedHint={lockedHints[scope]}
           levelText={
             currentEntry

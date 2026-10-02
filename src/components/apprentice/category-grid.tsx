@@ -3,22 +3,35 @@ import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 
 import { Progress } from "@/components/ui/progress";
-import { categoryStyles } from "@/lib/categories";
+import { getCategoryStyle } from "@/lib/categories";
 import { categoryProgressPercent } from "@/lib/levels";
-import type { CategoryProgress } from "@/lib/mock/apprentice-dashboard";
-import type { Category } from "@/lib/mock/categories";
 import { cn } from "cn";
 
 export type CategoryCardData = {
-  category: Category;
-  progress: CategoryProgress;
+  category: {
+    id: string;
+    slug: string;
+    name: string;
+    tagline: string;
+    sequenceOrder: number;
+  };
+  progress: {
+    currentLevel: number;
+    xp: number;
+    started: boolean;
+    sequenceOrder: number;
+    isLocked: boolean;
+  };
   totalLevels: number;
   previousCategoryName?: string;
 };
 
 type CategoryStatus = "locked" | "notStarted" | "mastered" | "inProgress";
 
-function categoryStatus(progress: CategoryProgress, totalLevels: number): CategoryStatus {
+function categoryStatus(
+  progress: CategoryCardData["progress"],
+  totalLevels: number,
+): CategoryStatus {
   if (progress.isLocked) return "locked";
   if (!progress.started) return "notStarted";
   if (progress.currentLevel > totalLevels) return "mastered";
@@ -35,7 +48,7 @@ function CategoryCard({ category, progress, totalLevels, previousCategoryName }:
   const t = useTranslations("Apprentice.CategoryCard");
   const format = useFormatter();
   const locked = progress.isLocked;
-  const style = categoryStyles[category.id];
+  const style = getCategoryStyle(category.slug);
   const Icon = locked ? Lock : style.icon;
   const percent = categoryProgressPercent(progress.currentLevel, totalLevels);
   const level = Math.min(progress.currentLevel, totalLevels);

@@ -99,7 +99,8 @@
       "eyebrow": "Wähl deinen Weg",
       "title": "Start",
       "subtitle": "Such dir einen Skilltree für heute aus.",
-      "mastered": "Gemeisterte Lektionen"
+      "mastered": "Gemeisterte Lektionen",
+      "curriculumEmpty": "Noch kein Lehrplan. Die Lehrkraft braut etwas zusammen."
     },
     "Stats": {
       "categories": "Kategorien",
@@ -219,7 +220,7 @@
     "tabsLabel": "Rangliste",
     "captionScope": "Nach {scope}-XP sortiert · {count} platziert",
     "emptyTitle": "Noch niemand in {scope} platziert",
-    "emptyBody": "Das erste bestandene Level holt die Krone.",
+    "emptyBody": "Die Rangliste ist leer. Hol dir als Erster XP!",
     "lockedHint": "Schließe {previous} ab, um {category} freizuschalten",
     "Table": {
       "rank": "Rang",
@@ -319,6 +320,7 @@
       "filterMine": "Von dir",
       "filterOthers": "Von anderen",
       "filterEmpty": "Hier ist nichts.",
+      "queueEmpty": "Keine offenen Abgaben. Stark!",
       "pass": "Bestanden",
       "fail": "Nicht bestanden",
       "unlocks": "Schaltet das nächste Level frei",

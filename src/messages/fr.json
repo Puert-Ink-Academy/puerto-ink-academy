@@ -99,7 +99,8 @@
       "eyebrow": "Choisissez votre voie",
       "title": "Accueil",
       "subtitle": "Choisissez un arbre à travailler aujourd'hui.",
-      "mastered": "Leçons maîtrisées"
+      "mastered": "Leçons maîtrisées",
+      "curriculumEmpty": "Pas encore de programme. L'enseignant prépare quelque chose."
     },
     "Stats": {
       "categories": "Catégories",
@@ -219,7 +220,7 @@
     "tabsLabel": "Classement",
     "captionScope": "Classé par XP {scope} · {count} classés",
     "emptyTitle": "Personne n'est encore classée en {scope}",
-    "emptyBody": "Le premier niveau réussi prend la couronne.",
+    "emptyBody": "Le classement est vide. Soyez le premier à gagner de l'XP !",
     "lockedHint": "Terminez {previous} pour débloquer {category}",
     "Table": {
       "rank": "Rang",
@@ -319,6 +320,7 @@
       "filterMine": "Les vôtres",
       "filterOthers": "Les autres",
       "filterEmpty": "Rien dans cette vue.",
+      "queueEmpty": "Aucun envoi en attente. Beau travail !",
       "pass": "Réussi",
       "fail": "Échoué",
       "unlocks": "Débloque le niveau suivant",

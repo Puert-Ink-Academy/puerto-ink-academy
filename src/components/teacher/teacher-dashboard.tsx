@@ -6,18 +6,32 @@ import { useState } from "react";
 import { GradingModal } from "@/components/teacher/grading-modal";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/panel";
-import { categoryStyles } from "@/lib/categories";
-import { getPlatformUser } from "@/lib/mock/admin-users";
-import { categories } from "@/lib/mock/categories";
-import { personalLevelFor } from "@/lib/mock/leaderboard";
-import type { PendingSubmission } from "@/lib/mock/teacher-dashboard";
+import { getCategoryStyle } from "@/lib/categories";
+import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
 
 const claimFilters = ["all", "open", "mine", "others"] as const;
 
 type ClaimFilter = (typeof claimFilters)[number];
 
-function matchesClaim(submission: PendingSubmission, filter: ClaimFilter, reviewerId: string) {
+type ReviewSubmission = {
+  id: string;
+  apprenticeId: string;
+  apprenticeName: string;
+  categoryId: string;
+  categoryName: string;
+  categorySlug: string;
+  level: number;
+  lessonTitle: string;
+  submittedAt: string;
+  photos: SubmissionPhoto[];
+  claimedByTeacherId: string | null;
+  claimedAt: string | null;
+  personalLevel: number;
+  claimedByName: string | null;
+};
+
+function matchesClaim(submission: ReviewSubmission, filter: ClaimFilter, reviewerId: string) {
   const owner = submission.claimedByTeacherId;
   if (filter === "open") return owner === null;
   if (filter === "mine") return owner === reviewerId;
@@ -29,23 +43,32 @@ export function TeacherDashboard({
   submissions,
   reviewerId,
 }: {
-  submissions: PendingSubmission[];
+  submissions: ReviewSubmission[];
   reviewerId: string;
 }) {
   const format = useFormatter();
   const t = useTranslations("Teacher.Grading");
   const [queue, setQueue] = useState(submissions);
-  const [selected, setSelected] = useState<PendingSubmission | null>(null);
+  const [selected, setSelected] = useState<ReviewSubmission | null>(null);
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState<ClaimFilter>("all");
 
   const visible = queue.filter((submission) => matchesClaim(submission, filter, reviewerId));
-  const groups = categories
-    .map((category) => ({
-      category,
-      items: visible.filter((submission) => submission.categoryId === category.id),
-    }))
-    .filter((group) => group.items.length > 0);
+  const groups = [...visible.reduce((map, submission) => {
+    const existing = map.get(submission.categoryId);
+    if (existing) existing.items.push(submission);
+    else {
+      map.set(submission.categoryId, {
+        category: {
+          id: submission.categoryId,
+          name: submission.categoryName,
+          slug: submission.categorySlug,
+        },
+        items: [submission],
+      });
+    }
+    return map;
+  }, new Map<string, { category: { id: string; name: string; slug: string }; items: ReviewSubmission[] }>()).values()];
   const filterLabel: Record<ClaimFilter, string> = {
     all: t("filterAll"),
     open: t("filterOpen"),
@@ -53,13 +76,13 @@ export function TeacherDashboard({
     others: t("filterOthers"),
   };
 
-  const openReview = (submission: PendingSubmission) => {
+  const openReview = (submission: ReviewSubmission) => {
     setSelected(submission);
     setOpen(true);
   };
 
-  const claim = (submission: PendingSubmission) => {
-    const claimed: PendingSubmission = {
+  const claim = (submission: ReviewSubmission) => {
+    const claimed: ReviewSubmission = {
       ...submission,
       claimedByTeacherId: reviewerId,
       claimedAt: new Date().toISOString(),
@@ -68,7 +91,7 @@ export function TeacherDashboard({
     openReview(claimed);
   };
 
-  const drop = (submission: PendingSubmission) => {
+  const drop = (submission: ReviewSubmission) => {
     setQueue((current) =>
       current.map((item) =>
         item.id === submission.id ? { ...item, claimedByTeacherId: null, claimedAt: null } : item,
@@ -122,7 +145,7 @@ export function TeacherDashboard({
           </Panel>
         ) : (
           groups.map(({ category, items }) => {
-          const style = categoryStyles[category.id];
+          const style = getCategoryStyle(category.slug);
           const Icon = style.icon;
           const headingId = `grading-${category.id}`;
 
@@ -149,10 +172,7 @@ export function TeacherDashboard({
                   const claimedByYou = submission.claimedByTeacherId === reviewerId;
                   const claimedByOther =
                     submission.claimedByTeacherId !== null && !claimedByYou;
-                  const reviewerName = submission.claimedByTeacherId
-                    ? (getPlatformUser(submission.claimedByTeacherId)?.name ??
-                      submission.claimedByTeacherId)
-                    : "";
+                  const reviewerName = submission.claimedByName ?? submission.claimedByTeacherId ?? "";
                   const underReview = t("underReview", { name: reviewerName });
 
                   return (
@@ -178,7 +198,7 @@ export function TeacherDashboard({
                             {t("row", {
                               name: submission.apprenticeName,
                               level: submission.level,
-                              personal: personalLevelFor(submission.apprenticeId),
+                              personal: submission.personalLevel,
                             })}
                             </span>
                             <span className="mt-0.5 block truncate text-xs text-zinc-400">

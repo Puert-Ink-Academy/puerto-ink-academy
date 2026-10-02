@@ -99,7 +99,8 @@
       "eyebrow": "Choose your path",
       "title": "Dashboard",
       "subtitle": "Pick a skill tree to train today.",
-      "mastered": "Mastered lessons"
+      "mastered": "Mastered lessons",
+      "curriculumEmpty": "No curriculum available yet. The Teacher is brewing something up."
     },
     "Stats": {
       "categories": "Categories",
@@ -219,7 +220,7 @@
     "tabsLabel": "Leaderboard",
     "captionScope": "Ranked by {scope} XP · {count} ranked",
     "emptyTitle": "No one ranked in {scope} yet",
-    "emptyBody": "The first passed level takes the crown.",
+    "emptyBody": "The leaderboard is empty. Be the first to earn XP!",
     "lockedHint": "Complete {previous} to unlock {category}",
     "Table": {
       "rank": "Rank",
@@ -319,6 +320,7 @@
       "filterMine": "Yours",
       "filterOthers": "Others",
       "filterEmpty": "Nothing in this view.",
+      "queueEmpty": "Zero pending submissions. Great job!",
       "pass": "Pass",
       "fail": "Fail",
       "unlocks": "Unlocks the next level",

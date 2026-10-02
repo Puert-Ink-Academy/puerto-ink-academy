@@ -19,7 +19,7 @@ const previewCategories: CategoryId[] = ["fine-line", "realism"];
 export function ProductPreview() {
   const t = useTranslations("Marketing.Preview");
   const categoryItems = previewCategories.map((id) => ({
-    category: getCategory(id),
+    category: { ...getCategory(id), slug: id },
     progress: getCategoryProgress(id),
     totalLevels: getCategoryLessons(id).length,
     previousCategoryName: getPreviousCategory(id)?.name,

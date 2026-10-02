@@ -1,11 +1,5 @@
-import { CurriculumManager } from "@/components/teacher/curriculum-manager";
-import { categories } from "@/lib/mock/categories";
-import { levelLessons } from "@/lib/mock/level-lessons";
+import { CurriculumPage } from "@/components/teacher/curriculum-page";
 
 export default function AdminCurriculumPage() {
-  return (
-    <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
-      <CurriculumManager nav="admin" categories={categories} lessons={levelLessons} />
-    </main>
-  );
+  return <CurriculumPage nav="admin" />;
 }
