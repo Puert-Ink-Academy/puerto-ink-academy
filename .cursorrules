@@ -1,19 +1,45 @@
 # Puerto Ink Academy — Cursor Rules
 
 ## Tech Stack
-- Next.js 15 (App Router, Server Actions, TypeScript)
-- Styling: Tailwind CSS, Shadcn UI (Dark theme only, sleek gaming aesthetic)
-- Database: PostgreSQL via Drizzle ORM
-- Storage: DigitalOcean Spaces (S3 compatible) + CDN
-- Auth: Session-based role auth (ADMIN, TEACHER, APPRENTICE)
+- Next.js 15 (App Router, Server Actions, TypeScript strict). Do not use `any`.
+- Styling: Tailwind CSS and shadcn/ui. Dark theme only, mobile-first, premium gaming look.
+- Database: PostgreSQL via Drizzle ORM. The live schema is `db/schema.sql`. The typed map is `src/db/schema.ts`.
+- Storage: DigitalOcean Spaces (S3-compatible) plus its CDN. Postgres stores the CDN URL and the object key, never the file bytes.
+- Roles: `ADMIN`, `TEACHER`, `APPRENTICE`.
+- Auth is not built yet. `src/lib/current-user.ts` is the temporary stand-in. Do not invent sessions, passwords, or login flows unless asked.
 
-## Domain Business Rules
-- Levels are linear and locked: apprentices can only view their active level.
-- Submissions require 8/10 or higher to pass and unlock the next sequence.
-- Endless attempts: failed submissions (<8/10) trigger retries and persist in history.
-- Dynamic XP: award XP based on score (10 = 100 XP, 9 = 90 XP, 8 = 80 XP, <8 = 0 XP).
-- Versioning: edits to lessons create new versions in `level_versions` to preserve historical student data.
+## Core Architecture
+- Default to React Server Components.
+- Add `"use client"` only when the screen needs interaction: forms, dialogs, tabs, or local claim state.
+- Fetch in server components with the functions in `src/db/queries.ts`.
+- Do not import `src/db` from a client component. The database module is `server-only`.
+- New screens read Postgres. Do not add new mock data. `src/lib/mock/` stays only for screens that are not on the database yet.
 
-## Code Style
-- Always use TypeScript with strict types; do not use `any`.
-- Keep components modular and mobile-first responsive.
+## UI and UX
+- Dark gaming aesthetic only. Amber for apprentices and teachers, violet for admins, emerald for a pass, rose for a fail, gold for a 10/10.
+- Wrap each data section in `<Suspense>` with a skeleton from `src/components/feedback/`.
+- The skeleton matches the layout the user will see once data arrives. It does not mimic the empty message.
+- An empty query returns an empty state. It must not throw or render a broken list.
+- Keep components modular and responsive.
+
+## Business Logic
+- A submission passes at 8/10 or higher and unlocks the next level. Under 8 stays on that level and can be retried.
+- XP is written when the grade is saved: 10 awards 100, 9 awards 90, 8 awards 80, under 8 awards 0. Retries do not stack. The level keeps the best attempt.
+- One pending submission per apprentice per level. A waiting submission blocks another upload.
+- A best score of 10 closes the level. A best score of 8 or 9 unlocks the next level and still allows another attempt.
+- The curriculum is shared. Teachers create a level once. Every apprentice uses that same level.
+- Editing a lesson inserts a new `level_versions` row. Never update or delete an old version. Submissions stay pinned to the version that was graded.
+- Level position does not change after the level exists. New levels are added at the end.
+- Leaderboards are per style, read from stored `style_progress` XP. Rank is numbered when the page is requested. There is no leaderboard table and no global board.
+- Personal level is stored on `apprentice_progress` from personal XP. Rank titles, when they exist, are looked up from `titles` by that level. They are not copied onto the apprentice.
+- A badge is a level whose best score is 10. First versus best is derived from attempt history.
+
+## Commit Conventions
+Use Conventional Commits. The subject says why, in one line.
+
+- `feat:` a new capability
+- `fix:` a bug
+- `refactor:` a restructure that keeps behavior
+- `chore:` tooling, config, or dependencies
+
+Do not commit `.env` or `.env.local`.
