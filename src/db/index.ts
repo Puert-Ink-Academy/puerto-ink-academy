@@ -4,11 +4,14 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
 import * as schema from "@/db/schema";
+import { logger } from "@/lib/logger";
 
 const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error("DATABASE_URL is not set");
+  const missing = new Error("DATABASE_URL is not set");
+  logger.error("db", missing);
+  throw missing;
 }
 
 const sslmode = new URL(databaseUrl).searchParams.get("sslmode");
@@ -36,4 +39,14 @@ if (process.env.NODE_ENV !== "production") {
   globalForDb.postgresClient = client;
 }
 
-export const db = drizzle(client, { schema });
+export const db = drizzle(client, {
+  schema,
+  logger:
+    process.env.LOG_DB_QUERIES === "true"
+      ? {
+          logQuery(query, params) {
+            logger.debug("db", `${query} ${JSON.stringify(params)}`);
+          },
+        }
+      : false,
+});
