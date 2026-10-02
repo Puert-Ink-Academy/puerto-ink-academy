@@ -1,10 +1,11 @@
+import type { CountryCode } from "@/lib/countries";
 import {
   unlockedCategories,
   type ApprenticeStanding,
   type EvolutionAttempt,
   type LeaderboardScope,
 } from "@/lib/leaderboard";
-import { platformUsers } from "@/lib/mock/admin-users";
+import { getPlatformUser } from "@/lib/mock/admin-users";
 import { categories, type Category } from "@/lib/mock/categories";
 import { apprenticeStandings, getRanking } from "@/lib/mock/leaderboard";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
@@ -36,6 +37,9 @@ export type ApprenticeProfile = {
   id: string;
   name: string;
   email: string;
+  artistName?: string;
+  studio?: string;
+  nationality?: CountryCode;
   rankTitle: "Apprentice";
   isCurrentUser: boolean;
   totalXp: number;
@@ -91,12 +95,15 @@ export function getProfile(id: string): ApprenticeProfile | undefined {
     })
     .sort((a, b) => b.best.score - b.first.score - (a.best.score - a.first.score));
 
+  const user = getPlatformUser(standing.id);
+
   return {
     id: standing.id,
     name: standing.name,
-    email:
-      platformUsers.find((user) => user.id === standing.id)?.email ??
-      `${standing.id}@puertoink.academy`,
+    email: user?.email ?? `${standing.id}@puertoink.academy`,
+    artistName: user?.artistName,
+    studio: user?.studio,
+    nationality: user?.nationality,
     rankTitle: "Apprentice",
     isCurrentUser: standing.isCurrentUser === true,
     totalXp: global?.xp ?? 0,

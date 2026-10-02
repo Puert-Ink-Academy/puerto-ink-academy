@@ -1,6 +1,7 @@
 import { Crown, Medal } from "lucide-react";
 import Link from "next/link";
 
+import { CountryFlag } from "@/components/ui/country-flag";
 import { Panel } from "@/components/ui/panel";
 import {
   Table,
@@ -123,6 +124,9 @@ export function LeaderboardTable({
                 <TableCell className="py-3">
                   <p className={cn("font-semibold", style.name)}>
                     <span className="text-zinc-500">#{entry.rank}</span>{" "}
+                    {entry.nationality && (
+                      <CountryFlag code={entry.nationality} className="mr-1.5 align-[-1px]" />
+                    )}
                     {linkProfiles ? (
                       <Link
                         href={`/profile/${entry.id}`}

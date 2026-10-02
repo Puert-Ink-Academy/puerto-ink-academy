@@ -4,6 +4,7 @@ import { MoreHorizontal, UserCog } from "lucide-react";
 
 import { RoleBadge } from "@/components/admin/role-badge";
 import { Button } from "@/components/ui/button";
+import { CountryFlag } from "@/components/ui/country-flag";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,8 +58,14 @@ export function UsersTable({
                     {user.name.charAt(0)}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate font-medium text-zinc-50">{user.name}</p>
+                    <p className="flex min-w-0 items-center gap-1.5 font-medium text-zinc-50">
+                      {user.nationality && <CountryFlag code={user.nationality} />}
+                      <span className="truncate">{user.name}</span>
+                    </p>
                     <p className="truncate text-xs text-zinc-500">{user.email}</p>
+                    {user.artistName && (
+                      <p className="truncate text-xs text-violet-300/80">{user.artistName}</p>
+                    )}
                   </div>
                 </div>
               </TableCell>

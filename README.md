@@ -66,8 +66,8 @@ Good places to look as an apprentice (John Doe):
   - mastered (10): a glowing Mastery Badge, and no more submissions
   - waiting for a grade: the upload zone is locked with a "Pending Teacher Review" notice
 - **Attempt history:** every attempt per level, with photos, score, XP and feedback.
-- **Leaderboard:** Global and per-style tabs with gold, silver and bronze podiums, a sticky "your rank" banner, and links to profiles.
-- **Profiles** (`/profile/[id]`): stats, rank cards per style, an Evolution Portfolio that puts a first attempt next to the best one, and a showcase of every 10/10 earned. Emails are only shown on your own profile.
+- **Leaderboard:** Global and per-style tabs with gold, silver and bronze podiums, nationality flags, a sticky "your rank" banner, and links to profiles.
+- **Profiles** (`/profile/[id]`): nationality flag, tattoo artist name and studio (if any), stats, rank cards per style, an Evolution Portfolio that puts a first attempt next to the best one, and a showcase of every 10/10 earned. Emails are only shown on your own profile, and only you can edit your artist name, studio and nationality.
 
 ### Teachers
 
@@ -77,7 +77,7 @@ Good places to look as an apprentice (John Doe):
 
 ### Admins
 
-- **Users:** the account list with role management and an "Add user" dialog.
+- **Users:** the account list with flags and artist names, role management, and an "Add user" dialog that also takes the artist name, studio and nationality.
 - Everything teachers have: grading, curriculum and leaderboard.
 
 ### App shell
@@ -118,6 +118,8 @@ src/
     levels.ts           level status and progress helpers
     progression.ts      category mastery and sequential unlocks
     leaderboard.ts      ranking types and math
+    artist.ts           artist name, studio and nationality validation
+    countries.ts        country codes and names (flags are served from /flags/[code])
     session.ts          current user for each role (mock identity for now)
 public/mock/            mock submission photos
 ```
@@ -129,5 +131,5 @@ Rules live in `src/lib/`, and `src/lib/mock/` only supplies data. John's categor
 - Auth.js email-code sign-in with role-protected routes, replacing the demo login
 - Drizzle schema and PostgreSQL for users, categories, levels, `level_versions` and attempts
 - Photo uploads to DigitalOcean Spaces with a CDN
-- Persisting the admin "Add user" flow, the curriculum builder and grading
+- Persisting the admin "Add user" flow, profile edits, the curriculum builder and grading
 - An email provider (such as Resend) for sign-in codes and invites

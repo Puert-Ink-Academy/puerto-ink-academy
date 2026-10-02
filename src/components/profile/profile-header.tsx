@@ -1,6 +1,18 @@
-import { Mail, ShieldCheck } from "lucide-react";
+"use client";
 
+import { Mail, Pencil, ShieldCheck, Store } from "lucide-react";
+import { useState } from "react";
+
+import { EditArtistSheet } from "@/components/profile/edit-artist-sheet";
+import { Button } from "@/components/ui/button";
+import { CountryFlag } from "@/components/ui/country-flag";
+import type { ArtistDetails } from "@/lib/artist";
 import type { ApprenticeProfile } from "@/lib/mock/profiles";
+
+export type ProfileHeaderData = Pick<
+  ApprenticeProfile,
+  "id" | "name" | "email" | "rankTitle" | "isCurrentUser" | "artistName" | "studio" | "nationality"
+>;
 
 function initials(name: string): string {
   return name
@@ -11,7 +23,14 @@ function initials(name: string): string {
     .toUpperCase();
 }
 
-export function ProfileHeader({ profile }: { profile: ApprenticeProfile }) {
+export function ProfileHeader({ profile }: { profile: ProfileHeaderData }) {
+  const [details, setDetails] = useState<Partial<ArtistDetails>>({
+    artistName: profile.artistName,
+    studio: profile.studio,
+    nationality: profile.nationality,
+  });
+  const [editOpen, setEditOpen] = useState(false);
+
   return (
     <header className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900 p-5 sm:p-6">
       <span
@@ -28,6 +47,7 @@ export function ProfileHeader({ profile }: { profile: ApprenticeProfile }) {
         </span>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+            {details.nationality && <CountryFlag code={details.nationality} size="md" />}
             <h1 className="text-2xl font-semibold tracking-tight text-zinc-50 sm:text-3xl">
               {profile.name}
             </h1>
@@ -37,6 +57,18 @@ export function ProfileHeader({ profile }: { profile: ApprenticeProfile }) {
               </span>
             )}
           </div>
+          {details.artistName && (
+            <p className="mt-1 font-brand text-2xl leading-tight text-amber-300 drop-shadow-[0_0_14px_var(--color-amber-500)]">
+              {details.artistName}
+            </p>
+          )}
+          {details.studio && (
+            <p className="mt-1.5 flex items-center justify-center gap-1.5 text-sm text-zinc-300 sm:justify-start">
+              <Store className="size-4 shrink-0 text-zinc-500" aria-hidden />
+              <span className="sr-only">Studio:</span>
+              <span className="truncate">{details.studio}</span>
+            </p>
+          )}
           <p className="mt-1.5 flex items-center justify-center gap-1.5 text-sm text-zinc-400 sm:justify-start">
             {profile.isCurrentUser ? (
               <>
@@ -47,12 +79,34 @@ export function ProfileHeader({ profile }: { profile: ApprenticeProfile }) {
               "Puerto Ink Academy apprentice"
             )}
           </p>
-          <p className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-medium text-amber-300">
-            <ShieldCheck className="size-3.5" aria-hidden />
-            Rank: {profile.rankTitle}
-          </p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
+            <p className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-medium text-amber-300">
+              <ShieldCheck className="size-3.5" aria-hidden />
+              Rank: {profile.rankTitle}
+            </p>
+            {profile.isCurrentUser && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setEditOpen(true)}
+                className="h-8 rounded-full border-zinc-700 bg-zinc-950/40 px-3 text-xs text-zinc-200 hover:border-amber-400/60 hover:text-amber-300"
+              >
+                <Pencil className="size-3.5" aria-hidden />
+                Edit profile
+              </Button>
+            )}
+          </div>
         </div>
       </div>
+      {profile.isCurrentUser && (
+        <EditArtistSheet
+          open={editOpen}
+          onOpenChange={setEditOpen}
+          profileId={profile.id}
+          initial={details}
+          onSaved={setDetails}
+        />
+      )}
     </header>
   );
 }

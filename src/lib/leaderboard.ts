@@ -1,3 +1,4 @@
+import type { CountryCode } from "@/lib/countries";
 import type { CategoryId } from "@/lib/mock/categories";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { unlockedCategoryIds } from "@/lib/progression";
@@ -53,6 +54,7 @@ export type LeaderboardEntry = {
   xp: number;
   averageScore: number;
   isCurrentUser?: boolean;
+  nationality?: CountryCode;
 };
 
 export function unlockedCategories(standing: ApprenticeStanding): Set<CategoryId> {

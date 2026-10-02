@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { toast } from "sonner";
 
+import { ArtistFields } from "@/components/profile/artist-fields";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,6 +24,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  artistDetailsInput,
+  parseArtistDetails,
+  type ArtistDetailsErrors,
+  type ArtistDetailsInput,
+} from "@/lib/artist";
 import type { PlatformUser } from "@/lib/mock/admin-users";
 import { isRole, roles, type Role } from "@/lib/roles";
 import { slugify } from "@/lib/slug";
@@ -60,6 +67,8 @@ function AddUserForm({
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<Role>("APPRENTICE");
   const [errors, setErrors] = useState<FieldErrors>({});
+  const [artist, setArtist] = useState<ArtistDetailsInput>(artistDetailsInput({}));
+  const [artistErrors, setArtistErrors] = useState<ArtistDetailsErrors>({});
 
   return (
     <form
@@ -68,8 +77,10 @@ function AddUserForm({
       onSubmit={(event) => {
         event.preventDefault();
         const nextErrors = validate(name, email, takenEmails);
+        const parsed = parseArtistDetails(artist);
         setErrors(nextErrors);
-        if (nextErrors.name || nextErrors.email) return;
+        setArtistErrors(parsed.ok ? {} : parsed.errors);
+        if (nextErrors.name || nextErrors.email || !parsed.ok) return;
 
         const trimmedEmail = email.trim();
         onAdd({
@@ -81,6 +92,7 @@ function AddUserForm({
             month: "short",
             year: "numeric",
           }),
+          ...parsed.details,
         });
         toast.success(`Invite sent to ${trimmedEmail}`);
         onDone();
@@ -149,6 +161,12 @@ function AddUserForm({
           </SelectContent>
         </Select>
       </div>
+      <ArtistFields
+        value={artist}
+        onChange={setArtist}
+        errors={artistErrors}
+        accent="violet"
+      />
       <DialogFooter className="-mx-4 -mb-4 border-zinc-800 bg-zinc-950/40">
         <DialogClose
           render={
@@ -184,7 +202,7 @@ export function AddUserDialog({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-zinc-800 bg-zinc-900 sm:max-w-sm">
+      <DialogContent className="max-h-[calc(100svh-2rem)] overflow-y-auto border-zinc-800 bg-zinc-900 sm:max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-zinc-50">Add User</DialogTitle>
           <DialogDescription className="text-zinc-400">

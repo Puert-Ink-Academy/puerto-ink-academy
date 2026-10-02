@@ -9,6 +9,7 @@ import {
   type LeaderboardScope,
   type MasteredLevel,
 } from "@/lib/leaderboard";
+import { getPlatformUser } from "@/lib/mock/admin-users";
 import {
   apprenticeCategoryProgress,
   apprenticeDashboard,
@@ -236,7 +237,10 @@ export const apprenticeStandings: ApprenticeStanding[] = [
 ];
 
 export function getRanking(scope: LeaderboardScope): LeaderboardEntry[] {
-  return rankStandings(apprenticeStandings, scope);
+  return rankStandings(apprenticeStandings, scope).map((entry) => ({
+    ...entry,
+    nationality: getPlatformUser(entry.id)?.nationality,
+  }));
 }
 
 export function getRankings(): Record<LeaderboardScope, LeaderboardEntry[]> {
