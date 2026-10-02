@@ -2,7 +2,16 @@
   "Metadata": {
     "title": "Puerto Ink Academy",
     "description": "Η επόμενη γενιά στην εκπαίδευση τατουάζ",
-    "loginTitle": "Σύνδεση · Puerto Ink Academy"
+    "loginTitle": "Σύνδεση · Puerto Ink Academy",
+    "notFound": "Η σελίδα δεν βρέθηκε",
+    "pages": {
+      "dashboard": "Η διαδρομή σου, η πρόοδος και το XP.",
+      "leaderboard": "Κατατάξεις ανά στυλ από αποθηκευμένο XP.",
+      "curriculum": "Στυλ και επίπεδα για όλους τους μαθητευόμενους.",
+      "grading": "Υποβολές που περιμένουν βαθμό.",
+      "users": "Λογαριασμοί και ρόλοι της πλατφόρμας.",
+      "profile": "Δημόσιο προφίλ ενός μαθητευόμενου."
+    }
   },
   "Common": {
     "language": "Γλώσσα",

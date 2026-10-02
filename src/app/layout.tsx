@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Pirata_One } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { type AppLocale } from "@/i18n/config";
+
 import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
@@ -23,14 +25,28 @@ const pirataOne = Pirata_One({
   subsets: ["latin"],
 });
 
+const openGraphLocale: Record<AppLocale, string> = {
+  "en-US": "en_US",
+  de: "de_DE",
+  fr: "fr_FR",
+  el: "el_GR",
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Metadata");
+  const locale = await getLocale();
+  const title = t("title");
 
   return {
-    title: t("title"),
+    title: { default: title, template: `%s · ${title}` },
     description: t("description"),
     robots: { index: false, follow: false },
     applicationName: "Puerto Ink",
+    openGraph: {
+      siteName: "Puerto Ink",
+      type: "website",
+      locale: openGraphLocale[locale],
+    },
     appleWebApp: {
       capable: true,
       title: "Puerto Ink",

@@ -9,8 +9,8 @@ import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { Panel } from "@/components/ui/panel";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Metadata");
-  return { title: t("loginTitle") };
+  const t = await getTranslations("Auth");
+  return { title: t("title"), description: t("subtitle") };
 }
 
 export default function LoginPage() {

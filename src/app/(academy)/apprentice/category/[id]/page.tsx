@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
@@ -14,6 +15,19 @@ import { currentUsers } from "@/lib/current-user";
 import { categoryProgressPercent } from "@/lib/levels";
 import { apprenticeView } from "@/lib/live-progress";
 import { cn } from "cn";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const t = await getTranslations("Metadata");
+  const curriculum = await getCurriculum();
+  const category = curriculum.find((entry) => entry.id === id);
+  if (!category) return { title: t("notFound") };
+  return { title: category.name, description: category.tagline };
+}
 
 async function CategoryBody({ id }: { id: string }) {
   const [curriculum, overview] = await Promise.all([

@@ -1,4 +1,5 @@
 import { ArrowLeft, Crown } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -20,6 +21,30 @@ import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
 import { getPendingSubmission } from "@/lib/mock/teacher-dashboard";
 import { getCurrentApprentice } from "@/lib/session";
+import { getCurriculum } from "@/db/queries";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string; level: string }>;
+}): Promise<Metadata> {
+  const { id, level } = await params;
+  const levelNumber = Number(level);
+  const t = await getTranslations("Metadata");
+
+  if (isCategoryId(id) && Number.isInteger(levelNumber)) {
+    const lesson = getLevelLesson(id, levelNumber);
+    if (lesson) return { title: lesson.title, description: lesson.objective };
+  }
+
+  const curriculum = await getCurriculum();
+  const match = curriculum
+    .find((category) => category.id === id)
+    ?.levels.find((entry) => entry.position === levelNumber);
+  if (match) return { title: match.version.title, description: match.version.objective };
+
+  return { title: t("notFound") };
+}
 
 export default async function LevelPage({
   params,

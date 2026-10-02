@@ -2,7 +2,16 @@
   "Metadata": {
     "title": "Puerto Ink Academy",
     "description": "Die nächste Stufe der Tattoo-Ausbildung",
-    "loginTitle": "Anmelden · Puerto Ink Academy"
+    "loginTitle": "Anmelden · Puerto Ink Academy",
+    "notFound": "Seite nicht gefunden",
+    "pages": {
+      "dashboard": "Dein Trainingsweg, Fortschritt und XP.",
+      "leaderboard": "Ranglisten je Stil nach gespeicherter XP.",
+      "curriculum": "Stile und Level für alle Auszubildenden.",
+      "grading": "Abgaben, die auf eine Note warten.",
+      "users": "Konten und Rollen der Plattform.",
+      "profile": "Öffentliches Profil eines Auszubildenden."
+    }
   },
   "Common": {
     "language": "Sprache",

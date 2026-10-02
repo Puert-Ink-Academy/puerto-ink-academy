@@ -10,6 +10,7 @@ import { SectionLabel } from "@/components/ui/section-label";
 import { getApprenticeOverview, getCurriculum } from "@/db/queries";
 import { currentUsers } from "@/lib/current-user";
 import { apprenticeView } from "@/lib/live-progress";
+import { screenMetadata } from "@/lib/page-metadata";
 
 async function DashboardBody() {
   const t = await getTranslations("Apprentice.Dashboard");
@@ -53,6 +54,10 @@ async function DashboardBody() {
       <CategoryGrid items={items} />
     </>
   );
+}
+
+export async function generateMetadata() {
+  return screenMetadata("dashboard");
 }
 
 export default async function DashboardPage() {

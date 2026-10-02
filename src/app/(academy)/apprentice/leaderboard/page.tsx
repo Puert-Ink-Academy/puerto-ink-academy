@@ -2,6 +2,11 @@ import { Suspense } from "react";
 
 import { LeaderboardBoard } from "@/components/leaderboard/leaderboard-board";
 import { LeaderboardSkeleton } from "@/components/feedback/leaderboard-skeleton";
+import { screenMetadata } from "@/lib/page-metadata";
+
+export async function generateMetadata() {
+  return screenMetadata("leaderboard");
+}
 
 export default function LeaderboardPage() {
   return (

@@ -1,10 +1,28 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 import { FirstVsBest } from "@/components/profile/first-vs-best";
 import { MasteryShowcase } from "@/components/profile/mastery-showcase";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { getProfile } from "@/lib/mock/profiles";
 import { personalLevel } from "@/lib/personal-level";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const t = await getTranslations("Metadata");
+  const profile = getProfile(id);
+  if (!profile) return { title: t("notFound") };
+  const pages = await getTranslations("Metadata.pages");
+  return {
+    title: profile.artistName || profile.name,
+    description: pages("profile"),
+  };
+}
 
 export default async function ProfilePage({
   params,

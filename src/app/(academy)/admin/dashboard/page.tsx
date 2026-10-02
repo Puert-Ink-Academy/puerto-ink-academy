@@ -1,5 +1,10 @@
 import { AdminUsers } from "@/components/admin/admin-users";
 import { platformUsers } from "@/lib/mock/admin-users";
+import { screenMetadata } from "@/lib/page-metadata";
+
+export async function generateMetadata() {
+  return screenMetadata("users");
+}
 
 export default function AdminDashboardPage() {
   return (

@@ -2,7 +2,16 @@
   "Metadata": {
     "title": "Puerto Ink Academy",
     "description": "La nouvelle génération de la formation au tatouage",
-    "loginTitle": "Connexion · Puerto Ink Academy"
+    "loginTitle": "Connexion · Puerto Ink Academy",
+    "notFound": "Page introuvable",
+    "pages": {
+      "dashboard": "Votre parcours, votre progression et votre XP.",
+      "leaderboard": "Classements par style selon l'XP enregistrée.",
+      "curriculum": "Styles et niveaux partagés par tous les apprentis.",
+      "grading": "Envois en attente d'une note.",
+      "users": "Comptes et rôles de la plateforme.",
+      "profile": "Profil public d'un apprenti."
+    }
   },
   "Common": {
     "language": "Langue",

@@ -2,7 +2,16 @@
   "Metadata": {
     "title": "Puerto Ink Academy",
     "description": "The Next Evolution in Tattoo Education",
-    "loginTitle": "Sign in · Puerto Ink Academy"
+    "loginTitle": "Sign in · Puerto Ink Academy",
+    "notFound": "Page not found",
+    "pages": {
+      "dashboard": "Your training path, progress, and XP.",
+      "leaderboard": "Per-style rankings from stored XP.",
+      "curriculum": "Styles and levels shared by every apprentice.",
+      "grading": "Submissions waiting for a grade.",
+      "users": "Accounts and roles on the platform.",
+      "profile": "An apprentice's public profile."
+    }
   },
   "Common": {
     "language": "Language",
