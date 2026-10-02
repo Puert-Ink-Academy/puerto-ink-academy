@@ -5,6 +5,7 @@ import { TeacherDashboard } from "@/components/teacher/teacher-dashboard";
 import { SectionLabel } from "@/components/ui/section-label";
 import { pendingSubmissions } from "@/lib/mock/teacher-dashboard";
 import type { StaffNav } from "@/lib/nav";
+import { getSessionUser } from "@/lib/session";
 
 export function GradingView({ nav }: { nav: StaffNav }) {
   const t = useTranslations("Teacher.Grading");
@@ -20,7 +21,10 @@ export function GradingView({ nav }: { nav: StaffNav }) {
           {t("summary", { submissions: pendingSubmissions.length, styles })}
         </p>
       </header>
-      <TeacherDashboard submissions={pendingSubmissions} />
+      <TeacherDashboard
+        submissions={pendingSubmissions}
+        reviewerId={getSessionUser(nav).id}
+      />
     </main>
   );
 }

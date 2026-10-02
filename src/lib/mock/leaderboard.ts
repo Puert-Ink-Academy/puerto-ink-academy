@@ -1,6 +1,7 @@
 import { averageScore, MASTERY_SCORE } from "@/lib/grading";
 import {
   rankStandings,
+  unlockedTotals,
   type ApprenticeStanding,
   type CategoryStanding,
   type EvolutionAttempt,
@@ -18,6 +19,7 @@ import {
 import { categoryIds, type CategoryId } from "@/lib/mock/categories";
 import { levelAttempts, type LevelAttempt } from "@/lib/mock/level-attempts";
 import { mockPhotos } from "@/lib/mock/photos";
+import { personalLevel } from "@/lib/personal-level";
 
 function currentUserAverage(categoryId: CategoryId): number {
   return averageScore(
@@ -235,6 +237,12 @@ export const apprenticeStandings: ApprenticeStanding[] = [
     evolution: [],
   },
 ];
+
+export function personalLevelFor(apprenticeId: string): number {
+  const standing = apprenticeStandings.find((entry) => entry.id === apprenticeId);
+  if (!standing) return 1;
+  return personalLevel(unlockedTotals(standing).xp).level;
+}
 
 export function getRanking(scope: LeaderboardScope): LeaderboardEntry[] {
   return rankStandings(apprenticeStandings, scope).map((entry) => ({

@@ -35,6 +35,16 @@ export const platformUsers: PlatformUser[] = [
     nationality: countryCode("GB"),
   },
   {
+    id: "luis-ortega",
+    name: "Luis Ortega",
+    email: "luis.ortega@puertoink.academy",
+    role: "TEACHER",
+    joinedAt: "2026-02-02",
+    artistName: "Luis Ortega",
+    studio: "Puerto Ink Studio",
+    nationality: countryCode("ES"),
+  },
+  {
     id: "admin-user",
     name: "Admin User",
     email: "admin@puertoink.academy",

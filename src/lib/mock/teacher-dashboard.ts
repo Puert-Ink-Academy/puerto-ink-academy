@@ -13,6 +13,9 @@ export type PendingSubmission = {
   /** ISO 8601 timestamp. */
   submittedAt: string;
   photos: SubmissionPhoto[];
+  claimedByTeacherId: string | null;
+  /** ISO 8601 timestamp. */
+  claimedAt: string | null;
 };
 
 const loadedAt = Date.now();
@@ -32,6 +35,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Stencil Transfer",
     submittedAt: minutesAgo(20),
     photos: [mockPhotos.roseOutline, mockPhotos.evolutionClean],
+    claimedByTeacherId: null,
+    claimedAt: null,
   },
   {
     id: "sofia-fine-line-level-9",
@@ -43,6 +48,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Color Packing",
     submittedAt: minutesAgo(60),
     photos: [mockPhotos.colorPacking, mockPhotos.roseOutline],
+    claimedByTeacherId: "jane-smith",
+    claimedAt: minutesAgo(15),
   },
   {
     id: "diego-fine-line-level-8",
@@ -54,6 +61,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Shading Gradients",
     submittedAt: minutesAgo(120),
     photos: [mockPhotos.gradientShading, mockPhotos.whipShading, mockPhotos.roseOutline],
+    claimedByTeacherId: "luis-ortega",
+    claimedAt: minutesAgo(40),
   },
   {
     id: "kai-fine-line-level-6",
@@ -65,6 +74,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Line Weight",
     submittedAt: minutesAgo(26 * 60),
     photos: [mockPhotos.liningDrills],
+    claimedByTeacherId: null,
+    claimedAt: null,
   },
   {
     id: "alex-realism-level-5",
@@ -76,6 +87,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Photo-Reference Piece",
     submittedAt: minutesAgo(180),
     photos: [mockPhotos.gradientShading, mockPhotos.whipShading],
+    claimedByTeacherId: null,
+    claimedAt: null,
   },
   {
     id: "lena-realism-level-3",
@@ -87,6 +100,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Skin Textures",
     submittedAt: minutesAgo(300),
     photos: [mockPhotos.whipShading, mockPhotos.gradientShading],
+    claimedByTeacherId: null,
+    claimedAt: null,
   },
   {
     id: "mike-japanese-level-2",
@@ -98,6 +113,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Wave Patterns",
     submittedAt: minutesAgo(240),
     photos: [mockPhotos.liningDrills, mockPhotos.colorPacking],
+    claimedByTeacherId: null,
+    claimedAt: null,
   },
   {
     id: "marco-traditional-level-2",
@@ -109,6 +126,8 @@ export const pendingSubmissions: PendingSubmission[] = [
     lessonTitle: "Solid Black Fill",
     submittedAt: minutesAgo(30 * 60),
     photos: [mockPhotos.colorPacking],
+    claimedByTeacherId: null,
+    claimedAt: null,
   },
 ];
 

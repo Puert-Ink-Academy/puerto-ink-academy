@@ -122,10 +122,12 @@ export function GradingModal({
   submission,
   open,
   onOpenChange,
+  onDrop,
 }: {
   submission: PendingSubmission | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onDrop?: () => void;
 }) {
   const format = useFormatter();
   const t = useTranslations("Teacher.Grading");
@@ -150,6 +152,17 @@ export function GradingModal({
                 })}{" "}
                 · {format.relativeTime(new Date(submission.submittedAt))}
               </DialogDescription>
+              {onDrop && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="mt-3"
+                  onClick={onDrop}
+                >
+                  {t("drop")}
+                </Button>
+              )}
             </div>
             <GradingForm
               submission={submission}
