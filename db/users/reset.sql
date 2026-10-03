@@ -18,6 +18,7 @@ DELETE FROM apprentice_progress;
 DELETE FROM accounts;
 DELETE FROM sessions;
 DELETE FROM verification_tokens;
+DELETE FROM login_code_requests;
 DELETE FROM users;
 
 COMMIT;

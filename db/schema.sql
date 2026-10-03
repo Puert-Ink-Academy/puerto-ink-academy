@@ -70,6 +70,11 @@ CREATE TABLE verification_tokens (
   PRIMARY KEY (identifier, token)
 );
 
+CREATE TABLE login_code_requests (
+  identifier text PRIMARY KEY,
+  requested_at timestamptz NOT NULL
+);
+
 CREATE TABLE titles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,

@@ -4,11 +4,11 @@ import { redirect, unstable_rethrow } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { signIn, signOut } from "@/auth";
-import { getUserByEmail } from "@/db/queries";
+import { claimLoginCodeRequest, getUserByEmail } from "@/db/queries";
 import { normalizeEmail } from "@/lib/email";
 import { dashboardPath } from "@/lib/session";
 
-export type AuthActionResult = { ok: true } | { error: string };
+export type AuthActionResult = { ok: true } | { error: string; retryAfterSeconds?: number };
 
 function authResult(url: string): { error: string | null; sent: boolean } {
   const parsed = new URL(url, "http://localhost");
@@ -25,6 +25,14 @@ export async function requestLoginCode(email: string): Promise<AuthActionResult>
 
   const user = await getUserByEmail(normalized);
   if (!user) return { error: t("unknownEmail") };
+
+  const claim = await claimLoginCodeRequest(normalized);
+  if (!claim.ok) {
+    return {
+      error: t("codeCooldown", { seconds: claim.retryAfterSeconds }),
+      retryAfterSeconds: claim.retryAfterSeconds,
+    };
+  }
 
   try {
     const url = await signIn("email", {

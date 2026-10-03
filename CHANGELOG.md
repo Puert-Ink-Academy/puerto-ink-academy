@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### Added
+
+- A sign-in code can be requested once a minute for each email. The login form shows how long is left.
+
+### Database
+
+- `db/login-code-requests.sql` adds `login_code_requests`. It has been applied to the live database.
+
 ## [0.2.0] - 2026-10-03
 
 ### Added

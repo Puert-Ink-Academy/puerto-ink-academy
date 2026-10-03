@@ -2,7 +2,7 @@
 
 import { ArrowLeft, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useId, useState, useTransition } from "react";
+import { useEffect, useId, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 import { requestLoginCode, verifyLoginCode } from "@/app/actions/auth";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { sectionLabelVariants } from "@/components/ui/section-label";
+import { normalizeEmail } from "@/lib/email";
 
 const labelClass = sectionLabelVariants();
 const inputClass =
@@ -19,6 +20,7 @@ const submitClass =
 
 export function LoginForm({ initialError = null }: { initialError?: string | null }) {
   const t = useTranslations("Auth");
+  const tErrors = useTranslations("Errors");
   const emailId = useId();
   const codeId = useId();
   const errorId = useId();
@@ -27,15 +29,57 @@ export function LoginForm({ initialError = null }: { initialError?: string | nul
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(initialError);
   const [pending, startTransition] = useTransition();
+  const [cooldown, setCooldown] = useState<{ email: string; until: number } | null>(null);
+  const [now, setNow] = useState(() => Date.now());
+  const [showingCooldownError, setShowingCooldownError] = useState(false);
+
+  useEffect(() => {
+    if (!cooldown || cooldown.until <= Date.now()) return;
+    const id = window.setInterval(() => {
+      const next = Date.now();
+      setNow(next);
+      if (next >= cooldown.until) window.clearInterval(id);
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [cooldown]);
+
+  const normalized = normalizeEmail(email);
+  const secondsLeft =
+    cooldown && normalized && cooldown.email === normalized
+      ? Math.max(0, Math.ceil((cooldown.until - now) / 1000))
+      : 0;
+  const visibleError =
+    showingCooldownError && secondsLeft > 0
+      ? tErrors("codeCooldown", { seconds: secondsLeft })
+      : error;
+
+  useEffect(() => {
+    if (secondsLeft > 0 || !showingCooldownError) return;
+    setShowingCooldownError(false);
+    setError(null);
+  }, [secondsLeft, showingCooldownError]);
+
+  function beginCooldown(address: string, seconds: number) {
+    const key = normalizeEmail(address);
+    if (!key) return;
+    setNow(Date.now());
+    setCooldown({ email: key, until: Date.now() + seconds * 1000 });
+  }
 
   function sendCode(onSent: () => void) {
     startTransition(async () => {
       const result = await requestLoginCode(email);
       if ("error" in result) {
         setError(result.error);
+        if (result.retryAfterSeconds) {
+          setShowingCooldownError(true);
+          beginCooldown(email, result.retryAfterSeconds);
+        }
         return;
       }
+      setShowingCooldownError(false);
       setError(null);
+      beginCooldown(email, 60);
       onSent();
     });
   }
@@ -69,15 +113,19 @@ export function LoginForm({ initialError = null }: { initialError?: string | nul
             aria-describedby={error ? errorId : undefined}
             className={inputClass}
           />
-          {error && (
+          {visibleError && (
             <p id={errorId} className="text-sm text-rose-400">
-              {error}
+              {visibleError}
             </p>
           )}
         </div>
-        <Button type="submit" size="lg" disabled={pending} className={submitClass}>
+        <Button type="submit" size="lg" disabled={pending || secondsLeft > 0} className={submitClass}>
           <Mail aria-hidden />
-          {pending ? t("sending") : t("sendCode")}
+          {pending
+            ? t("sending")
+            : secondsLeft > 0
+              ? t("sendCodeIn", { seconds: secondsLeft })
+              : t("sendCode")}
         </Button>
       </form>
     );
@@ -122,9 +170,9 @@ export function LoginForm({ initialError = null }: { initialError?: string | nul
           aria-describedby={error ? errorId : undefined}
           className={`${inputClass} text-center font-mono text-lg tracking-[0.5em] md:text-lg`}
         />
-        {error && (
+        {visibleError && (
           <p id={errorId} className="text-sm text-rose-400">
-            {error}
+            {visibleError}
           </p>
         )}
       </div>
@@ -153,11 +201,11 @@ export function LoginForm({ initialError = null }: { initialError?: string | nul
         <Button
           type="button"
           variant="ghost"
-          disabled={pending}
+          disabled={pending || secondsLeft > 0}
           onClick={() => sendCode(() => toast.success(t("resent", { email })))}
           className="h-10 px-2 text-amber-400 hover:bg-zinc-800 hover:text-amber-300"
         >
-          {t("resend")}
+          {secondsLeft > 0 ? t("resendIn", { seconds: secondsLeft }) : t("resend")}
         </Button>
       </div>
     </form>

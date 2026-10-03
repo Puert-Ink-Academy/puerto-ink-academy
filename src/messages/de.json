@@ -101,7 +101,9 @@
     "verifying": "Wird geprüft…",
     "differentEmail": "Andere E-Mail verwenden",
     "resend": "Code erneut senden",
-    "resent": "Neuer Code an {email} gesendet"
+    "resendIn": "Erneut senden ({seconds}s)",
+    "resent": "Neuer Code an {email} gesendet",
+    "sendCodeIn": "Code senden ({seconds}s)"
   },
   "Apprentice": {
     "Dashboard": {
@@ -462,6 +464,7 @@
     "unknownEmail": "Kein Konto nutzt diese E-Mail. Bitte einen Admin, dich hinzuzufügen.",
     "invalidCode": "Gib den 6-stelligen Code aus deiner E-Mail ein.",
     "sendFailed": "Der Code konnte nicht gesendet werden. Versuch es gleich noch einmal.",
+    "codeCooldown": "Warte {seconds}s, bevor du einen neuen Code anforderst.",
     "levelMissing": "Dieses Level gibt es nicht.",
     "levelLocked": "Dieses Level ist gesperrt.",
     "pendingReview": "Für dieses Level wartet schon eine Abgabe auf eine Note.",

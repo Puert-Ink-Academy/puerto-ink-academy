@@ -101,7 +101,9 @@
     "verifying": "Vérification…",
     "differentEmail": "Utiliser un autre e-mail",
     "resend": "Renvoyer le code",
-    "resent": "Nouveau code envoyé à {email}"
+    "resendIn": "Renvoyer ({seconds}s)",
+    "resent": "Nouveau code envoyé à {email}",
+    "sendCodeIn": "Envoyer le code ({seconds}s)"
   },
   "Apprentice": {
     "Dashboard": {
@@ -462,6 +464,7 @@
     "unknownEmail": "Aucun compte n'utilise cet e-mail. Demandez à un admin de vous ajouter.",
     "invalidCode": "Saisissez le code à 6 chiffres reçu par e-mail.",
     "sendFailed": "Impossible d'envoyer le code. Réessayez dans un instant.",
+    "codeCooldown": "Attendez {seconds} s avant de demander un autre code.",
     "levelMissing": "Ce niveau n'existe pas.",
     "levelLocked": "Ce niveau est verrouillé.",
     "pendingReview": "Ce niveau a déjà un envoi en attente de note.",

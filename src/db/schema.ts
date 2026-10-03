@@ -102,6 +102,11 @@ export const verificationTokens = pgTable(
   (table) => [primaryKey({ columns: [table.identifier, table.token] })],
 );
 
+export const loginCodeRequests = pgTable("login_code_requests", {
+  identifier: text("identifier").primaryKey(),
+  requestedAt: timestamp("requested_at", { withTimezone: true, mode: "date" }).notNull(),
+});
+
 export const titles = pgTable(
   "titles",
   {

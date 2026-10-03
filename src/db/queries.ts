@@ -7,6 +7,7 @@ import {
   apprenticeProgress,
   levelProgress,
   levels,
+  loginCodeRequests,
   styleProgress,
   submissions,
   users,
@@ -270,4 +271,35 @@ export async function getUserById(id: string) {
   const [row] = await db.select(authUserColumns).from(users).where(eq(users.id, id)).limit(1);
 
   return row ?? null;
+}
+
+const LOGIN_CODE_COOLDOWN_MS = 60_000;
+
+export async function claimLoginCodeRequest(
+  email: string,
+): Promise<{ ok: true } | { ok: false; retryAfterSeconds: number }> {
+  const claimed = await db.execute<{ requested_at: Date | string }>(sql`
+    INSERT INTO login_code_requests (identifier, requested_at)
+    VALUES (${email}, now())
+    ON CONFLICT (identifier) DO UPDATE
+    SET requested_at = now()
+    WHERE login_code_requests.requested_at <= now() - interval '1 minute'
+    RETURNING requested_at
+  `);
+
+  if (claimed.length > 0) return { ok: true };
+
+  const [existing] = await db
+    .select({ requestedAt: loginCodeRequests.requestedAt })
+    .from(loginCodeRequests)
+    .where(eq(loginCodeRequests.identifier, email))
+    .limit(1);
+
+  const elapsed = existing ? Date.now() - existing.requestedAt.getTime() : 0;
+  const retryAfterSeconds = Math.min(
+    60,
+    Math.max(1, Math.ceil((LOGIN_CODE_COOLDOWN_MS - elapsed) / 1000)),
+  );
+
+  return { ok: false, retryAfterSeconds };
 }
