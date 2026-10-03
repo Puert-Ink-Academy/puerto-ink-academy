@@ -7,7 +7,7 @@ BEGIN;
 
 INSERT INTO users (email, name, role, profile_slug)
 VALUES
-  ('puertoinkacademy@gmail.com', 'Puerto Ink', 'ADMIN', 'puerto-ink'),
+  ('purtoinkacademy@gmail.com', 'Puerto Ink', 'ADMIN', 'puerto-ink'),
   ('christoforosvradis@gmail.com', 'Christoforos Vradis', 'TEACHER', 'christoforos-vradis'),
   ('chrisvradis00@gmail.com', 'Chris Koukos', 'APPRENTICE', 'chris-koukos')
 ON CONFLICT ((lower(email))) DO NOTHING;

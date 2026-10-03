@@ -1,6 +1,6 @@
 "use server";
 
-import { redirect, unstable_rethrow } from "next/navigation";
+import { unstable_rethrow } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { signIn, signOut } from "@/auth";
@@ -8,7 +8,10 @@ import { claimLoginCodeRequest, getUserByEmail } from "@/db/queries";
 import { normalizeEmail } from "@/lib/email";
 import { dashboardPath } from "@/lib/session";
 
-export type AuthActionResult = { ok: true } | { error: string; retryAfterSeconds?: number };
+export type AuthActionResult =
+  | { ok: true }
+  | { error: string; retryAfterSeconds?: number }
+  | { redirectTo: string };
 
 function authResult(url: string): { error: string | null; sent: boolean } {
   const parsed = new URL(url, "http://localhost");
@@ -73,7 +76,7 @@ export async function verifyLoginCode(
     token,
     callbackUrl: dashboardPath(user.role),
   });
-  redirect(`/api/auth/callback/email?${params.toString()}`);
+  return { redirectTo: `/api/auth/callback/email?${params.toString()}` };
 }
 
 export async function logout() {

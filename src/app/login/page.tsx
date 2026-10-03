@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import { LoginForm } from "@/components/auth/login-form";
 import { Wordmark } from "@/components/brand/wordmark";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { Panel } from "@/components/ui/panel";
+import { dashboardPath, getSessionUser } from "@/lib/session";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth");
@@ -17,6 +19,9 @@ export default async function LoginPage({
 }: {
   searchParams: Promise<{ error?: string | string[] }>;
 }) {
+  const user = await getSessionUser();
+  if (user) redirect(dashboardPath(user.role));
+
   const t = await getTranslations("Auth");
   const tErrors = await getTranslations("Errors");
   const params = await searchParams;

@@ -5,10 +5,17 @@
 ### Added
 
 - A sign-in code can be requested once a minute for each email. The login form shows how long is left.
+- Entering the code opens the sign-in address in the browser, so the session cookie is stored and the role dashboard loads.
+- A signed-in visit to `/login` goes to that role's dashboard. Profiles keep the viewer's own navigation.
+
+### Changed
+
+- Sign-in mail is sent as Puerto Ink Academy. Gmail still shows the name set on that Google account.
 
 ### Database
 
 - `db/login-code-requests.sql` adds `login_code_requests`. It has been applied to the live database.
+- The admin account email is `purtoinkacademy@gmail.com`. The live row was updated, and `db/users/seed.sql` matches it.
 
 ## [0.2.0] - 2026-10-03
 

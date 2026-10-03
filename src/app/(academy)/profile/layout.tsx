@@ -1,5 +1,5 @@
 import { AppLayout } from "@/components/layout/app-layout";
-import { requireSessionUser } from "@/lib/session";
+import { navKeyFor, requireSessionUser } from "@/lib/session";
 
 export default async function ProfileLayout({
   children,
@@ -8,7 +8,7 @@ export default async function ProfileLayout({
 }) {
   const user = await requireSessionUser();
   return (
-    <AppLayout nav="apprentice" user={user}>
+    <AppLayout nav={navKeyFor(user.role)} user={user}>
       {children}
     </AppLayout>
   );

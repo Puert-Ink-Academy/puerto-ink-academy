@@ -22,8 +22,16 @@ declare module "next-auth" {
   }
 }
 
+const senderName = "Puerto Ink Academy";
 const parsedPort = Number(process.env.EMAIL_SERVER_PORT ?? "465");
 const emailPort = Number.isInteger(parsedPort) ? parsedPort : 465;
+
+function senderFrom(from: string | undefined): string | undefined {
+  const trimmed = from?.trim();
+  if (!trimmed) return undefined;
+  if (trimmed.includes("<")) return trimmed;
+  return `${senderName} <${trimmed}>`;
+}
 
 const emailServer: SMTPTransport.Options = {
   host: process.env.EMAIL_SERVER_HOST,
@@ -83,7 +91,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       id: "email",
       name: "Email",
       server: emailServer,
-      from: process.env.EMAIL_FROM,
+      from: senderFrom(process.env.EMAIL_FROM),
       maxAge: 10 * 60,
       generateVerificationToken() {
         return randomInt(100_000, 1_000_000).toString();

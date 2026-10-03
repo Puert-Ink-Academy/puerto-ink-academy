@@ -3,6 +3,7 @@ import "server-only";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
+import type { NavKey } from "@/lib/nav";
 import type { Role } from "@/lib/roles";
 
 export type SessionUser = {
@@ -19,8 +20,18 @@ const dashboardForRole: Record<Role, string> = {
   ADMIN: "/admin/dashboard",
 };
 
+const navForRole: Record<Role, NavKey> = {
+  APPRENTICE: "apprentice",
+  TEACHER: "teacher",
+  ADMIN: "admin",
+};
+
 export function dashboardPath(role: Role): string {
   return dashboardForRole[role];
+}
+
+export function navKeyFor(role: Role): NavKey {
+  return navForRole[role];
 }
 
 export async function getSessionUser(): Promise<SessionUser | null> {

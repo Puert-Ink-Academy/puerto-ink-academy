@@ -138,6 +138,10 @@ export function LoginForm({ initialError = null }: { initialError?: string | nul
         event.preventDefault();
         startTransition(async () => {
           const result = await verifyLoginCode(email, code);
+          if ("redirectTo" in result) {
+            window.location.assign(result.redirectTo);
+            return;
+          }
           if ("error" in result) setError(result.error);
         });
       }}
