@@ -1,11 +1,12 @@
 import { Wordmark } from "@/components/brand/wordmark";
+import type { LayoutUser } from "@/components/layout/layout-user";
 import { navAccent } from "@/components/layout/nav-items";
 import { RolePill } from "@/components/layout/role-pill";
 import { UserMenu } from "@/components/layout/user-menu";
 import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
-export function MobileTopBar({ nav }: { nav: NavKey }) {
+export function MobileTopBar({ nav, user }: { nav: NavKey; user: LayoutUser }) {
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-800 bg-zinc-950/95 pt-[env(safe-area-inset-top)] backdrop-blur-md md:hidden">
       <div className="flex h-14 items-center gap-2 px-4">
@@ -13,7 +14,7 @@ export function MobileTopBar({ nav }: { nav: NavKey }) {
         <Wordmark />
         <RolePill nav={nav} />
         <div className="ml-auto">
-          <UserMenu nav={nav} variant="compact" />
+          <UserMenu nav={nav} variant="compact" user={user} />
         </div>
       </div>
     </header>

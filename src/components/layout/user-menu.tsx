@@ -21,9 +21,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { isLocale, localeNames, locales } from "@/i18n/config";
+import type { LayoutUser } from "@/components/layout/layout-user";
 import type { NavKey } from "@/lib/nav";
 import { profilePath } from "@/lib/profile-slug";
-import { getSessionUser } from "@/lib/session";
 import { cn } from "cn";
 
 function Avatar({ name, className }: { name: string; className: string }) {
@@ -43,15 +43,16 @@ function Avatar({ name, className }: { name: string; className: string }) {
 export function UserMenu({
   nav,
   variant,
+  user,
 }: {
   nav: NavKey;
   variant: "sidebar" | "compact";
+  user: LayoutUser;
 }) {
   const t = useTranslations("Nav");
   const tCommon = useTranslations("Common");
   const locale = useLocale();
   const { changeLocale, pending: changingLocale } = useChangeLocale();
-  const user = getSessionUser(nav);
   const accent = navAccent[nav];
   const [pending, startTransition] = useTransition();
 

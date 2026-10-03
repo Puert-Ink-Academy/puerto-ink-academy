@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import { isActivePath, navAccent, navItems } from "@/components/layout/nav-items";
+import type { LayoutUser } from "@/components/layout/layout-user";
+import { isActivePath, navAccent, navItemsFor } from "@/components/layout/nav-items";
 import { Wordmark } from "@/components/brand/wordmark";
 import { RolePill } from "@/components/layout/role-pill";
 import { UserMenu } from "@/components/layout/user-menu";
@@ -12,10 +13,11 @@ import { buttonVariants } from "@/components/ui/button";
 import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
-export function SidebarNav({ nav }: { nav: NavKey }) {
+export function SidebarNav({ nav, user }: { nav: NavKey; user: LayoutUser }) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
   const accent = navAccent[nav];
+  const items = navItemsFor(nav, user.id);
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-60 flex-col border-r border-zinc-800 bg-zinc-900 md:flex">
@@ -25,7 +27,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
         <RolePill nav={nav} className="ml-auto" />
       </div>
       <nav aria-label={t("primary")} className="flex flex-1 flex-col gap-1 px-3">
-        {navItems[nav].map((item) => {
+        {items.map((item) => {
           const active = isActivePath(pathname, item);
           const Icon = item.icon;
 
@@ -47,7 +49,7 @@ export function SidebarNav({ nav }: { nav: NavKey }) {
         })}
       </nav>
       <div className="border-t border-zinc-800 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
-        <UserMenu nav={nav} variant="sidebar" />
+        <UserMenu nav={nav} variant="sidebar" user={user} />
       </div>
     </aside>
   );

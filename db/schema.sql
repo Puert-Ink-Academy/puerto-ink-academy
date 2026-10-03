@@ -11,6 +11,8 @@ CREATE TYPE submission_status AS ENUM ('pending', 'graded');
 CREATE TABLE users (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   email text NOT NULL,
+  email_verified timestamptz,
+  image text,
   name text NOT NULL,
   role user_role NOT NULL,
   artist_name text,
@@ -35,6 +37,38 @@ CREATE TABLE users (
 CREATE UNIQUE INDEX users_email_lower_key ON users (lower(email));
 
 CREATE UNIQUE INDEX users_profile_slug_lower_key ON users (lower(profile_slug));
+
+CREATE TABLE accounts (
+  user_id uuid NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  type text NOT NULL,
+  provider text NOT NULL,
+  provider_account_id text NOT NULL,
+  refresh_token text,
+  access_token text,
+  expires_at integer,
+  token_type text,
+  scope text,
+  id_token text,
+  session_state text,
+  PRIMARY KEY (provider, provider_account_id)
+);
+
+CREATE INDEX accounts_user_id_idx ON accounts (user_id);
+
+CREATE TABLE sessions (
+  session_token text PRIMARY KEY,
+  user_id uuid NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  expires timestamptz NOT NULL
+);
+
+CREATE INDEX sessions_user_id_idx ON sessions (user_id);
+
+CREATE TABLE verification_tokens (
+  identifier text NOT NULL,
+  token text NOT NULL,
+  expires timestamptz NOT NULL,
+  PRIMARY KEY (identifier, token)
+);
 
 CREATE TABLE titles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

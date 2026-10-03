@@ -90,7 +90,7 @@
   "Auth": {
     "title": "Sign in",
     "subtitle": "We'll email you a one-time code. No password needed.",
-    "demo": "Demo mode: any 6-digit code works.",
+    "demo": "We'll only send a code if this email is already on the academy.",
     "email": "Email",
     "emailPlaceholder": "you@puertoink.academy",
     "sendCode": "Send code",
@@ -461,6 +461,7 @@
   "Errors": {
     "unknownEmail": "No account uses this email. Ask an admin to add you.",
     "invalidCode": "Enter the 6-digit code from your email.",
+    "sendFailed": "We couldn't send the code. Try again in a moment.",
     "levelMissing": "This level doesn't exist.",
     "levelLocked": "This level is locked.",
     "pendingReview": "This level already has a submission waiting for a grade.",

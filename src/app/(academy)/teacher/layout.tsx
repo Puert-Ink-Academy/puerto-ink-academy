@@ -1,9 +1,15 @@
 import { AppLayout } from "@/components/layout/app-layout";
+import { requireRole } from "@/lib/session";
 
-export default function TeacherLayout({
+export default async function TeacherLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AppLayout nav="teacher">{children}</AppLayout>;
+  const user = await requireRole("TEACHER");
+  return (
+    <AppLayout nav="teacher" user={user}>
+      {children}
+    </AppLayout>
+  );
 }

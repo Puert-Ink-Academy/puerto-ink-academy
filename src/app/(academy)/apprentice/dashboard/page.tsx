@@ -8,15 +8,16 @@ import { DashboardSkeleton } from "@/components/feedback/dashboard-skeleton";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getApprenticeOverview, getCurriculum } from "@/db/queries";
-import { currentUsers } from "@/lib/current-user";
+import { getCurrentApprentice } from "@/lib/session";
 import { apprenticeView } from "@/lib/live-progress";
 import { screenMetadata } from "@/lib/page-metadata";
 
 async function DashboardBody() {
   const t = await getTranslations("Apprentice.Dashboard");
+  const apprentice = await getCurrentApprentice();
   const [curriculum, overview] = await Promise.all([
     getCurriculum(),
-    getApprenticeOverview(currentUsers.apprentice.id),
+    getApprenticeOverview(apprentice.id),
   ]);
   const view = apprenticeView(curriculum, overview);
 

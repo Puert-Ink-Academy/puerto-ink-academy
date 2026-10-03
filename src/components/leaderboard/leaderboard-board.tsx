@@ -6,14 +6,15 @@ import { LeaderboardHeader } from "@/components/leaderboard/leaderboard-header";
 import { LeaderboardTabs } from "@/components/leaderboard/leaderboard-tabs";
 import { getApprenticeOverview, getCurriculum, getLeaderboard } from "@/db/queries";
 import { isCountryCode } from "@/lib/countries";
-import { currentUsers } from "@/lib/current-user";
+import { getCurrentUser } from "@/lib/current-user";
 import { apprenticeView } from "@/lib/live-progress";
 import type { NavKey } from "@/lib/nav";
 
 export async function LeaderboardBoard({ nav }: { nav: NavKey }) {
   const t = await getTranslations("Leaderboard");
   const curriculum = await getCurriculum();
-  const viewerId = nav === "apprentice" ? currentUsers.apprentice.id : undefined;
+  const viewer = await getCurrentUser();
+  const viewerId = nav === "apprentice" ? viewer.id : undefined;
   const [rankingsList, overview] = await Promise.all([
     Promise.all(curriculum.map((category) => getLeaderboard(category.id))),
     viewerId ? getApprenticeOverview(viewerId) : Promise.resolve(null),

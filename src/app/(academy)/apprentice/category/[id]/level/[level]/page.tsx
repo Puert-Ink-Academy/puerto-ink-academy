@@ -72,7 +72,8 @@ export default async function LevelPage({
   const result = getLevelResult(id, levelNumber);
   const state = levelState(result?.highestScore);
   const attempts = getLevelAttempts(id, levelNumber);
-  const pendingSubmission = getPendingSubmission(getCurrentApprentice().id, id, levelNumber);
+  const apprentice = await getCurrentApprentice();
+  const pendingSubmission = getPendingSubmission(apprentice.id, id, levelNumber);
   const t = await getTranslations("Apprentice.Level");
   const submission = {
     categoryId: id,

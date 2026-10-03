@@ -1,0 +1,1637 @@
+{
+  "id": "117980dd-a964-432e-a23b-8d4adc8d03bb",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.accounts": {
+      "name": "accounts",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider": {
+          "name": "provider",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provider_account_id": {
+          "name": "provider_account_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "token_type": {
+          "name": "token_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scope": {
+          "name": "scope",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id_token": {
+          "name": "id_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "session_state": {
+          "name": "session_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "accounts_user_id_idx": {
+          "name": "accounts_user_id_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "accounts_user_id_users_id_fk": {
+          "name": "accounts_user_id_users_id_fk",
+          "tableFrom": "accounts",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "accounts_provider_provider_account_id_pk": {
+          "name": "accounts_provider_provider_account_id_pk",
+          "columns": [
+            "provider",
+            "provider_account_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.apprentice_progress": {
+      "name": "apprentice_progress",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "personal_xp": {
+          "name": "personal_xp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "personal_level": {
+          "name": "personal_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "xp_into_level": {
+          "name": "xp_into_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "xp_for_next_level": {
+          "name": "xp_for_next_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "levels_completed": {
+          "name": "levels_completed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "apprentice_progress_user_id_users_id_fk": {
+          "name": "apprentice_progress_user_id_users_id_fk",
+          "tableFrom": "apprentice_progress",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "apprentice_progress_xp_nonnegative": {
+          "name": "apprentice_progress_xp_nonnegative",
+          "value": "\"apprentice_progress\".\"personal_xp\" >= 0"
+        },
+        "apprentice_progress_level_positive": {
+          "name": "apprentice_progress_level_positive",
+          "value": "\"apprentice_progress\".\"personal_level\" >= 1"
+        },
+        "apprentice_progress_into_nonnegative": {
+          "name": "apprentice_progress_into_nonnegative",
+          "value": "\"apprentice_progress\".\"xp_into_level\" >= 0"
+        },
+        "apprentice_progress_into_below_next": {
+          "name": "apprentice_progress_into_below_next",
+          "value": "\"apprentice_progress\".\"xp_into_level\" < \"apprentice_progress\".\"xp_for_next_level\""
+        },
+        "apprentice_progress_next_positive": {
+          "name": "apprentice_progress_next_positive",
+          "value": "\"apprentice_progress\".\"xp_for_next_level\" > 0"
+        },
+        "apprentice_progress_levels_completed_nonnegative": {
+          "name": "apprentice_progress_levels_completed_nonnegative",
+          "value": "\"apprentice_progress\".\"levels_completed\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.categories": {
+      "name": "categories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tagline": {
+          "name": "tagline",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sequence_order": {
+          "name": "sequence_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "categories_slug_lower_key": {
+          "name": "categories_slug_lower_key",
+          "columns": [
+            {
+              "expression": "lower(\"slug\")",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "categories_name_lower_key": {
+          "name": "categories_name_lower_key",
+          "columns": [
+            {
+              "expression": "lower(\"name\")",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "categories_created_by_users_id_fk": {
+          "name": "categories_created_by_users_id_fk",
+          "tableFrom": "categories",
+          "tableTo": "users",
+          "columnsFrom": [
+            "created_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "categories_sequence_order_key": {
+          "name": "categories_sequence_order_key",
+          "nullsNotDistinct": false,
+          "columns": [
+            "sequence_order"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "categories_name_not_blank": {
+          "name": "categories_name_not_blank",
+          "value": "length(btrim(\"categories\".\"name\")) > 0"
+        },
+        "categories_slug_not_blank": {
+          "name": "categories_slug_not_blank",
+          "value": "length(btrim(\"categories\".\"slug\")) > 0"
+        },
+        "categories_sequence_order_positive": {
+          "name": "categories_sequence_order_positive",
+          "value": "\"categories\".\"sequence_order\" >= 1"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.level_progress": {
+      "name": "level_progress",
+      "schema": "",
+      "columns": {
+        "apprentice_id": {
+          "name": "apprentice_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level_id": {
+          "name": "level_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "best_score": {
+          "name": "best_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "best_awarded_xp": {
+          "name": "best_awarded_xp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "best_submission_id": {
+          "name": "best_submission_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attempt_count": {
+          "name": "attempt_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "latest_score": {
+          "name": "latest_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latest_feedback": {
+          "name": "latest_feedback",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "level_progress_apprentice_id_users_id_fk": {
+          "name": "level_progress_apprentice_id_users_id_fk",
+          "tableFrom": "level_progress",
+          "tableTo": "users",
+          "columnsFrom": [
+            "apprentice_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "level_progress_level_id_levels_id_fk": {
+          "name": "level_progress_level_id_levels_id_fk",
+          "tableFrom": "level_progress",
+          "tableTo": "levels",
+          "columnsFrom": [
+            "level_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "level_progress_best_submission_id_submissions_id_fk": {
+          "name": "level_progress_best_submission_id_submissions_id_fk",
+          "tableFrom": "level_progress",
+          "tableTo": "submissions",
+          "columnsFrom": [
+            "best_submission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "level_progress_apprentice_id_level_id_pk": {
+          "name": "level_progress_apprentice_id_level_id_pk",
+          "columns": [
+            "apprentice_id",
+            "level_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "level_progress_attempt_count_positive": {
+          "name": "level_progress_attempt_count_positive",
+          "value": "\"level_progress\".\"attempt_count\" >= 1"
+        },
+        "level_progress_best_state": {
+          "name": "level_progress_best_state",
+          "value": "(\n        \"level_progress\".\"best_score\" IS NULL\n        AND \"level_progress\".\"best_awarded_xp\" IS NULL\n        AND \"level_progress\".\"best_submission_id\" IS NULL\n        AND \"level_progress\".\"latest_score\" IS NULL\n        AND \"level_progress\".\"latest_feedback\" IS NULL\n      ) OR (\n        \"level_progress\".\"best_score\" BETWEEN 0 AND 10\n        AND \"level_progress\".\"best_awarded_xp\" = CASE WHEN \"level_progress\".\"best_score\" >= 8 THEN \"level_progress\".\"best_score\" * 10 ELSE 0 END\n        AND \"level_progress\".\"best_submission_id\" IS NOT NULL\n        AND \"level_progress\".\"latest_score\" BETWEEN 0 AND 10\n      )"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.level_references": {
+      "name": "level_references",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "level_version_id": {
+          "name": "level_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "label": {
+          "name": "label",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "object_key": {
+          "name": "object_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "alt": {
+          "name": "alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "width": {
+          "name": "width",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "level_references_version_sort_key": {
+          "name": "level_references_version_sort_key",
+          "columns": [
+            {
+              "expression": "level_version_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "sort_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "level_references_level_version_id_level_versions_id_fk": {
+          "name": "level_references_level_version_id_level_versions_id_fk",
+          "tableFrom": "level_references",
+          "tableTo": "level_versions",
+          "columnsFrom": [
+            "level_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "level_references_label_not_blank": {
+          "name": "level_references_label_not_blank",
+          "value": "length(btrim(\"level_references\".\"label\")) > 0"
+        },
+        "level_references_sort_order_nonnegative": {
+          "name": "level_references_sort_order_nonnegative",
+          "value": "\"level_references\".\"sort_order\" >= 0"
+        },
+        "level_references_file_pair": {
+          "name": "level_references_file_pair",
+          "value": "(\"level_references\".\"url\" IS NULL AND \"level_references\".\"object_key\" IS NULL) OR (\"level_references\".\"url\" IS NOT NULL AND \"level_references\".\"object_key\" IS NOT NULL)"
+        },
+        "level_references_dimensions": {
+          "name": "level_references_dimensions",
+          "value": "(\"level_references\".\"width\" IS NULL AND \"level_references\".\"height\" IS NULL) OR (\"level_references\".\"width\" > 0 AND \"level_references\".\"height\" > 0)"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.level_versions": {
+      "name": "level_versions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "level_id": {
+          "name": "level_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "version_number": {
+          "name": "version_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "objective": {
+          "name": "objective",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "exercise": {
+          "name": "exercise",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tips": {
+          "name": "tips",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "level_versions_level_number_key": {
+          "name": "level_versions_level_number_key",
+          "columns": [
+            {
+              "expression": "level_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "version_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "level_versions_level_id_levels_id_fk": {
+          "name": "level_versions_level_id_levels_id_fk",
+          "tableFrom": "level_versions",
+          "tableTo": "levels",
+          "columnsFrom": [
+            "level_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "level_versions_created_by_users_id_fk": {
+          "name": "level_versions_created_by_users_id_fk",
+          "tableFrom": "level_versions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "created_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "level_versions_number_positive": {
+          "name": "level_versions_number_positive",
+          "value": "\"level_versions\".\"version_number\" >= 1"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.levels": {
+      "name": "levels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "current_version_id": {
+          "name": "current_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "levels_category_position_key": {
+          "name": "levels_category_position_key",
+          "columns": [
+            {
+              "expression": "category_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "position",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "levels_category_id_categories_id_fk": {
+          "name": "levels_category_id_categories_id_fk",
+          "tableFrom": "levels",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "levels_current_version_id_level_versions_id_fk": {
+          "name": "levels_current_version_id_level_versions_id_fk",
+          "tableFrom": "levels",
+          "tableTo": "level_versions",
+          "columnsFrom": [
+            "current_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "levels_position_positive": {
+          "name": "levels_position_positive",
+          "value": "\"levels\".\"position\" >= 1"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.sessions": {
+      "name": "sessions",
+      "schema": "",
+      "columns": {
+        "session_token": {
+          "name": "session_token",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "sessions_user_id_idx": {
+          "name": "sessions_user_id_idx",
+          "columns": [
+            {
+              "expression": "user_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sessions_user_id_users_id_fk": {
+          "name": "sessions_user_id_users_id_fk",
+          "tableFrom": "sessions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.style_progress": {
+      "name": "style_progress",
+      "schema": "",
+      "columns": {
+        "apprentice_id": {
+          "name": "apprentice_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_xp": {
+          "name": "category_xp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "current_level": {
+          "name": "current_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "average_score": {
+          "name": "average_score",
+          "type": "numeric(4, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "levels_completed": {
+          "name": "levels_completed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "is_locked": {
+          "name": "is_locked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_mastered": {
+          "name": "is_mastered",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {
+        "style_progress_leaderboard": {
+          "name": "style_progress_leaderboard",
+          "columns": [
+            {
+              "expression": "category_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "category_xp",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"style_progress\".\"is_locked\" = false AND \"style_progress\".\"category_xp\" > 0",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "style_progress_apprentice_id_users_id_fk": {
+          "name": "style_progress_apprentice_id_users_id_fk",
+          "tableFrom": "style_progress",
+          "tableTo": "users",
+          "columnsFrom": [
+            "apprentice_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "style_progress_category_id_categories_id_fk": {
+          "name": "style_progress_category_id_categories_id_fk",
+          "tableFrom": "style_progress",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "style_progress_apprentice_id_category_id_pk": {
+          "name": "style_progress_apprentice_id_category_id_pk",
+          "columns": [
+            "apprentice_id",
+            "category_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "style_progress_xp_nonnegative": {
+          "name": "style_progress_xp_nonnegative",
+          "value": "\"style_progress\".\"category_xp\" >= 0"
+        },
+        "style_progress_current_level_positive": {
+          "name": "style_progress_current_level_positive",
+          "value": "\"style_progress\".\"current_level\" >= 1"
+        },
+        "style_progress_average_score_range": {
+          "name": "style_progress_average_score_range",
+          "value": "\"style_progress\".\"average_score\" BETWEEN 0 AND 10"
+        },
+        "style_progress_levels_completed_nonnegative": {
+          "name": "style_progress_levels_completed_nonnegative",
+          "value": "\"style_progress\".\"levels_completed\" >= 0"
+        },
+        "style_progress_lock_and_mastery": {
+          "name": "style_progress_lock_and_mastery",
+          "value": "NOT (\"style_progress\".\"is_locked\" AND \"style_progress\".\"is_mastered\")"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.submission_photos": {
+      "name": "submission_photos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "submission_id": {
+          "name": "submission_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sort_order": {
+          "name": "sort_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "object_key": {
+          "name": "object_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alt": {
+          "name": "alt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "width": {
+          "name": "width",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "submission_photos_submission_sort_key": {
+          "name": "submission_photos_submission_sort_key",
+          "columns": [
+            {
+              "expression": "submission_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "sort_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "submission_photos_submission_id_submissions_id_fk": {
+          "name": "submission_photos_submission_id_submissions_id_fk",
+          "tableFrom": "submission_photos",
+          "tableTo": "submissions",
+          "columnsFrom": [
+            "submission_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "submission_photos_sort_order_nonnegative": {
+          "name": "submission_photos_sort_order_nonnegative",
+          "value": "\"submission_photos\".\"sort_order\" >= 0"
+        },
+        "submission_photos_url_not_blank": {
+          "name": "submission_photos_url_not_blank",
+          "value": "length(btrim(\"submission_photos\".\"url\")) > 0"
+        },
+        "submission_photos_object_key_not_blank": {
+          "name": "submission_photos_object_key_not_blank",
+          "value": "length(btrim(\"submission_photos\".\"object_key\")) > 0"
+        },
+        "submission_photos_dimensions": {
+          "name": "submission_photos_dimensions",
+          "value": "\"submission_photos\".\"width\" > 0 AND \"submission_photos\".\"height\" > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.submissions": {
+      "name": "submissions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "apprentice_id": {
+          "name": "apprentice_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level_id": {
+          "name": "level_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level_version_id": {
+          "name": "level_version_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attempt_number": {
+          "name": "attempt_number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "submission_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "claimed_by": {
+          "name": "claimed_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "claimed_at": {
+          "name": "claimed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "graded_by": {
+          "name": "graded_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "graded_at": {
+          "name": "graded_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "feedback": {
+          "name": "feedback",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "awarded_xp": {
+          "name": "awarded_xp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "submissions_attempt_key": {
+          "name": "submissions_attempt_key",
+          "columns": [
+            {
+              "expression": "apprentice_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "level_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "attempt_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "submissions_one_pending_per_level": {
+          "name": "submissions_one_pending_per_level",
+          "columns": [
+            {
+              "expression": "apprentice_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "level_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"submissions\".\"status\" = 'pending'",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "submissions_pending_queue": {
+          "name": "submissions_pending_queue",
+          "columns": [
+            {
+              "expression": "submitted_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"submissions\".\"status\" = 'pending'",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "submissions_claimed_by": {
+          "name": "submissions_claimed_by",
+          "columns": [
+            {
+              "expression": "claimed_by",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "where": "\"submissions\".\"status\" = 'pending'",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "submissions_apprentice_id_users_id_fk": {
+          "name": "submissions_apprentice_id_users_id_fk",
+          "tableFrom": "submissions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "apprentice_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "submissions_level_id_levels_id_fk": {
+          "name": "submissions_level_id_levels_id_fk",
+          "tableFrom": "submissions",
+          "tableTo": "levels",
+          "columnsFrom": [
+            "level_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "submissions_level_version_id_level_versions_id_fk": {
+          "name": "submissions_level_version_id_level_versions_id_fk",
+          "tableFrom": "submissions",
+          "tableTo": "level_versions",
+          "columnsFrom": [
+            "level_version_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "submissions_claimed_by_users_id_fk": {
+          "name": "submissions_claimed_by_users_id_fk",
+          "tableFrom": "submissions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "claimed_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "submissions_graded_by_users_id_fk": {
+          "name": "submissions_graded_by_users_id_fk",
+          "tableFrom": "submissions",
+          "tableTo": "users",
+          "columnsFrom": [
+            "graded_by"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "submissions_attempt_number_positive": {
+          "name": "submissions_attempt_number_positive",
+          "value": "\"submissions\".\"attempt_number\" >= 1"
+        },
+        "submissions_claim_pair": {
+          "name": "submissions_claim_pair",
+          "value": "(\"submissions\".\"claimed_by\" IS NULL AND \"submissions\".\"claimed_at\" IS NULL) OR (\"submissions\".\"claimed_by\" IS NOT NULL AND \"submissions\".\"claimed_at\" IS NOT NULL)"
+        },
+        "submissions_grade_state": {
+          "name": "submissions_grade_state",
+          "value": "(\n        \"submissions\".\"status\" = 'pending'\n        AND \"submissions\".\"score\" IS NULL\n        AND \"submissions\".\"feedback\" IS NULL\n        AND \"submissions\".\"awarded_xp\" IS NULL\n        AND \"submissions\".\"graded_by\" IS NULL\n        AND \"submissions\".\"graded_at\" IS NULL\n      ) OR (\n        \"submissions\".\"status\" = 'graded'\n        AND \"submissions\".\"score\" BETWEEN 0 AND 10\n        AND \"submissions\".\"awarded_xp\" = CASE WHEN \"submissions\".\"score\" >= 8 THEN \"submissions\".\"score\" * 10 ELSE 0 END\n        AND \"submissions\".\"graded_by\" IS NOT NULL\n        AND \"submissions\".\"graded_at\" IS NOT NULL\n      )"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.titles": {
+      "name": "titles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "min_personal_level": {
+          "name": "min_personal_level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "titles_min_personal_level_key": {
+          "name": "titles_min_personal_level_key",
+          "nullsNotDistinct": false,
+          "columns": [
+            "min_personal_level"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "titles_name_not_blank": {
+          "name": "titles_name_not_blank",
+          "value": "length(btrim(\"titles\".\"name\")) > 0"
+        },
+        "titles_min_personal_level_positive": {
+          "name": "titles_min_personal_level_positive",
+          "value": "\"titles\".\"min_personal_level\" >= 1"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_verified": {
+          "name": "email_verified",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "user_role",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "artist_name": {
+          "name": "artist_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "studio": {
+          "name": "studio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nationality": {
+          "name": "nationality",
+          "type": "char(2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profile_slug": {
+          "name": "profile_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "CURRENT_DATE"
+        }
+      },
+      "indexes": {
+        "users_email_lower_key": {
+          "name": "users_email_lower_key",
+          "columns": [
+            {
+              "expression": "lower(\"email\")",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "users_profile_slug_lower_key": {
+          "name": "users_profile_slug_lower_key",
+          "columns": [
+            {
+              "expression": "lower(\"profile_slug\")",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "users_name_not_blank": {
+          "name": "users_name_not_blank",
+          "value": "length(btrim(\"users\".\"name\")) > 0"
+        },
+        "users_email_not_blank": {
+          "name": "users_email_not_blank",
+          "value": "length(btrim(\"users\".\"email\")) > 0"
+        },
+        "users_artist_name_length": {
+          "name": "users_artist_name_length",
+          "value": "\"users\".\"artist_name\" IS NULL OR char_length(\"users\".\"artist_name\") <= 40"
+        },
+        "users_studio_length": {
+          "name": "users_studio_length",
+          "value": "\"users\".\"studio\" IS NULL OR char_length(\"users\".\"studio\") <= 60"
+        },
+        "users_nationality_code": {
+          "name": "users_nationality_code",
+          "value": "\"users\".\"nationality\" IS NULL OR \"users\".\"nationality\" ~ '^[A-Z]{2}$'"
+        },
+        "users_profile_slug_not_blank": {
+          "name": "users_profile_slug_not_blank",
+          "value": "length(btrim(\"users\".\"profile_slug\")) > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.verification_tokens": {
+      "name": "verification_tokens",
+      "schema": "",
+      "columns": {
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token": {
+          "name": "token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "expires": {
+          "name": "expires",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "verification_tokens_identifier_token_pk": {
+          "name": "verification_tokens_identifier_token_pk",
+          "columns": [
+            "identifier",
+            "token"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.submission_status": {
+      "name": "submission_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "graded"
+      ]
+    },
+    "public.user_role": {
+      "name": "user_role",
+      "schema": "public",
+      "values": [
+        "ADMIN",
+        "TEACHER",
+        "APPRENTICE"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

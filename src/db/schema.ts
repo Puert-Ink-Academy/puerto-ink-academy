@@ -26,6 +26,8 @@ export const users = pgTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     email: text("email").notNull(),
+    emailVerified: timestamp("email_verified", { withTimezone: true, mode: "date" }),
+    image: text("image"),
     name: text("name").notNull(),
     role: userRole("role").notNull(),
     artistName: text("artist_name"),
@@ -53,6 +55,51 @@ export const users = pgTable(
     ),
     check("users_profile_slug_not_blank", sql`length(btrim(${table.profileSlug})) > 0`),
   ],
+);
+
+export const accounts = pgTable(
+  "accounts",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("provider_account_id").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (table) => [
+    primaryKey({ columns: [table.provider, table.providerAccountId] }),
+    index("accounts_user_id_idx").on(table.userId),
+  ],
+);
+
+export const sessions = pgTable(
+  "sessions",
+  {
+    sessionToken: text("session_token").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    expires: timestamp("expires", { withTimezone: true, mode: "date" }).notNull(),
+  },
+  (table) => [index("sessions_user_id_idx").on(table.userId)],
+);
+
+export const verificationTokens = pgTable(
+  "verification_tokens",
+  {
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { withTimezone: true, mode: "date" }).notNull(),
+  },
+  (table) => [primaryKey({ columns: [table.identifier, table.token] })],
 );
 
 export const titles = pgTable(
@@ -346,11 +393,27 @@ export const usersRelations = relations(users, ({ one, many }) => ({
     references: [apprenticeProgress.userId],
     relationName: "apprenticeProgress",
   }),
+  accounts: many(accounts),
+  sessions: many(sessions),
   createdCategories: many(categories),
   authoredVersions: many(levelVersions),
   apprenticeSubmissions: many(submissions, { relationName: "apprenticeSubmissions" }),
   claimedSubmissions: many(submissions, { relationName: "claimedSubmissions" }),
   gradedSubmissions: many(submissions, { relationName: "gradedSubmissions" }),
+}));
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
+}));
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(users, {
+    fields: [sessions.userId],
+    references: [users.id],
+  }),
 }));
 
 export const categoriesRelations = relations(categories, ({ one, many }) => ({

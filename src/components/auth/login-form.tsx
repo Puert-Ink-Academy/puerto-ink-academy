@@ -17,7 +17,7 @@ const inputClass =
 const submitClass =
   "h-11 w-full bg-amber-400 text-zinc-950 shadow-[0_0_24px_-6px_var(--color-amber-400)] hover:bg-amber-300";
 
-export function LoginForm() {
+export function LoginForm({ initialError = null }: { initialError?: string | null }) {
   const t = useTranslations("Auth");
   const emailId = useId();
   const codeId = useId();
@@ -25,7 +25,7 @@ export function LoginForm() {
   const [step, setStep] = useState<"email" | "code">("email");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(initialError);
   const [pending, startTransition] = useTransition();
 
   function sendCode(onSent: () => void) {

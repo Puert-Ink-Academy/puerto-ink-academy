@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, asc, desc, eq, gt } from "drizzle-orm";
+import { and, asc, desc, eq, gt, sql } from "drizzle-orm";
 
 import { db } from "@/db/index";
 import {
@@ -244,4 +244,30 @@ export async function getLeaderboard(categoryId: string) {
     rank: index + 1,
     ...row,
   }));
+}
+
+const authUserColumns = {
+  id: users.id,
+  email: users.email,
+  emailVerified: users.emailVerified,
+  image: users.image,
+  name: users.name,
+  role: users.role,
+  artistName: users.artistName,
+};
+
+export async function getUserByEmail(email: string) {
+  const [row] = await db
+    .select(authUserColumns)
+    .from(users)
+    .where(sql`lower(${users.email}) = ${email}`)
+    .limit(1);
+
+  return row ?? null;
+}
+
+export async function getUserById(id: string) {
+  const [row] = await db.select(authUserColumns).from(users).where(eq(users.id, id)).limit(1);
+
+  return row ?? null;
 }

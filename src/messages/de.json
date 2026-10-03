@@ -90,7 +90,7 @@
   "Auth": {
     "title": "Anmelden",
     "subtitle": "Wir schicken dir einen Einmalcode per E-Mail. Kein Passwort nötig.",
-    "demo": "Demo: Jeder 6-stellige Code funktioniert.",
+    "demo": "Wir senden nur einen Code, wenn diese E-Mail schon in der Academy ist.",
     "email": "E-Mail",
     "emailPlaceholder": "you@puertoink.academy",
     "sendCode": "Code senden",
@@ -461,6 +461,7 @@
   "Errors": {
     "unknownEmail": "Kein Konto nutzt diese E-Mail. Bitte einen Admin, dich hinzuzufügen.",
     "invalidCode": "Gib den 6-stelligen Code aus deiner E-Mail ein.",
+    "sendFailed": "Der Code konnte nicht gesendet werden. Versuch es gleich noch einmal.",
     "levelMissing": "Dieses Level gibt es nicht.",
     "levelLocked": "Dieses Level ist gesperrt.",
     "pendingReview": "Für dieses Level wartet schon eine Abgabe auf eine Note.",

@@ -30,7 +30,8 @@ export async function submitLevelAttempt(
     return { error: t("levelLocked") };
   }
 
-  if (hasPendingReview(getCurrentApprentice().id, categoryId, level)) {
+  const apprentice = await getCurrentApprentice();
+  if (hasPendingReview(apprentice.id, categoryId, level)) {
     return { error: t("pendingReview"), pending: true };
   }
 

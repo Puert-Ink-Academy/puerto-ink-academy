@@ -1,9 +1,15 @@
 import { AppLayout } from "@/components/layout/app-layout";
+import { requireSessionUser } from "@/lib/session";
 
-export default function ProfileLayout({
+export default async function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AppLayout nav="apprentice">{children}</AppLayout>;
+  const user = await requireSessionUser();
+  return (
+    <AppLayout nav="apprentice" user={user}>
+      {children}
+    </AppLayout>
+  );
 }

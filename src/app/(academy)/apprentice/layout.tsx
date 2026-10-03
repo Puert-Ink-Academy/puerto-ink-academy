@@ -1,9 +1,15 @@
 import { AppLayout } from "@/components/layout/app-layout";
+import { requireRole } from "@/lib/session";
 
-export default function ApprenticeLayout({
+export default async function ApprenticeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AppLayout nav="apprentice">{children}</AppLayout>;
+  const user = await requireRole("APPRENTICE");
+  return (
+    <AppLayout nav="apprentice" user={user}>
+      {children}
+    </AppLayout>
+  );
 }

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
 import { LoginForm } from "@/components/auth/login-form";
@@ -13,8 +12,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title"), description: t("subtitle") };
 }
 
-export default function LoginPage() {
-  const t = useTranslations("Auth");
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string | string[] }>;
+}) {
+  const t = await getTranslations("Auth");
+  const tErrors = await getTranslations("Errors");
+  const params = await searchParams;
+  const error = Array.isArray(params.error) ? params.error[0] : params.error;
 
   return (
     <main className="flex min-h-svh items-center justify-center bg-zinc-950 px-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] text-zinc-50">
@@ -32,7 +38,7 @@ export default function LoginPage() {
         <Panel as="section" padding="lg">
           <h1 className="text-xl font-semibold tracking-tight">{t("title")}</h1>
           <p className="mt-1 mb-5 text-sm text-zinc-400">{t("subtitle")}</p>
-          <LoginForm />
+          <LoginForm initialError={error ? tErrors("invalidCode") : null} />
         </Panel>
         <p className="mt-4 text-center text-xs text-zinc-500">{t("demo")}</p>
         <div className="mt-4 flex justify-center">

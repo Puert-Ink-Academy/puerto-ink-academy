@@ -11,7 +11,6 @@ import {
 import type { NavKey } from "@/lib/nav";
 import type { Role } from "@/lib/roles";
 import { profilePath } from "@/lib/profile-slug";
-import { getCurrentApprentice } from "@/lib/session";
 
 export type NavLabel =
   | "dashboard"
@@ -28,7 +27,7 @@ export type NavItem = {
   activePrefixes?: string[];
 };
 
-export const navItems: Record<NavKey, NavItem[]> = {
+const navItemsByRole: Record<NavKey, NavItem[]> = {
   apprentice: [
     {
       href: "/apprentice/dashboard",
@@ -37,7 +36,6 @@ export const navItems: Record<NavKey, NavItem[]> = {
       activePrefixes: ["/apprentice/category"],
     },
     { href: "/apprentice/leaderboard", label: "leaderboard", icon: Trophy },
-    { href: profilePath(getCurrentApprentice().id), label: "profile", icon: UserRound },
   ],
   teacher: [
     { href: "/teacher/dashboard", label: "dashboard", icon: LayoutDashboard },
@@ -51,6 +49,15 @@ export const navItems: Record<NavKey, NavItem[]> = {
     { href: "/admin/leaderboard", label: "leaderboard", icon: Trophy },
   ],
 };
+
+export function navItemsFor(nav: NavKey, userId: string): NavItem[] {
+  if (nav !== "apprentice") return navItemsByRole[nav];
+
+  return [
+    ...navItemsByRole.apprentice,
+    { href: profilePath(userId), label: "profile", icon: UserRound },
+  ];
+}
 
 export type NavAccent = {
   dot: string;

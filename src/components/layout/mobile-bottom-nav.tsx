@@ -4,15 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-import { isActivePath, navAccent, navItems } from "@/components/layout/nav-items";
+import { isActivePath, navAccent, navItemsFor } from "@/components/layout/nav-items";
 import { buttonVariants } from "@/components/ui/button";
 import type { NavKey } from "@/lib/nav";
 import { cn } from "cn";
 
-export function MobileBottomNav({ nav }: { nav: NavKey }) {
+export function MobileBottomNav({ nav, userId }: { nav: NavKey; userId: string }) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
-  const items = navItems[nav];
+  const items = navItemsFor(nav, userId);
   const accent = navAccent[nav];
 
   return (

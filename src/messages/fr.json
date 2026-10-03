@@ -90,7 +90,7 @@
   "Auth": {
     "title": "Connexion",
     "subtitle": "Nous vous envoyons un code à usage unique. Aucun mot de passe.",
-    "demo": "Mode démo : n'importe quel code à 6 chiffres fonctionne.",
+    "demo": "Nous n'envoyons un code que si cet e-mail est déjà dans l'académie.",
     "email": "E-mail",
     "emailPlaceholder": "you@puertoink.academy",
     "sendCode": "Envoyer le code",
@@ -461,6 +461,7 @@
   "Errors": {
     "unknownEmail": "Aucun compte n'utilise cet e-mail. Demandez à un admin de vous ajouter.",
     "invalidCode": "Saisissez le code à 6 chiffres reçu par e-mail.",
+    "sendFailed": "Impossible d'envoyer le code. Réessayez dans un instant.",
     "levelMissing": "Ce niveau n'existe pas.",
     "levelLocked": "Ce niveau est verrouillé.",
     "pendingReview": "Ce niveau a déjà un envoi en attente de note.",

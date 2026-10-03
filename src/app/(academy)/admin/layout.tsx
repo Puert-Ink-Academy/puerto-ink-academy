@@ -1,9 +1,15 @@
 import { AppLayout } from "@/components/layout/app-layout";
+import { requireRole } from "@/lib/session";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <AppLayout nav="admin">{children}</AppLayout>;
+  const user = await requireRole("ADMIN");
+  return (
+    <AppLayout nav="admin" user={user}>
+      {children}
+    </AppLayout>
+  );
 }

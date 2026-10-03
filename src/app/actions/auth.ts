@@ -1,49 +1,73 @@
 "use server";
 
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
-import { platformUsers, type PlatformUser } from "@/lib/mock/admin-users";
-import type { Role } from "@/lib/roles";
+import { signIn, signOut } from "@/auth";
+import { getUserByEmail } from "@/db/queries";
+import { normalizeEmail } from "@/lib/email";
+import { dashboardPath } from "@/lib/session";
 
 export type AuthActionResult = { ok: true } | { error: string };
 
-const dashboardForRole: Record<Role, string> = {
-  APPRENTICE: "/apprentice/dashboard",
-  TEACHER: "/teacher/dashboard",
-  ADMIN: "/admin/dashboard",
-};
-
-function findUser(email: string): PlatformUser | undefined {
-  const normalized = email.trim().toLowerCase();
-  return platformUsers.find((user) => user.email.toLowerCase() === normalized);
+function authResult(url: string): { error: string | null; sent: boolean } {
+  const parsed = new URL(url, "http://localhost");
+  return {
+    error: parsed.searchParams.get("error"),
+    sent: parsed.pathname.endsWith("/verify-request"),
+  };
 }
 
-// Auth.js email sign-in replaces this: it will create and email a one-time code.
 export async function requestLoginCode(email: string): Promise<AuthActionResult> {
-  if (!findUser(email)) {
-    const t = await getTranslations("Errors");
-    return { error: t("unknownEmail") };
+  const t = await getTranslations("Errors");
+  const normalized = normalizeEmail(email);
+  if (!normalized) return { error: t("unknownEmail") };
+
+  const user = await getUserByEmail(normalized);
+  if (!user) return { error: t("unknownEmail") };
+
+  try {
+    const url = await signIn("email", {
+      email: normalized,
+      redirect: false,
+      redirectTo: dashboardPath(user.role),
+    });
+
+    const result = typeof url === "string" ? authResult(url) : { error: "Configuration", sent: false };
+    if (!result.sent || result.error) {
+      return { error: result.error === "AccessDenied" ? t("unknownEmail") : t("sendFailed") };
+    }
+  } catch (error) {
+    unstable_rethrow(error);
+    return { error: t("sendFailed") };
   }
+
   return { ok: true };
 }
 
-// Auth.js replaces this: it will check the stored code and start the session.
 export async function verifyLoginCode(
   email: string,
   code: string,
 ): Promise<AuthActionResult> {
   const t = await getTranslations("Errors");
-  const user = findUser(email);
-  if (!user) {
-    return { error: t("unknownEmail") };
-  }
-  if (!/^\d{6}$/.test(code.trim())) {
+  const normalized = normalizeEmail(email);
+  const token = code.trim();
+
+  if (!normalized || !/^\d{6}$/.test(token)) {
     return { error: t("invalidCode") };
   }
-  redirect(dashboardForRole[user.role]);
+
+  const user = await getUserByEmail(normalized);
+  if (!user) return { error: t("unknownEmail") };
+
+  const params = new URLSearchParams({
+    email: normalized,
+    token,
+    callbackUrl: dashboardPath(user.role),
+  });
+  redirect(`/api/auth/callback/email?${params.toString()}`);
 }
 
 export async function logout() {
-  redirect("/login");
+  await signOut({ redirectTo: "/login" });
 }

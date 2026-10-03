@@ -14,7 +14,8 @@ export async function updateArtistDetails(
   profileId: unknown,
   input: unknown,
 ): Promise<UpdateArtistDetailsResult> {
-  if (profileId !== getCurrentApprentice().id) {
+  const apprentice = await getCurrentApprentice();
+  if (profileId !== apprentice.id) {
     return { error: "ownProfile" };
   }
 

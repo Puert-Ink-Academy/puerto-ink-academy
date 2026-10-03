@@ -7,14 +7,10 @@ import { navAccent, roleBadge } from "@/components/layout/nav-items";
 import { TeacherDashboard } from "@/components/teacher/teacher-dashboard";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getPendingSubmissions } from "@/db/queries";
-import { currentUsers } from "@/lib/current-user";
+import { getCurrentUser } from "@/lib/current-user";
 import type { StaffNav } from "@/lib/nav";
 
-function reviewerId(nav: StaffNav) {
-  return nav === "admin" ? currentUsers.admin.id : currentUsers.teacher.id;
-}
-
-async function PendingQueue({ nav }: { nav: StaffNav }) {
+async function PendingQueue() {
   const t = await getTranslations("Teacher.Grading");
   const rows = await getPendingSubmissions();
 
@@ -22,6 +18,7 @@ async function PendingQueue({ nav }: { nav: StaffNav }) {
     return <EmptyState title={t("queueEmpty")} />;
   }
 
+  const reviewer = await getCurrentUser();
   const styles = new Set(rows.map((row) => row.categoryId)).size;
   const submissions = rows.map((row) => ({
     id: row.id,
@@ -48,7 +45,7 @@ async function PendingQueue({ nav }: { nav: StaffNav }) {
   return (
     <>
       <p className="text-sm text-zinc-400">{t("summary", { submissions: rows.length, styles })}</p>
-      <TeacherDashboard submissions={submissions} reviewerId={reviewerId(nav)} />
+      <TeacherDashboard submissions={submissions} reviewerId={reviewer.id} />
     </>
   );
 }
@@ -64,7 +61,7 @@ export async function GradingView({ nav }: { nav: StaffNav }) {
         <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">{t("title")}</h1>
       </header>
       <Suspense fallback={<QueueSkeleton />}>
-        <PendingQueue nav={nav} />
+        <PendingQueue />
       </Suspense>
     </main>
   );

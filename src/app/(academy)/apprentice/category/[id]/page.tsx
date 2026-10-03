@@ -11,7 +11,7 @@ import { Progress } from "@/components/ui/progress";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getApprenticeOverview, getCurriculum } from "@/db/queries";
 import { getCategoryStyle } from "@/lib/categories";
-import { currentUsers } from "@/lib/current-user";
+import { getCurrentApprentice } from "@/lib/session";
 import { categoryProgressPercent } from "@/lib/levels";
 import { apprenticeView } from "@/lib/live-progress";
 import { cn } from "cn";
@@ -30,9 +30,10 @@ export async function generateMetadata({
 }
 
 async function CategoryBody({ id }: { id: string }) {
+  const apprentice = await getCurrentApprentice();
   const [curriculum, overview] = await Promise.all([
     getCurriculum(),
-    getApprenticeOverview(currentUsers.apprentice.id),
+    getApprenticeOverview(apprentice.id),
   ]);
   const view = apprenticeView(curriculum, overview);
   const entry = view.categories.find((category) => category.category.id === id);
