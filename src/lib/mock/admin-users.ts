@@ -1,5 +1,5 @@
-import { countryCode, type CountryCode } from "@/lib/countries";
-import type { Role } from "@/lib/roles";
+import { countryCode, type CountryCode } from "@/lib/people/countries";
+import type { Role } from "@/lib/people/roles";
 
 export type PlatformUser = {
   id: string;

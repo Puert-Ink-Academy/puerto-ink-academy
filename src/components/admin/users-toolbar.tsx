@@ -13,8 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { countryName, isCountryCode } from "@/lib/countries";
-import { roles, type Role } from "@/lib/roles";
+import { countryName, isCountryCode } from "@/lib/people/countries";
+import { roles, type Role } from "@/lib/people/roles";
 import {
   isStudioFilter,
   isUserSort,
@@ -24,7 +24,7 @@ import {
   type StudioFilter,
   type UserFilters,
   type UserSort,
-} from "@/lib/user-directory";
+} from "@/lib/people/user-directory";
 import { cn } from "cn";
 
 const roleChipKeys = {

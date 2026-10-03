@@ -2,7 +2,7 @@ import Image from "next/image"
 import { useLocale } from "next-intl"
 import { cn } from "cn"
 
-import { countryName, type CountryCode } from "@/lib/countries"
+import { countryName, type CountryCode } from "@/lib/people/countries"
 
 const sizes = {
   sm: { width: 16, height: 11 },

@@ -5,9 +5,9 @@ import { EmptyState } from "@/components/feedback/empty-state";
 import { LeaderboardHeader } from "@/components/leaderboard/leaderboard-header";
 import { LeaderboardTabs } from "@/components/leaderboard/leaderboard-tabs";
 import { getApprenticeOverview, getCurriculum, getLeaderboard } from "@/db/queries";
-import { isCountryCode } from "@/lib/countries";
-import { getCurrentUser } from "@/lib/current-user";
-import { apprenticeView } from "@/lib/live-progress";
+import { isCountryCode } from "@/lib/people/countries";
+import { getCurrentUser } from "@/lib/auth/current-user";
+import { apprenticeView } from "@/lib/progress/live-progress";
 import type { NavKey } from "@/lib/nav";
 
 export async function LeaderboardBoard({ nav }: { nav: NavKey }) {

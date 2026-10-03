@@ -23,7 +23,7 @@ import {
 import { isLocale, localeNames, locales } from "@/i18n/config";
 import type { LayoutUser } from "@/components/layout/layout-user";
 import type { NavKey } from "@/lib/nav";
-import { profilePath } from "@/lib/profile-slug";
+import { profilePath } from "@/lib/people/profile-slug";
 import { cn } from "cn";
 
 function Avatar({ name, className }: { name: string; className: string }) {

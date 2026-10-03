@@ -1,15 +1,15 @@
-import type { CountryCode } from "@/lib/countries";
+import type { CountryCode } from "@/lib/people/countries";
 import {
   unlockedCategories,
   unlockedTotals,
   type ApprenticeStanding,
   type EvolutionAttempt,
-} from "@/lib/leaderboard";
+} from "@/lib/progress/leaderboard";
 import { getPlatformUser } from "@/lib/mock/admin-users";
 import { categories, type Category, type CategoryId } from "@/lib/mock/categories";
 import { apprenticeStandings, getRanking } from "@/lib/mock/leaderboard";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
-import { profileIdFromSlug } from "@/lib/profile-slug";
+import { profileIdFromSlug } from "@/lib/people/profile-slug";
 
 export type ScopeStanding = {
   scope: CategoryId;

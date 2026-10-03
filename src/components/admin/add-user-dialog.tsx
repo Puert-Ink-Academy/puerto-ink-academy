@@ -30,9 +30,9 @@ import {
   parseArtistDetails,
   type ArtistDetailsErrors,
   type ArtistDetailsInput,
-} from "@/lib/artist";
+} from "@/lib/people/artist";
 import type { PlatformUser } from "@/lib/mock/admin-users";
-import { isRole, roles, type Role } from "@/lib/roles";
+import { isRole, roles, type Role } from "@/lib/people/roles";
 import { slugify } from "@/lib/slug";
 
 type FieldErrorCode = "nameRequired" | "emailRequired" | "emailInvalid" | "emailTaken";

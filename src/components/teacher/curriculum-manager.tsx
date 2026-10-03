@@ -10,12 +10,12 @@ import { CreateCategoryDialog } from "@/components/teacher/create-category-dialo
 import { LevelFormSheet } from "@/components/teacher/level-form-sheet";
 import { Button } from "@/components/ui/button";
 import { SectionLabel } from "@/components/ui/section-label";
-import type { CurriculumCategory, CurriculumLevel } from "@/lib/curriculum";
+import type { CurriculumCategory, CurriculumLevel } from "@/lib/curriculum/curriculum";
 import {
   emptyLevelForm,
   levelFormFromLesson,
   type LevelFormValues,
-} from "@/lib/level-form";
+} from "@/lib/curriculum/level-form";
 import type { StaffNav } from "@/lib/nav";
 
 type SheetTarget = {

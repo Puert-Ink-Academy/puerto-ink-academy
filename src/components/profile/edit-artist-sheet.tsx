@@ -20,7 +20,7 @@ import {
   parseArtistDetails,
   type ArtistDetails,
   type ArtistDetailsErrors,
-} from "@/lib/artist";
+} from "@/lib/people/artist";
 
 function EditArtistForm({
   profileId,

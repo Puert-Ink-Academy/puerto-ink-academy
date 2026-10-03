@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 
-import type { Role } from "@/lib/roles";
+import type { Role } from "@/lib/people/roles";
 import { cn } from "cn";
 
 const roleBadgeClassName: Record<Role, string> = {

@@ -6,7 +6,7 @@
 - Database: PostgreSQL via Drizzle ORM. The live schema is `db/schema.sql`. The typed map is `src/db/schema.ts`.
 - Storage: DigitalOcean Spaces (S3-compatible) plus its CDN. Postgres stores the CDN URL and the object key, never the file bytes.
 - Roles: `ADMIN`, `TEACHER`, `APPRENTICE`.
-- Auth is not built yet. `src/lib/current-user.ts` is the temporary stand-in. Do not invent sessions, passwords, or login flows unless asked.
+- Auth is not built yet. `src/lib/auth/current-user.ts` is the temporary stand-in. Do not invent sessions, passwords, or login flows unless asked.
 
 ## Core Architecture
 - Default to React Server Components.

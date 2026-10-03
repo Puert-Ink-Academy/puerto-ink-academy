@@ -1,4 +1,4 @@
-import { averageScore, isPassingScore } from "@/lib/grading";
+import { averageScore, isPassingScore } from "@/lib/progress/grading";
 
 type LevelRef = { position: number };
 

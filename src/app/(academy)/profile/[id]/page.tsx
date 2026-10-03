@@ -6,7 +6,7 @@ import { FirstVsBest } from "@/components/profile/first-vs-best";
 import { MasteryShowcase } from "@/components/profile/mastery-showcase";
 import { ProfileHeader } from "@/components/profile/profile-header";
 import { getProfile } from "@/lib/mock/profiles";
-import { personalLevel } from "@/lib/personal-level";
+import { personalLevel } from "@/lib/progress/personal-level";
 
 export async function generateMetadata({
   params,

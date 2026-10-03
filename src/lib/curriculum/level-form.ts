@@ -1,5 +1,5 @@
-import type { CurriculumLevel } from "@/lib/curriculum";
-import { PASS_SCORE, xpForScore } from "@/lib/grading";
+import type { CurriculumLevel } from "@/lib/curriculum/curriculum";
+import { PASS_SCORE, xpForScore } from "@/lib/progress/grading";
 
 export type LevelFormValues = {
   level: number;

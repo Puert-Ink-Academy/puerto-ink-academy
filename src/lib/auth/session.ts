@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 import type { NavKey } from "@/lib/nav";
-import type { Role } from "@/lib/roles";
+import type { Role } from "@/lib/people/roles";
 
 export type SessionUser = {
   id: string;

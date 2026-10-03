@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { LeaderboardEntry } from "@/lib/leaderboard";
+import type { LeaderboardEntry } from "@/lib/progress/leaderboard";
 import { cn } from "cn";
 
 type PodiumStyle = {

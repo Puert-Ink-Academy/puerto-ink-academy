@@ -7,7 +7,7 @@ import { navAccent, roleBadge } from "@/components/layout/nav-items";
 import { TeacherDashboard } from "@/components/teacher/teacher-dashboard";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getPendingSubmissions } from "@/db/queries";
-import { getCurrentUser } from "@/lib/current-user";
+import { getCurrentUser } from "@/lib/auth/current-user";
 import type { StaffNav } from "@/lib/nav";
 
 async function PendingQueue() {

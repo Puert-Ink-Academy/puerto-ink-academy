@@ -1,4 +1,4 @@
-import { xpForScore } from "@/lib/grading";
+import { xpForScore } from "@/lib/progress/grading";
 import type { CategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts, levelAttempts } from "@/lib/mock/level-attempts";
 

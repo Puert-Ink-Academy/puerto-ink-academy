@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { sectionLabelVariants } from "@/components/ui/section-label";
 import { Textarea } from "@/components/ui/textarea";
-import { isPassingScore, xpForScore } from "@/lib/grading";
+import { isPassingScore, xpForScore } from "@/lib/progress/grading";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
 

@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
-import { MASTERY_SCORE, xpForScore } from "@/lib/grading";
+import { MASTERY_SCORE, xpForScore } from "@/lib/progress/grading";
 import type { CategoryId } from "@/lib/mock/categories";
 import { cn } from "cn";
 

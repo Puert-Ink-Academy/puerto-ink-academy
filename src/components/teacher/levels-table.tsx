@@ -13,10 +13,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getCategoryStyle } from "@/lib/categories";
-import type { CurriculumLevel } from "@/lib/curriculum";
-import { PASS_SCORE } from "@/lib/grading";
-import { DEFAULT_XP_REWARD } from "@/lib/level-form";
+import { getCategoryStyle } from "@/lib/curriculum/categories";
+import type { CurriculumLevel } from "@/lib/curriculum/curriculum";
+import { PASS_SCORE } from "@/lib/progress/grading";
+import { DEFAULT_XP_REWARD } from "@/lib/curriculum/level-form";
 import { cn } from "cn";
 
 export function LevelsTable({

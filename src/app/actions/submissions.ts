@@ -2,14 +2,14 @@
 
 import { getTranslations } from "next-intl/server";
 
-import { MASTERY_SCORE } from "@/lib/grading";
-import { isViewableLevel } from "@/lib/levels";
+import { MASTERY_SCORE } from "@/lib/progress/grading";
+import { isViewableLevel } from "@/lib/curriculum/levels";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { isCategoryId } from "@/lib/mock/categories";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
 import { hasPendingReview } from "@/lib/mock/teacher-dashboard";
-import { getCurrentApprentice } from "@/lib/session";
+import { getCurrentApprentice } from "@/lib/auth/session";
 
 export type SubmissionResult = { ok: true } | { error: string; pending?: true };
 

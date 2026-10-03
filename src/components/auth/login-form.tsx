@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { sectionLabelVariants } from "@/components/ui/section-label";
-import { normalizeEmail } from "@/lib/email";
+import { normalizeEmail } from "@/lib/auth/email";
 
 const labelClass = sectionLabelVariants();
 const inputClass =

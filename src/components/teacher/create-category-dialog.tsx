@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { sectionLabelVariants } from "@/components/ui/section-label";
-import type { CurriculumCategory } from "@/lib/curriculum";
+import type { CurriculumCategory } from "@/lib/curriculum/curriculum";
 import { slugify } from "@/lib/slug";
 
 const labelClass = sectionLabelVariants();

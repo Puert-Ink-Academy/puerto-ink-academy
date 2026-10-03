@@ -2,8 +2,8 @@ import { Check, ChevronRight, Crown, Lock } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
-import { MASTERY_SCORE } from "@/lib/grading";
-import { levelStatus, type LevelStatus } from "@/lib/levels";
+import { MASTERY_SCORE } from "@/lib/progress/grading";
+import { levelStatus, type LevelStatus } from "@/lib/curriculum/levels";
 import { cn } from "cn";
 
 function SkillNode({

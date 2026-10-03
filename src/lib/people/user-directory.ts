@@ -1,6 +1,6 @@
-import { countryName, type CountryCode } from "@/lib/countries";
+import { countryName, type CountryCode } from "@/lib/people/countries";
 import type { PlatformUser } from "@/lib/mock/admin-users";
-import { roles, type Role } from "@/lib/roles";
+import { roles, type Role } from "@/lib/people/roles";
 
 export const studioFilters = ["all", "studio", "independent"] as const;
 export type StudioFilter = (typeof studioFilters)[number];

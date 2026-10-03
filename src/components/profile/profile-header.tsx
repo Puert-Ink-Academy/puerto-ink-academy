@@ -6,9 +6,9 @@ import { useState } from "react";
 
 import { EditArtistSheet } from "@/components/profile/edit-artist-sheet";
 import { Button } from "@/components/ui/button";
-import type { ArtistDetails } from "@/lib/artist";
+import type { ArtistDetails } from "@/lib/people/artist";
 import type { ApprenticeProfile } from "@/lib/mock/profiles";
-import type { PersonalLevelProgress } from "@/lib/personal-level";
+import type { PersonalLevelProgress } from "@/lib/progress/personal-level";
 
 export type ProfileHeaderData = Pick<
   ApprenticeProfile,

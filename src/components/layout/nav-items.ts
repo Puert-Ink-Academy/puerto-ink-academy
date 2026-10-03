@@ -9,8 +9,8 @@ import {
 } from "lucide-react";
 
 import type { NavKey } from "@/lib/nav";
-import type { Role } from "@/lib/roles";
-import { profilePath } from "@/lib/profile-slug";
+import type { Role } from "@/lib/people/roles";
+import { profilePath } from "@/lib/people/profile-slug";
 
 export type NavLabel =
   | "dashboard"

@@ -1,4 +1,4 @@
-import { averageScore, MASTERY_SCORE } from "@/lib/grading";
+import { averageScore, MASTERY_SCORE } from "@/lib/progress/grading";
 import {
   rankStandings,
   unlockedTotals,
@@ -9,7 +9,7 @@ import {
   type LeaderboardEntry,
   type LeaderboardScope,
   type MasteredLevel,
-} from "@/lib/leaderboard";
+} from "@/lib/progress/leaderboard";
 import { getPlatformUser } from "@/lib/mock/admin-users";
 import {
   apprenticeCategoryProgress,
@@ -19,7 +19,7 @@ import {
 import { categoryIds, type CategoryId } from "@/lib/mock/categories";
 import { levelAttempts, type LevelAttempt } from "@/lib/mock/level-attempts";
 import { mockPhotos } from "@/lib/mock/photos";
-import { personalLevel } from "@/lib/personal-level";
+import { personalLevel } from "@/lib/progress/personal-level";
 
 function currentUserAverage(categoryId: CategoryId): number {
   return averageScore(

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { requireSessionUser, type SessionUser } from "@/lib/session";
+import { requireSessionUser, type SessionUser } from "@/lib/auth/session";
 
 export type { SessionUser };
 

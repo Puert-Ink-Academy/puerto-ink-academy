@@ -7,10 +7,13 @@
 - A sign-in code can be requested once a minute for each email. The login form shows how long is left.
 - Entering the code opens the sign-in address in the browser, so the session cookie is stored and the role dashboard loads.
 - A signed-in visit to `/login` goes to that role's dashboard. Profiles keep the viewer's own navigation.
+- Italian and Spanish are available in the language switcher.
 
 ### Changed
 
 - Sign-in mail is sent as Puerto Ink Academy. Gmail still shows the name set on that Google account.
+- The landing page contact address is `purtoinkacademy@gmail.com`.
+- Domain helpers in `src/lib` are grouped into `auth`, `curriculum`, `progress`, and `people`.
 
 ### Database
 

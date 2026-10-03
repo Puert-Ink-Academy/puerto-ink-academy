@@ -1,4 +1,4 @@
-import { isCountryCode, type CountryCode } from "@/lib/countries";
+import { isCountryCode, type CountryCode } from "@/lib/people/countries";
 
 export const ARTIST_NAME_MAX_LENGTH = 40;
 export const STUDIO_MAX_LENGTH = 60;

@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/section-label";
-import { categoryStyles } from "@/lib/categories";
+import { categoryStyles } from "@/lib/curriculum/categories";
 import { categories } from "@/lib/mock/categories";
 import { cn } from "cn";
 

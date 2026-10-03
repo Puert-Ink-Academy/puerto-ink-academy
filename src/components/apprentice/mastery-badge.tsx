@@ -2,7 +2,7 @@ import { Crown } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/section-label";
-import { MASTERY_SCORE } from "@/lib/grading";
+import { MASTERY_SCORE } from "@/lib/progress/grading";
 import type { LevelResult } from "@/lib/mock/level-results";
 
 export function MasteryBadge({ result }: { result: LevelResult }) {

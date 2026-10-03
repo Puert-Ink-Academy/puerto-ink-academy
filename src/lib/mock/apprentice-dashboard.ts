@@ -1,8 +1,8 @@
-import { averageScore, isPassingScore, xpFromBestScores } from "@/lib/grading";
+import { averageScore, isPassingScore, xpFromBestScores } from "@/lib/progress/grading";
 import { categories, type CategoryId } from "@/lib/mock/categories";
 import { levelAttempts } from "@/lib/mock/level-attempts";
 import { getCategoryResults } from "@/lib/mock/level-results";
-import { unlockedCategoryIds } from "@/lib/progression";
+import { unlockedCategoryIds } from "@/lib/progress/progression";
 
 export type CategoryProgress = {
   currentLevel: number;

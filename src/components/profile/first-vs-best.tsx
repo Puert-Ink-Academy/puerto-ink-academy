@@ -7,9 +7,9 @@ import { useState } from "react";
 
 import { PhotoViewer } from "@/components/submissions/photo-viewer";
 import { Panel } from "@/components/ui/panel";
-import { categoryStyles } from "@/lib/categories";
-import { MASTERY_SCORE } from "@/lib/grading";
-import type { EvolutionAttempt } from "@/lib/leaderboard";
+import { categoryStyles } from "@/lib/curriculum/categories";
+import { MASTERY_SCORE } from "@/lib/progress/grading";
+import type { EvolutionAttempt } from "@/lib/progress/leaderboard";
 import type { EvolutionCard } from "@/lib/mock/profiles";
 import { cn } from "cn";
 

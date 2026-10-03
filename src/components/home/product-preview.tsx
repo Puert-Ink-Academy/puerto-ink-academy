@@ -7,7 +7,7 @@ import { SkillTree } from "@/components/apprentice/skill-tree";
 import { PreviewFrame } from "@/components/home/preview-frame";
 import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
 import { SectionLabel } from "@/components/ui/section-label";
-import { MASTERY_SCORE, PASS_SCORE } from "@/lib/grading";
+import { MASTERY_SCORE, PASS_SCORE } from "@/lib/progress/grading";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { getCategory, getPreviousCategory, type CategoryId } from "@/lib/mock/categories";
 import { getRanking } from "@/lib/mock/leaderboard";

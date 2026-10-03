@@ -5,8 +5,8 @@ import { getTranslations } from "next-intl/server";
 
 import { signIn, signOut } from "@/auth";
 import { claimLoginCodeRequest, getUserByEmail } from "@/db/queries";
-import { normalizeEmail } from "@/lib/email";
-import { dashboardPath } from "@/lib/session";
+import { normalizeEmail } from "@/lib/auth/email";
+import { dashboardPath } from "@/lib/auth/session";
 
 export type AuthActionResult =
   | { ok: true }

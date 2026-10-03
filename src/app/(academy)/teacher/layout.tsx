@@ -1,5 +1,5 @@
 import { AppLayout } from "@/components/layout/app-layout";
-import { requireRole } from "@/lib/session";
+import { requireRole } from "@/lib/auth/session";
 
 export default async function TeacherLayout({
   children,

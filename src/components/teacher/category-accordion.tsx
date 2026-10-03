@@ -11,8 +11,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { getCategoryStyle } from "@/lib/categories";
-import type { CurriculumCategory, CurriculumLevel } from "@/lib/curriculum";
+import { getCategoryStyle } from "@/lib/curriculum/categories";
+import type { CurriculumCategory, CurriculumLevel } from "@/lib/curriculum/curriculum";
 import { cn } from "cn";
 
 export function CategoryAccordion({

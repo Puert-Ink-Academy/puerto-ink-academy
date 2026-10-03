@@ -1,4 +1,4 @@
-import { requireSessionUser } from "@/lib/session";
+import { requireSessionUser } from "@/lib/auth/session";
 
 export default async function AcademyLayout({
   children,

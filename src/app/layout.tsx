@@ -30,6 +30,8 @@ const openGraphLocale: Record<AppLocale, string> = {
   de: "de_DE",
   fr: "fr_FR",
   el: "el_GR",
+  it: "it_IT",
+  es: "es_ES",
 };
 
 export async function generateMetadata(): Promise<Metadata> {

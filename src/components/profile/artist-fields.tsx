@@ -20,8 +20,8 @@ import {
   type ArtistDetailsErrors,
   type ArtistDetailsInput,
   type ArtistFieldError,
-} from "@/lib/artist";
-import { countryName, isCountryCode, sortedCountryCodes } from "@/lib/countries";
+} from "@/lib/people/artist";
+import { countryName, isCountryCode, sortedCountryCodes } from "@/lib/people/countries";
 import { cn } from "cn";
 
 const accentFields = {

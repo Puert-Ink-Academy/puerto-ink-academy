@@ -10,7 +10,7 @@ import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
 
-const CONTACT_EMAIL = "hello@puertoink.academy";
+const CONTACT_EMAIL = "purtoinkacademy@gmail.com";
 
 const primaryButton = cn(
   buttonVariants({ size: "lg" }),

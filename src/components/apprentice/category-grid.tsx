@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 
 import { Progress } from "@/components/ui/progress";
-import { getCategoryStyle } from "@/lib/categories";
-import { categoryProgressPercent } from "@/lib/levels";
+import { getCategoryStyle } from "@/lib/curriculum/categories";
+import { categoryProgressPercent } from "@/lib/curriculum/levels";
 import { cn } from "cn";
 
 export type CategoryCardData = {

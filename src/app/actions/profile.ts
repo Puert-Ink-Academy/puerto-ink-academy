@@ -1,7 +1,7 @@
 "use server";
 
-import { parseArtistDetails, type ArtistDetails, type ArtistDetailsErrors } from "@/lib/artist";
-import { getCurrentApprentice } from "@/lib/session";
+import { parseArtistDetails, type ArtistDetails, type ArtistDetailsErrors } from "@/lib/people/artist";
+import { getCurrentApprentice } from "@/lib/auth/session";
 
 export type ProfileActionError = "ownProfile" | "checkFields";
 

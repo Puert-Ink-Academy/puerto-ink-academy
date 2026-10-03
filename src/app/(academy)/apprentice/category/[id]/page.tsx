@@ -10,10 +10,10 @@ import { CurriculumSkeleton } from "@/components/feedback/curriculum-skeleton";
 import { Progress } from "@/components/ui/progress";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getApprenticeOverview, getCurriculum } from "@/db/queries";
-import { getCategoryStyle } from "@/lib/categories";
-import { getCurrentApprentice } from "@/lib/session";
-import { categoryProgressPercent } from "@/lib/levels";
-import { apprenticeView } from "@/lib/live-progress";
+import { getCategoryStyle } from "@/lib/curriculum/categories";
+import { getCurrentApprentice } from "@/lib/auth/session";
+import { categoryProgressPercent } from "@/lib/curriculum/levels";
+import { apprenticeView } from "@/lib/progress/live-progress";
 import { cn } from "cn";
 
 export async function generateMetadata({

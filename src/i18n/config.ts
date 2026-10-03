@@ -1,4 +1,4 @@
-export const locales = ["en-US", "de", "fr", "el"] as const;
+export const locales = ["en-US", "de", "fr", "el", "it", "es"] as const;
 
 export type AppLocale = (typeof locales)[number];
 
@@ -11,6 +11,8 @@ export const localeNames: Record<AppLocale, string> = {
   de: "Deutsch",
   fr: "Français",
   el: "Ελληνικά",
+  it: "Italiano",
+  es: "Español",
 };
 
 export function isLocale(value: unknown): value is AppLocale {
@@ -22,6 +24,8 @@ const languageToLocale: Record<string, AppLocale> = {
   de: "de",
   fr: "fr",
   el: "el",
+  it: "it",
+  es: "es",
 };
 
 export function matchAcceptLanguage(header: string | null): AppLocale | undefined {

@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { PlatformUser } from "@/lib/mock/admin-users";
-import { isRole, roles, type Role } from "@/lib/roles";
+import { isRole, roles, type Role } from "@/lib/people/roles";
 
 function ChangeRoleForm({
   user,

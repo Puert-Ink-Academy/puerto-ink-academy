@@ -10,7 +10,7 @@ import { db } from "@/db/index";
 import { getUserByEmail, getUserById } from "@/db/queries";
 import { accounts, sessions, users, verificationTokens } from "@/db/schema";
 import { logger } from "@/lib/logger";
-import type { Role } from "@/lib/roles";
+import type { Role } from "@/lib/people/roles";
 
 declare module "next-auth" {
   interface Session {

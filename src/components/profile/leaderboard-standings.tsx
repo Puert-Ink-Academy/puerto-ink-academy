@@ -3,7 +3,7 @@ import { useFormatter, useTranslations } from "next-intl";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionLabel } from "@/components/ui/section-label";
-import { categoryStyles } from "@/lib/categories";
+import { categoryStyles } from "@/lib/curriculum/categories";
 import type { ScopeStanding } from "@/lib/mock/profiles";
 import { cn } from "cn";
 

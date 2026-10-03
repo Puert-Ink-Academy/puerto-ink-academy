@@ -1,9 +1,9 @@
-import type { CountryCode } from "@/lib/countries";
+import type { CountryCode } from "@/lib/people/countries";
 import type { CategoryId } from "@/lib/mock/categories";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
-import { personalLevel } from "@/lib/personal-level";
-import { profileSlug } from "@/lib/profile-slug";
-import { unlockedCategoryIds } from "@/lib/progression";
+import { personalLevel } from "@/lib/progress/personal-level";
+import { profileSlug } from "@/lib/people/profile-slug";
+import { unlockedCategoryIds } from "@/lib/progress/progression";
 
 export type CategoryStanding = {
   level: number;

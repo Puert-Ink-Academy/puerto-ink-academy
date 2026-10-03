@@ -1,6 +1,6 @@
 import * as flags from "country-flag-icons/string/3x2";
 
-import { countryCodes, isCountryCode } from "@/lib/countries";
+import { countryCodes, isCountryCode } from "@/lib/people/countries";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;

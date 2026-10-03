@@ -6,7 +6,7 @@ import { useState } from "react";
 import { GradingModal } from "@/components/teacher/grading-modal";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/panel";
-import { getCategoryStyle } from "@/lib/categories";
+import { getCategoryStyle } from "@/lib/curriculum/categories";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
 

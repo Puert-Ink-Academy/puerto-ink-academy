@@ -17,7 +17,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { levelFormFromData, type LevelFormValues } from "@/lib/level-form";
+import { levelFormFromData, type LevelFormValues } from "@/lib/curriculum/level-form";
 
 type LevelFormMode = "create" | "edit";
 

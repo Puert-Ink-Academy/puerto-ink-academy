@@ -1,5 +1,5 @@
 import { AppLayout } from "@/components/layout/app-layout";
-import { navKeyFor, requireSessionUser } from "@/lib/session";
+import { navKeyFor, requireSessionUser } from "@/lib/auth/session";
 
 export default async function ProfileLayout({
   children,

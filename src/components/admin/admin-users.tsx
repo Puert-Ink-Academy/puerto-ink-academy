@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
 import type { PlatformUser } from "@/lib/mock/admin-users";
-import type { Role } from "@/lib/roles";
+import type { Role } from "@/lib/people/roles";
 import {
   countryOptions,
   defaultUserFilters,
@@ -20,7 +20,7 @@ import {
   hasActiveFilters,
   roleCounts,
   type UserFilters,
-} from "@/lib/user-directory";
+} from "@/lib/people/user-directory";
 
 export function AdminUsers({ initialUsers }: { initialUsers: PlatformUser[] }) {
   const [users, setUsers] = useState(initialUsers);

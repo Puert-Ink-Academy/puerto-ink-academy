@@ -7,7 +7,7 @@ import { LoginForm } from "@/components/auth/login-form";
 import { Wordmark } from "@/components/brand/wordmark";
 import { LanguageSwitcher } from "@/components/i18n/language-switcher";
 import { Panel } from "@/components/ui/panel";
-import { dashboardPath, getSessionUser } from "@/lib/session";
+import { dashboardPath, getSessionUser } from "@/lib/auth/session";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Auth");

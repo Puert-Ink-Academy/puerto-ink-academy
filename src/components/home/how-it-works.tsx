@@ -2,7 +2,7 @@ import { BookOpen, Camera, Crown, Sparkles, Target, TrendingUp, type LucideIcon 
 import { useTranslations } from "next-intl";
 
 import { SectionLabel } from "@/components/ui/section-label";
-import { MASTERY_SCORE, PASS_SCORE } from "@/lib/grading";
+import { MASTERY_SCORE, PASS_SCORE } from "@/lib/progress/grading";
 
 const steps = [
   { icon: BookOpen, title: "learnTitle", body: "learnBody" },

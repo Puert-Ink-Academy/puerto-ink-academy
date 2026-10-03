@@ -11,16 +11,16 @@ import { LevelSubmission } from "@/components/apprentice/level-submission";
 import { MasteryBadge } from "@/components/apprentice/mastery-badge";
 import { ReferenceMaterial } from "@/components/apprentice/reference-material";
 import { SectionLabel } from "@/components/ui/section-label";
-import { categoryStyles } from "@/lib/categories";
-import { levelState } from "@/lib/grading";
-import { isViewableLevel, levelStatus } from "@/lib/levels";
+import { categoryStyles } from "@/lib/curriculum/categories";
+import { levelState } from "@/lib/progress/grading";
+import { isViewableLevel, levelStatus } from "@/lib/curriculum/levels";
 import { getCategoryProgress } from "@/lib/mock/apprentice-dashboard";
 import { getCategory, isCategoryId } from "@/lib/mock/categories";
 import { getLevelAttempts } from "@/lib/mock/level-attempts";
 import { getLevelLesson } from "@/lib/mock/level-lessons";
 import { getLevelResult } from "@/lib/mock/level-results";
 import { getPendingSubmission } from "@/lib/mock/teacher-dashboard";
-import { getCurrentApprentice } from "@/lib/session";
+import { getCurrentApprentice } from "@/lib/auth/session";
 import { getCurriculum } from "@/db/queries";
 
 export async function generateMetadata({

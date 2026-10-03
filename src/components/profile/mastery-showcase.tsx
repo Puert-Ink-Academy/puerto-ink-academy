@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
-import { categoryStyles } from "@/lib/categories";
-import { MASTERY_SCORE } from "@/lib/grading";
+import { categoryStyles } from "@/lib/curriculum/categories";
+import { MASTERY_SCORE } from "@/lib/progress/grading";
 import type { ShowcaseBadge } from "@/lib/mock/profiles";
 import { cn } from "cn";
 

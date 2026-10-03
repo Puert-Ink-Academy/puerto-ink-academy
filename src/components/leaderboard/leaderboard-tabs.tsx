@@ -8,8 +8,8 @@ import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
 import { UserRankBanner } from "@/components/leaderboard/user-rank-banner";
 import { Panel } from "@/components/ui/panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCategoryStyle } from "@/lib/categories";
-import type { LeaderboardEntry, LeaderboardScope } from "@/lib/leaderboard";
+import { getCategoryStyle } from "@/lib/curriculum/categories";
+import type { LeaderboardEntry, LeaderboardScope } from "@/lib/progress/leaderboard";
 import { isCategoryId } from "@/lib/mock/categories";
 import { cn } from "cn";
 

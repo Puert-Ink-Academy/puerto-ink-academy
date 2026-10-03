@@ -8,8 +8,8 @@ import { DashboardSkeleton } from "@/components/feedback/dashboard-skeleton";
 import { EmptyState } from "@/components/feedback/empty-state";
 import { SectionLabel } from "@/components/ui/section-label";
 import { getApprenticeOverview, getCurriculum } from "@/db/queries";
-import { getCurrentApprentice } from "@/lib/session";
-import { apprenticeView } from "@/lib/live-progress";
+import { getCurrentApprentice } from "@/lib/auth/session";
+import { apprenticeView } from "@/lib/progress/live-progress";
 import { screenMetadata } from "@/lib/page-metadata";
 
 async function DashboardBody() {

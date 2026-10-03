@@ -4,7 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { PhotoThumbnails } from "@/components/submissions/photo-thumbnails";
 import { Panel } from "@/components/ui/panel";
 import { SectionLabel } from "@/components/ui/section-label";
-import { isPassingScore, xpForScore } from "@/lib/grading";
+import { isPassingScore, xpForScore } from "@/lib/progress/grading";
 import type { LevelAttempt } from "@/lib/mock/level-attempts";
 import type { SubmissionPhoto } from "@/lib/mock/photos";
 import { cn } from "cn";
